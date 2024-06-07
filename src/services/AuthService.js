@@ -2,7 +2,6 @@
 
 
 let apigClient = null;
-let isLogged = false;
 
 if(window.apigClientFactory) {
     apigClient = window.apigClientFactory.newClient();
@@ -25,18 +24,15 @@ const login = (email, password, persist) => {
             if (persist) {
                 localStorage.setItem('token', jwt);
             }
-            isLogged = true;
-            return result.data;
+            return Promise.resolve(result.data);
         }).catch( function(result){
-            console.log(JSON.stringify(result, '', 2));
-            return result;
+            return Promise.reject(result);
     });
 
 }
 
 const logout = () => {
     localStorage.removeItem('token');
-    isLogged = false;
 }
 
 const getCurrentUser = () => {
@@ -46,6 +42,5 @@ const getCurrentUser = () => {
 export default {
     login,
     logout,
-    getCurrentUser,
-    isLogged
+    getCurrentUser
 };

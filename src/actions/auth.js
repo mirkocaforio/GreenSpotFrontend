@@ -21,6 +21,7 @@ export const login = (email, password, checked) => (dispatch) => {
             return Promise.resolve();
         },
         (error) => {
+            console.log('login error');
             const message =
                 (error.response &&
                     error.response.data &&

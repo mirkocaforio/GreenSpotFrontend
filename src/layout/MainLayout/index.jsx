@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import navigation from 'menu-items';
 
 // material-ui
 import AppBar from '@mui/material/AppBar';
@@ -16,6 +15,7 @@ import Customization from '../Customization';
 import Breadcrumbs from 'ui-component/extended/Breadcrumbs';
 import { SET_MENU } from 'store/actions';
 import { drawerWidth } from 'store/constant';
+import navigation from 'menu-items';
 
 // assets
 import { IconChevronRight } from '@tabler/icons-react';

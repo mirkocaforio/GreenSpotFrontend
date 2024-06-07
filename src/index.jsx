@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 // project imports
 import App from './App';
 import reducer from './store/reducer';
+import 'core-js';
 
 // google-fonts
 import '@fontsource/roboto/400.css';

@@ -66,8 +66,15 @@ const AuthLogin = ({ ...others }) => {
   const handleLogin = (values) => {
     dispatch(login(values.email, values.password, checked)).then(
         () => {
-            navigate("/dashboard/default");
-            window.location.reload();
+            console.log('Login success');
+            setTimeout(() => {
+                //navigate("/dashboard/default");
+                //window.location.reload();
+            }, 400);
+
+        },
+        (error) => {
+            console.log('Login error from AuthLogin.jsx');
         }
     );
   };
