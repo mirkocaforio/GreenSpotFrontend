@@ -27,12 +27,12 @@ import { Formik } from 'formik';
 // project imports
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import { login } from '../../../../actions/auth';
+import { useIsAuthenticated } from "../../../../hooks/useAuthorization";
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import Google from 'assets/images/icons/social-google.svg';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -46,13 +46,9 @@ const AuthLogin = ({ ...others }) => {
   const [checked, setChecked] = useState(true);
 
 
-  const { isLoggedIn } = useSelector(state => state.auth);
+  const isLoggedIn = useIsAuthenticated();
   //const { message } = useSelector(state => state.message);
 
-
-  const googleHandler = async () => {
-    console.error('Login');
-  };
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -64,50 +60,24 @@ const AuthLogin = ({ ...others }) => {
   };
 
   const handleLogin = (values) => {
-    dispatch(login(values.email, values.password, checked)).then(
+    return dispatch(login(values.email, values.password, checked)).then(
         () => {
-            console.log('Login success');
-            setTimeout(() => {
-                //navigate("/dashboard/default");
-                //window.location.reload();
-            }, 400);
-
+            return Promise.resolve();
         },
-        (error) => {
-            console.log('Login error from AuthLogin.jsx');
+        () => {
+            return Promise.reject();
         }
     );
   };
 
   if (isLoggedIn) {
-    return <Navigate to="/dashboard/default" />;
+    return <Navigate to="/"/>;
   }
 
 
   return (
     <>
       <Grid container direction="column" justifyContent="center" spacing={2}>
-        <Grid item xs={12}>
-          <AnimateButton>
-            <Button
-              disableElevation
-              fullWidth
-              onClick={googleHandler}
-              size="large"
-              variant="outlined"
-              sx={{
-                color: 'grey.700',
-                backgroundColor: theme.palette.grey[50],
-                borderColor: theme.palette.grey[100]
-              }}
-            >
-              <Box sx={{ mr: { xs: 1, sm: 2, width: 20 } }}>
-                <img src={Google} alt="google" width={16} height={16} style={{ marginRight: matchDownSM ? 8 : 16 }} />
-              </Box>
-              Sign in with Google
-            </Button>
-          </AnimateButton>
-        </Grid>
         <Grid item xs={12}>
           <Box
             sx={{
@@ -132,7 +102,7 @@ const AuthLogin = ({ ...others }) => {
               disableRipple
               disabled
             >
-              OR
+                Login
             </Button>
 
             <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
@@ -156,8 +126,13 @@ const AuthLogin = ({ ...others }) => {
           password: Yup.string().max(255).required('Password is required')
         })}
        onSubmit={(values, {setSubmitting }) => {
-           handleLogin(values);
-           setSubmitting(false);
+           setSubmitting(true);
+           handleLogin(values).then(() => {
+               setSubmitting(false);
+           }).catch(() => {
+               setSubmitting(false);
+           });
+
        }} >
         {({ errors,
               handleBlur,

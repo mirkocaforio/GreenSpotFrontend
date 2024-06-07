@@ -3,6 +3,8 @@ import { lazy } from 'react';
 // project imports
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
+import ProtectedRoutes from './ProtectedRoutes';
+import {ROLE_ADMIN, ROLE_MEMBER, ROLE_UTENTE} from "../services/AuthConstants";
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
@@ -25,14 +27,18 @@ const MainRoutes = {
   children: [
     {
       path: '/',
-      element: <DashboardDefault />
+      element: <ProtectedRoutes allowedRoles={[ROLE_ADMIN, ROLE_UTENTE, ROLE_MEMBER]}>
+          <DashboardDefault />
+        </ProtectedRoutes>
     },
     {
       path: 'dashboard',
       children: [
         {
           path: 'default',
-          element: <DashboardDefault />
+          element: <ProtectedRoutes allowedRoles={[ROLE_ADMIN, ROLE_UTENTE, ROLE_MEMBER]}>
+            <DashboardDefault />
+          </ProtectedRoutes>
         }
       ]
     },
@@ -83,7 +89,9 @@ const MainRoutes = {
     // },
     {
       path: 'sample-page',
-      element: <SamplePage />
+      element: <ProtectedRoutes allowedRoles={[ROLE_ADMIN, ROLE_UTENTE, ROLE_MEMBER]}>
+        <SamplePage />
+      </ProtectedRoutes>
     }
   ]
 };

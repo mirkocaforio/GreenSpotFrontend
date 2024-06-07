@@ -9,9 +9,8 @@ import {
 
 import AuthService from "../services/AuthService";
 
-export const login = (email, password, checked) => (dispatch) => {
-    console.log('login, email: '+email+', password: '+password);
-    return AuthService.login(email, password, checked).then(
+export const login = (email, password, persist) => (dispatch) => {
+    return AuthService.login(email, password, persist).then(
         (data) => {
             dispatch({
                 type: LOGIN_SUCCESS,
@@ -21,7 +20,7 @@ export const login = (email, password, checked) => (dispatch) => {
             return Promise.resolve();
         },
         (error) => {
-            console.log('login error');
+           console.log(error);
             const message =
                 (error.response &&
                     error.response.data &&

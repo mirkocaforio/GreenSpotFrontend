@@ -50,12 +50,8 @@ const logout = () => {
     localStorage.removeItem('token');
 }
 
-const getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem('token'));
-}
 
 export default {
     login,
-    logout,
-    getCurrentUser
+    logout
 };
