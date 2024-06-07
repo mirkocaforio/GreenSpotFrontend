@@ -26,7 +26,22 @@ const login = (email, password, persist) => {
             }
             return Promise.resolve(result.data);
         }).catch( function(result){
-            return Promise.reject(result);
+
+            if(result.response && result.response.data) {
+                console.error(result.response.data);
+                return Promise.reject(result.response.data);
+            } else if (result.request) {
+                console.error(result.request);
+                return Promise.reject(result.request);
+            }else if (result.data) {
+                console.error(result.data.message);
+                return Promise.reject(result.data.message);
+            } else{
+                console.error(JSON.stringify(result));
+                return Promise.reject(result);
+            }
+
+
     });
 
 }
