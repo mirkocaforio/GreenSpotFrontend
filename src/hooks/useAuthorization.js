@@ -26,5 +26,9 @@ export const useIsAuthenticated = () => {
         return false;
     }
 
+    if(isLoggedIn === null){
+        return false;
+    }
+
     return isLoggedIn;
 }

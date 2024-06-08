@@ -27,7 +27,6 @@ import { Formik } from 'formik';
 // project imports
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import { login } from '../../../../actions/auth';
-import { useIsAuthenticated } from "../../../../hooks/useAuthorization";
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
@@ -45,8 +44,6 @@ const AuthLogin = ({ ...others }) => {
   const customization = useSelector((state) => state.customization);
   const [checked, setChecked] = useState(true);
 
-
-  const isLoggedIn = useIsAuthenticated();
   //const { message } = useSelector(state => state.message);
 
 
@@ -62,6 +59,8 @@ const AuthLogin = ({ ...others }) => {
   const handleLogin = (values) => {
     return dispatch(login(values.email, values.password, checked)).then(
         () => {
+            //navigate('/home', { replace: true });
+            //window.location.reload();
             return Promise.resolve();
         },
         () => {
@@ -70,9 +69,6 @@ const AuthLogin = ({ ...others }) => {
     );
   };
 
-  if (isLoggedIn) {
-    return <Navigate to="/"/>;
-  }
 
 
   return (

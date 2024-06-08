@@ -23,22 +23,21 @@ const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 
 const MainRoutes = {
   path: '/',
-  element: <MainLayout />,
+  element: <ProtectedRoutes allowedRoles={[ROLE_ADMIN, ROLE_UTENTE, ROLE_MEMBER]}>
+                <MainLayout />
+            </ProtectedRoutes>,
   children: [
     {
-      path: '/',
-      element: <ProtectedRoutes allowedRoles={[ROLE_ADMIN, ROLE_UTENTE, ROLE_MEMBER]}>
+      path: '/home',
+      element:
           <DashboardDefault />
-        </ProtectedRoutes>
     },
     {
       path: 'dashboard',
       children: [
         {
           path: 'default',
-          element: <ProtectedRoutes allowedRoles={[ROLE_ADMIN, ROLE_UTENTE, ROLE_MEMBER]}>
-            <DashboardDefault />
-          </ProtectedRoutes>
+          element: <DashboardDefault />
         }
       ]
     },
@@ -89,9 +88,7 @@ const MainRoutes = {
     // },
     {
       path: 'sample-page',
-      element: <ProtectedRoutes allowedRoles={[ROLE_ADMIN, ROLE_UTENTE, ROLE_MEMBER]}>
-        <SamplePage />
-      </ProtectedRoutes>
+      element:<SamplePage />
     }
   ]
 };
