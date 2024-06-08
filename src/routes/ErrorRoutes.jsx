@@ -1,12 +1,21 @@
 
 // project imports
-import ErrorPage from "../views/error/ErrorPage";
 
+import MinimalLayout from "../layout/MinimalLayout";
+import Loadable from "../ui-component/Loadable";
+import {lazy} from "react";
+const ErrorPage = Loadable(lazy(() => import('../views/error/ErrorPage')));
 // ==============================|| AUTHENTICATION ROUTING ||============================== //
 
 const ErrorRoutes = {
     path: '*',
-    element: <ErrorPage />,
+    element: <MinimalLayout />,
+    children:[
+        {
+            path: '*',
+            element: <ErrorPage />
+        }
+    ]
 };
 
 export default ErrorRoutes;
