@@ -4,11 +4,11 @@ import {Navigate} from "react-router-dom";
 import {LOGIN_PATH} from "../services/AuthConstants";
 
 
-const ProtectedRoutes = ({allowedRoles, children}) => {
+const RouteGuard = ({allowedRoles, children}) => {
     const isLoggedIn = useIsAuthenticated();
     const isAuthorized = useAuthorization(allowedRoles);
 
     return isLoggedIn && isAuthorized ? children : <Navigate to={LOGIN_PATH}/>;
 }
 
-export default ProtectedRoutes;
+export default RouteGuard;
