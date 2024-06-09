@@ -20,8 +20,8 @@ export const login = (email, password, persist) => (dispatch) => {
             return Promise.resolve();
         },
         (error) => {
-           console.log(error);
             const message =
+                (error.data && error.data.message) ||
                 (error.response &&
                     error.response.data &&
                     error.response.data.message) ||
@@ -37,7 +37,7 @@ export const login = (email, password, persist) => (dispatch) => {
                 payload: message,
             });
 
-            return Promise.reject();
+            return Promise.reject(message);
         }
     );
 };

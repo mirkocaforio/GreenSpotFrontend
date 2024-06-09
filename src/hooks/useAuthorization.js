@@ -3,15 +3,11 @@ import {useSelector} from "react-redux";
 export const useAuthorization = (allowedRoles) => {
     const user = useSelector((state) => state.auth.user);
 
+    if (user === undefined || user === null) {
+        return false;
+    }
+
     // DEBUG
-    if (user === undefined) {
-        return false;
-    }
-
-    if (user === null) {
-        return false;
-    }
-
     if (!Object.keys(user).includes('role')) {
         return true;
     }
@@ -22,11 +18,7 @@ export const useAuthorization = (allowedRoles) => {
 export const useIsAuthenticated = () => {
     const { isLoggedIn } = useSelector(state => state.auth);
 
-    if(isLoggedIn === undefined){
-        return false;
-    }
-
-    if(isLoggedIn === null){
+    if(isLoggedIn === undefined || isLoggedIn === null){
         return false;
     }
 

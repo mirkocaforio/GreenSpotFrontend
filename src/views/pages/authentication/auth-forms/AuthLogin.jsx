@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate  } from 'react-router-dom';
 
@@ -19,6 +19,7 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
+import {Alert} from '@mui/material'
 
 // third party
 import * as Yup from 'yup';
@@ -44,7 +45,7 @@ const AuthLogin = ({ ...others }) => {
   const customization = useSelector((state) => state.customization);
   const [checked, setChecked] = useState(true);
 
-  //const { message } = useSelector(state => state.message);
+  const { message } = useSelector(state => state.message);
 
 
   const [showPassword, setShowPassword] = useState(false);
@@ -63,8 +64,8 @@ const AuthLogin = ({ ...others }) => {
             //window.location.reload();
             return Promise.resolve();
         },
-        () => {
-            return Promise.reject();
+        (error) => {
+            return Promise.reject(error);
         }
     );
   };
@@ -121,11 +122,12 @@ const AuthLogin = ({ ...others }) => {
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
           password: Yup.string().max(255).required('Password is required')
         })}
-       onSubmit={(values, {setSubmitting }) => {
+       onSubmit={(values, {setSubmitting, setErrors }) => {
            setSubmitting(true);
            handleLogin(values).then(() => {
                setSubmitting(false);
-           }).catch(() => {
+           }).catch((error) => {
+               setErrors({ submit: error });
                setSubmitting(false);
            });
 
@@ -201,7 +203,8 @@ const AuthLogin = ({ ...others }) => {
             </Stack>
             {errors.submit && (
               <Box sx={{ mt: 3 }}>
-                <FormHelperText error>{errors.submit}</FormHelperText>
+                  <Alert severity="error">{errors.submit}</Alert>
+                  {/*<FormHelperText error>{errors.submit}</FormHelperText>*/}
               </Box>
             )}
 
