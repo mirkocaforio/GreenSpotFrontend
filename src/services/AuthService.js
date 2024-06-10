@@ -49,16 +49,20 @@ const register = (name,surname,date,city,address,tel,email, password) => {
 
     return apigClient.apiV1UsersSignupPost(params, body, additionalParams)
         .then(function(){
-            //Getting token from response
-            return login(email, password, true);
-        }).then(function() {
-            //Update profile with new user data
-            return updateProfile(name, surname, date, city, address, tel, email);
-        }).then(function(){
+            // Schedule login and updateProfile to run asynchronously
+            setTimeout(() => {
+                //First login and then update profile
+                return login(email, password, true).then( function(){
+                    updateProfile(name, surname, date, city, address, tel, email);
+                }).catch( function(result){
+                    console.error("Error: " + result);
+                });
+            }, 0);
+
             return Promise.resolve("Registered successfully!");
         }).catch( function(result){
             return Promise.reject(result);
-    });
+        });
 
 
 }
