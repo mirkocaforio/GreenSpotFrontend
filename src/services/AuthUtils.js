@@ -1,6 +1,5 @@
 
 
-
 export function ApiClient() {
 
     if(window.apigClientFactory) {

@@ -32,6 +32,11 @@ import {register} from "../../../../actions/auth";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import {Alert} from "@mui/material";
+import {DatePicker} from "@mui/x-date-pickers/DatePicker";
+import TextField from "@mui/material/TextField";
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
+import {LocalizationProvider} from "@mui/x-date-pickers";
+import dayjs from "dayjs";
 
 
 // ===========================|| FIREBASE - REGISTER ||=========================== //
@@ -46,6 +51,7 @@ const AuthRegister = ({ ...others }) => {
 
   const [strength, setStrength] = useState(0);
   const [level, setLevel] = useState();
+  const [date, setDate] = useState(null);
   const navigate = useNavigate();
 
   const handleSuccess = () => {
@@ -207,14 +213,26 @@ const AuthRegister = ({ ...others }) => {
             </Grid>
 
             <FormControl fullWidth error={Boolean(touched.birthDate && errors.birthDate)} sx={{ ...theme.typography.dateInput }}>
-              <InputLabel htmlFor="outlined-adornment-date-register">Date of Birth</InputLabel>
-                <OutlinedInput id={"outlined-adornment-date-register"}
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                            id={"outlined-adornment-date-register"}
+                            onChange={(data) => {
+                                const formattedDate = dayjs(data).format('DD/MM/YY');
+                                setDate(data);
+                                handleChange({target: {name: "birthDate", value: formattedDate}});
+                                console.log(formattedDate);}}
+                            label={"Date of Birth"}
+                            inputFormat="DD/MM/YYYY"
+                            value={date}
+                            renderInput={(params) => <TextField {...params} variant="outlined" />}/>
+                </LocalizationProvider>
+                {/*<OutlinedInput id={"outlined-adornment-date-register"}
                                type="date"
                                value={values.birthDate}
                                name="birthDate"
                                onBlur={handleBlur}
                                onChange={handleChange}
-                               inputProps={{}}/>
+                               inputProps={{}}/>*/}
                 {touched.birthDate && errors.birthDate && (
                     <FormHelperText error id="standard-weight-helper-text--register">
                         {errors.birthDate}

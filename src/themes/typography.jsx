@@ -90,7 +90,7 @@ export default function themeTypography(theme) {
     marginTop: 1,
     marginBottom: 1,
     '& > label': {
-      top: 23,
+      top: 10,
       left: 0,
       color: theme.grey500,
       '&[data-shrink="false"]': {
@@ -100,6 +100,14 @@ export default function themeTypography(theme) {
     '& > div > input': {
       padding: '30.5px 14px 11.5px !important'
     },
+    '& .css-phng8t-MuiInputBase-input-MuiOutlinedInput-input': {
+      padding: '30.5px 14px 11.5px !important'
+    }
+    ,
+    '& .MuiInputLabel-outlined.MuiInputLabel-shrink': {
+      transform: 'translate(14px, 13px) scale(0.75)',
+    }
+    ,
     '& legend': {
       display: 'none'
     },
