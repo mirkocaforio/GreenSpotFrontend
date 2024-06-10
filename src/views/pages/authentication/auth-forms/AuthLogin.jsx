@@ -43,6 +43,7 @@ const AuthLogin = ({ ...others }) => {
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const customization = useSelector((state) => state.customization);
   const [checked, setChecked] = useState(true);
+  const {message} = useSelector((state) => state.message);
 
 
 
@@ -199,12 +200,18 @@ const AuthLogin = ({ ...others }) => {
                 Forgot Password?
               </Typography>
             </Stack>
-            {errors.submit && (
-              <Box sx={{ mt: 3 }}>
-                  <Alert severity="error">{errors.submit}</Alert>
-                  {/*<FormHelperText error>{errors.submit}</FormHelperText>*/}
-              </Box>
-            )}
+
+              {errors.submit && (
+                  <Box sx={{ mt: 3 }}>
+                      <Alert severity="error">{errors.submit}</Alert>
+                  </Box>
+              )}
+
+              {message && message.startsWith("Session expired") && (
+                  <Box sx={{ mt: 3 }}>
+                      <Alert severity="warning">{message}</Alert>
+                  </Box>
+              )}
 
             <Box sx={{ mt: 2 }}>
               <AnimateButton>

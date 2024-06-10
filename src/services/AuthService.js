@@ -27,6 +27,7 @@ const login = (email, password, persist) => {
             if (persist) {
                 localStorage.setItem('user', JSON.stringify(user.getUser()));
             }
+            //TODO: Prima di ritornare deve caricare le info del utente
             //return Promise.resolve(result.data);
             return Promise.resolve(user.getUser());
         }).catch( function(result){

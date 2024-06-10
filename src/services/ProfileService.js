@@ -1,6 +1,6 @@
 // ----- PROFILES MANAGEMENT ----- //
 
-import  {AuthHeader,ApiClient} from "./AuthUtils";
+import {AuthHeader, ApiClient, CurrentUser} from "./AuthUtils";
 import {ProfileModel} from "./ProfileModel";
 import {ROLE_MEMBER} from "./AuthConstants";
 
@@ -21,15 +21,23 @@ export const updateProfile = (name,surname,date,city,address,tel,email) => {
 
 export const getProfile = () => {
 
-    const params = AuthHeader();
+    let params = AuthHeader();
+    params = {...params, userEmail: CurrentUser().email};
+
     const additionalParams = {};
 
     let apigClient = ApiClient();
 
-    return apigClient.apiV1UsersProfileGet(params, additionalParams)
+    return apigClient.apiV1UsersUserEmailGet(params, additionalParams)
         .then(function(result){
+            localStorage.setItem('profile', JSON.stringify(result.data));
             return Promise.resolve(result.data);
         }).catch( function(result){
             return Promise.reject(result);
     });
+}
+
+export default {
+    updateProfile,
+    getProfile
 }

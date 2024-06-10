@@ -15,11 +15,14 @@ import { gridSpacing } from 'store/constant';
 
 // assets
 import StorefrontTwoToneIcon from '@mui/icons-material/StorefrontTwoTone';
+import {useSelector} from "react-redux";
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
 const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
+  const {profile} = useSelector(state => state.profile);
+  const {user} = useSelector(state => state.auth);
 
   useEffect(() => {
     setLoading(false);
@@ -57,7 +60,10 @@ const Dashboard = () => {
       <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12} md={8}>
-            <p>QUA CI VA UN GRAFICO</p>
+            {Object.entries(profile).map(([key, value]) => (
+                <p key={key}>{`${key}: ${value}`}</p>
+            ))}
+            <p>{user.token}</p>
           </Grid>
           <Grid item xs={12} md={4}>
             <PopularCard isLoading={isLoading} />

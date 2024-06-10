@@ -35,16 +35,20 @@ import Transitions from 'ui-component/extended/Transitions';
 import User1 from 'assets/images/users/user-round.svg';
 import {logout} from "../../../../actions/auth";
 import {LOGIN_PATH} from "../../../../services/AuthConstants";
+import logoutItem from "./profile-menu-items/logout";
 
 // assets
-import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons-react';
+import {IconSearch, IconSettings} from '@tabler/icons-react';
+import accountSettingsItem from "./profile-menu-items/accountSettings.";
+import socialProfileItem from "./profile-menu-items/socialProfile";
 
 // ==============================|| PROFILE MENU ||============================== //
 
 const ProfileSection = () => {
   const theme = useTheme();
   const customization = useSelector((state) => state.customization);
-  const {user} = useSelector((state) => state.auth);
+
+  const { profile } = useSelector((state) => state.profile);
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -54,7 +58,10 @@ const ProfileSection = () => {
   const [notification, setNotification] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
-  /**
+
+  const [filteredItems, setFilteredItems] = useState([]);
+
+    /**
    * anchorRef is used on different componets and specifying one type leads to other components throwing an error
    * */
   const anchorRef = useRef(null);
@@ -65,7 +72,19 @@ const ProfileSection = () => {
   };
 
   const getEmail = () => {
-    return user.email;
+    return profile.email;
+  }
+
+  const getName = () => {
+    return profile.name;
+  }
+
+  const getSurname = () => {
+    return profile.surname;
+  }
+
+  const getRole = () => {
+    return profile.role;
   }
 
   const handleClose = (event) => {
@@ -95,6 +114,21 @@ const ProfileSection = () => {
 
     prevOpen.current = open;
   }, [open]);
+
+  useEffect(() => {
+        const allItems = [
+            accountSettingsItem({}),
+            socialProfileItem({onClick: null, chipValue: '69'}),
+            logoutItem({onClick: handleLogout})
+        ];
+
+        if (value === '') {
+            setFilteredItems(allItems);
+        } else {
+            const filtered = allItems.filter(item => item.label.toLowerCase().includes(value.toLowerCase()));
+            setFilteredItems(filtered);
+        }
+    }, [ value]);
 
   return (
     <>
@@ -167,10 +201,11 @@ const ProfileSection = () => {
                     <Stack>
                       <Stack direction="row" spacing={0.5} alignItems="center">
                         <Typography component="span" variant="h4">
-                            {getEmail()}
+                            {getName()} {getSurname()}
                         </Typography>
                       </Stack>
-                      <Typography variant="subtitle2">Project Admin</Typography>
+                        <Typography variant="subtitle">{getEmail()}</Typography>
+                      <Typography variant="subtitle2">{getRole()}</Typography>
                     </Stack>
                     <OutlinedInput
                       sx={{ width: '100%', pr: 1, pl: 2, my: 2 }}
@@ -252,54 +287,39 @@ const ProfileSection = () => {
                           }
                         }}
                       >
-                        <ListItemButton
-                          sx={{ borderRadius: `${customization.borderRadius}px` }}
-                          selected={selectedIndex === 0}
-                          onClick={(event) => handleListItemClick(event, 0, '#')}
-                        >
-                          <ListItemIcon>
-                            <IconSettings stroke={1.5} size="1.3rem" />
-                          </ListItemIcon>
-                          <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} />
-                        </ListItemButton>
-                        <ListItemButton
-                          sx={{ borderRadius: `${customization.borderRadius}px` }}
-                          selected={selectedIndex === 1}
-                          onClick={(event) => handleListItemClick(event, 1, '#')}
-                        >
-                          <ListItemIcon>
-                            <IconUser stroke={1.5} size="1.3rem" />
-                          </ListItemIcon>
-                          <ListItemText
-                            primary={
-                              <Grid container spacing={1} justifyContent="space-between">
-                                <Grid item>
-                                  <Typography variant="body2">Social Profile</Typography>
-                                </Grid>
-                                <Grid item>
-                                  <Chip
-                                    label="02"
-                                    size="small"
-                                    sx={{
-                                      bgcolor: theme.palette.warning.dark,
-                                      color: theme.palette.background.default
-                                    }}
+                          {filteredItems.map((item) => (
+                              <ListItemButton
+                                  key={item.index}
+                                  sx={{ borderRadius: `${customization.borderRadius}px` }}
+                                  selected={selectedIndex === item.index}
+                                  onClick={(event) =>
+                                      item.onClick ? item.onClick() : handleListItemClick(event, item.index, item.route)
+                                  }
+                              >
+                                  <ListItemIcon>{item.icon}</ListItemIcon>
+                                  <ListItemText
+                                      primary={
+                                          <Grid container spacing={1} justifyContent="space-between">
+                                              <Grid item>
+                                                  <Typography variant="body2">{item.label}</Typography>
+                                              </Grid>
+                                              {item.chip && (
+                                                  <Grid item>
+                                                      <Chip
+                                                          label={item.chip}
+                                                          size="small"
+                                                          sx={{
+                                                              bgcolor: theme.palette.warning.dark,
+                                                              color: theme.palette.background.default
+                                                          }}
+                                                      />
+                                                  </Grid>
+                                              )}
+                                          </Grid>
+                                      }
                                   />
-                                </Grid>
-                              </Grid>
-                            }
-                          />
-                        </ListItemButton>
-                        <ListItemButton
-                          sx={{ borderRadius: `${customization.borderRadius}px` }}
-                          selected={selectedIndex === 4}
-                          onClick={handleLogout}
-                        >
-                          <ListItemIcon>
-                            <IconLogout stroke={1.5} size="1.3rem" />
-                          </ListItemIcon>
-                          <ListItemText primary={<Typography variant="body2">Logout</Typography>} />
-                        </ListItemButton>
+                              </ListItemButton>
+                          ))}
                       </List>
                     </Box>
                   </PerfectScrollbar>

@@ -5,6 +5,7 @@ import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 import RouteGuard from './RouteGuard';
 import {ROLE_ADMIN, ROLE_MEMBER, ROLE_UTENTE} from "../services/AuthConstants";
+import FetchData from "./FetchData";
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
@@ -24,7 +25,9 @@ const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 const MainRoutes = {
   path: '/',
   element: <RouteGuard allowedRoles={[ROLE_ADMIN, ROLE_UTENTE, ROLE_MEMBER]}>
+              <FetchData>
                 <MainLayout />
+              </FetchData>
             </RouteGuard>,
   children: [
     {

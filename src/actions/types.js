@@ -4,5 +4,8 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
 
+export const GET_PROFILE_SUCCESS = "UPDATE_PROFILE_SUCCESS";
+export const GET_PROFILE_FAIL = "UPDATE_PROFILE_FAIL";
+
 export const SET_MESSAGE = "SET_MESSAGE";
 export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
