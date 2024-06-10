@@ -6,11 +6,12 @@ import {
     LOGOUT,
 } from "../actions/types";
 
-const user = localStorage.getItem("token");
+//const user = localStorage.getItem("token");
+const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = user
-    ? { isLoggedIn: true, user }
-    : { isLoggedIn: false, user: null };
+    ? { isLoggedIn: true,hasRegistered: false, user }
+    : { isLoggedIn: false,hasRegistered: false, user: null };
 
 export default function (state = initialState, action) {
     const { type, payload } = action;
@@ -19,11 +20,13 @@ export default function (state = initialState, action) {
         case REGISTER_SUCCESS:
             return {
                 ...state,
+                hasRegistered: true,
                 isLoggedIn: false,
             };
         case REGISTER_FAIL:
             return {
                 ...state,
+                hasRegistered: false,
                 isLoggedIn: false,
             };
         case LOGIN_SUCCESS:

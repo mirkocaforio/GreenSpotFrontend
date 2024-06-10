@@ -1,6 +1,5 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate  } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -37,7 +36,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const AuthLogin = ({ ...others }) => {
-  let navigate = useNavigate();
+  //let navigate = useNavigate();
   const dispatch = useDispatch();
 
   const theme = useTheme();
@@ -45,7 +44,6 @@ const AuthLogin = ({ ...others }) => {
   const customization = useSelector((state) => state.customization);
   const [checked, setChecked] = useState(true);
 
-  const { message } = useSelector(state => state.message);
 
 
   const [showPassword, setShowPassword] = useState(false);

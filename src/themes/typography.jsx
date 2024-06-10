@@ -86,6 +86,28 @@ export default function themeTypography(theme) {
         top: 0
       }
     },
+  dateInput: {
+    marginTop: 1,
+    marginBottom: 1,
+    '& > label': {
+      top: 23,
+      left: 0,
+      color: theme.grey500,
+      '&[data-shrink="false"]': {
+        top: -5
+      }
+    },
+    '& > div > input': {
+      padding: '30.5px 14px 11.5px !important'
+    },
+    '& legend': {
+      display: 'none'
+    },
+    '& fieldset': {
+      top: 0
+    }
+  }
+  ,
     mainContent: {
       backgroundColor: theme.background,
       width: '100%',
