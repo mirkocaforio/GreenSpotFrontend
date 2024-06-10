@@ -11,6 +11,10 @@ export function ApiClient() {
 
 }
 
+export function isTokenExpired(message) {
+    return (message && message.startsWith('Invalid token: JWT expired'));
+}
+
 export function AuthHeader(){
     const token = JSON.parse(localStorage.getItem('user'));
 

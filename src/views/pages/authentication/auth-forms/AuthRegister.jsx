@@ -74,7 +74,7 @@ const AuthRegister = ({ ...others }) => {
     return dispatch(register(
         values.name,
         values.surname,
-        values.birthDate+"T00:00:00",
+        values.birthDate,
         values.city,
         values.address,
         values.phone,
@@ -167,6 +167,7 @@ const AuthRegister = ({ ...others }) => {
               handleBlur,
               handleChange,
               handleSubmit,
+                setValues,
               isSubmitting,
               touched,
               values }) => (
@@ -216,11 +217,12 @@ const AuthRegister = ({ ...others }) => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                             id={"outlined-adornment-date-register"}
+                            name="birthDate"
                             onChange={(data) => {
-                                const formattedDate = dayjs(data).format('DD/MM/YY');
+                                const formattedDate = dayjs(data).format('YYYY-MM-DDTHH:mm:ss');
                                 setDate(data);
-                                handleChange({target: {name: "birthDate", value: formattedDate}});
-                                console.log(formattedDate);}}
+                                handleChange({target: {name: 'birthDate', value: formattedDate}});
+                            }}
                             label={"Date of Birth"}
                             inputFormat="DD/MM/YYYY"
                             value={date}
