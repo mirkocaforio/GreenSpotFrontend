@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -34,13 +33,14 @@ import Transitions from 'ui-component/extended/Transitions';
 //import UpgradePlanCard from './UpgradePlanCard';
 import User1 from 'assets/images/users/user-round.svg';
 import {logout} from "../../../../actions/auth";
-import {LOGIN_PATH} from "../../../../services/AuthConstants";
+import {LOGIN_PATH} from "../../../../config";
 import logoutItem from "./profile-menu-items/logout";
 
 // assets
 import {IconSearch, IconSettings} from '@tabler/icons-react';
 import accountSettingsItem from "./profile-menu-items/accountSettings.";
 import socialProfileItem from "./profile-menu-items/socialProfile";
+import AvatarPic from "../../../../ui-component/AvatarPic";
 
 // ==============================|| PROFILE MENU ||============================== //
 
@@ -68,7 +68,6 @@ const ProfileSection = () => {
   const handleLogout = async () => {
     dispatch(logout());
     navigate(LOGIN_PATH);
-    window.location.reload();
   };
 
   const getEmail = () => {
@@ -106,35 +105,6 @@ const ProfileSection = () => {
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
-
-    function stringToColor(string) {
-        let hash = 0;
-        let i;
-
-        /* eslint-disable no-bitwise */
-        for (i = 0; i < string.length; i += 1) {
-            hash = string.charCodeAt(i) + ((hash << 5) - hash);
-        }
-
-        let color = '#';
-
-        for (i = 0; i < 3; i += 1) {
-            const value = (hash >> (i * 8)) & 0xff;
-            color += `00${value.toString(16)}`.slice(-2);
-        }
-        /* eslint-enable no-bitwise */
-
-        return color;
-    }
-
-    function stringAvatar(name) {
-        return {
-            sx: {
-                bgcolor: stringToColor(name),
-            },
-            children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-        };
-    }
 
   const prevOpen = useRef(open);
   useEffect(() => {
@@ -183,18 +153,7 @@ const ProfileSection = () => {
           }
         }}
         icon={
-        <Avatar
-          sx={{
-              ...theme.typography.mediumAvatar,
-              margin: '8px 0 8px 8px !important',
-              cursor: 'pointer'
-         }}
-        ref={anchorRef}
-        aria-controls={open ? 'menu-list-grow' : undefined}
-        aria-haspopup="true"
-        color="inherit"
-        {...stringAvatar(`${getName()} ${getSurname()}`)}
-        />
+            <AvatarPic open={open} anchorRef={anchorRef}  />
         }
         label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main} />}
         variant="outlined"

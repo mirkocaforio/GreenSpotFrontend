@@ -23,6 +23,7 @@ import Chip from 'ui-component/extended/Chip';
 // assets
 import { IconBrandTelegram, IconBuildingStore, IconMailbox, IconPhoto } from '@tabler/icons-react';
 import User1 from 'assets/images/users/user-round.svg';
+import AvatarPic from "../../../../ui-component/AvatarPic";
 
 const ListItemWrapper = ({ children }) => {
   return (
@@ -99,7 +100,7 @@ const NotificationList = () => {
       <ListItemWrapper>
         <ListItem alignItems="center">
           <ListItemAvatar>
-            <Avatar alt="John Doe" src={User1} />
+            <AvatarPic/>
           </ListItemAvatar>
           <ListItemText primary="John Doe" />
           <ListItemSecondaryAction>

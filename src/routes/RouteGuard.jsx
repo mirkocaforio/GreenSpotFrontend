@@ -1,7 +1,7 @@
 
 import {useIsAuthenticated, useAuthorization} from "../hooks/useAuthorization";
 import {Navigate} from "react-router-dom";
-import {LOGIN_PATH} from "../services/AuthConstants";
+import {LOGIN_PATH} from "../config";
 import PropTypes from "prop-types";
 
 

@@ -42,7 +42,7 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 
 // ==============================|| DASHBOARD - TOTAL INCOME LIGHT CARD ||============================== //
 
-const TotalIncomeLightCard = ({ isLoading, total, icon, label }) => {
+const TotalIncomeLightCard = ({ isLoading, total, title, icon, label }) => {
   const theme = useTheme();
 
   return (
@@ -69,7 +69,7 @@ const TotalIncomeLightCard = ({ isLoading, total, icon, label }) => {
                 </ListItemAvatar>
                 <ListItemText
                   sx={{ py: 0, mt: 0.45, mb: 0.45 }}
-                  primary={<Typography variant="h4">${total}k</Typography>}
+                  primary={ total ? (<Typography variant="h4">${total}k</Typography>) : (<Typography variant="h4">{title}</Typography>)}
                   secondary={
                     <Typography variant="subtitle2" sx={{ color: 'grey.500', mt: 0.5 }}>
                       {label}

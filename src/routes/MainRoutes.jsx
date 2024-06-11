@@ -4,7 +4,7 @@ import { lazy } from 'react';
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 import RouteGuard from './RouteGuard';
-import {ROLE_ADMIN, ROLE_MEMBER, ROLE_UTENTE} from "../services/AuthConstants";
+import {ROLE_ADMIN, ROLE_MEMBER, ROLE_UTENTE} from "../config";
 import FetchData from "./FetchData";
 
 // dashboard routing

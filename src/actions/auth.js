@@ -54,7 +54,7 @@ export const register = (name,surname,date,city,address,tel,email, password) => 
                 payload: response,
             });
 
-            logout();
+            dispatch(logout());
             return Promise.resolve();
         },
         (error) => {

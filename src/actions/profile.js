@@ -36,13 +36,15 @@ export const getProfileData = () => (dispatch) => {
                     payload: "Session expired. Please login again.",
                 });
 
-                logout();
+                dispatch(logout());
+            } else {
+                dispatch({
+                    type: SET_MESSAGE,
+                    payload: message,
+                });
             }
 
-            dispatch({
-                type: SET_MESSAGE,
-                payload: message,
-            });
+
 
             return Promise.reject(message);
         }

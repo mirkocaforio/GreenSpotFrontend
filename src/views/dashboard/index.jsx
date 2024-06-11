@@ -9,13 +9,14 @@ import PopularCard from './PopularCard';
 import TotalOrderLineChartCard from './TotalOrderLineChartCard';
 import TotalIncomeDarkCard from './TotalIncomeDarkCard';
 import TotalIncomeLightCard from './TotalIncomeLightCard';
-import TotalGrowthBarChart from './TotalGrowthBarChart';
+//import TotalGrowthBarChart from './TotalGrowthBarChart';
 
 import { gridSpacing } from 'store/constant';
 
 // assets
 import StorefrontTwoToneIcon from '@mui/icons-material/StorefrontTwoTone';
 import {useSelector} from "react-redux";
+import TotalIncomeCard from "../../ui-component/cards/Skeleton/TotalIncomeCard";
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
@@ -25,8 +26,18 @@ const Dashboard = () => {
   const {user} = useSelector(state => state.auth);
 
   useEffect(() => {
-    setLoading(false);
-  }, []);
+    if ( profile === null) {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+        },1000);
+    } else {
+      setLoading(false);
+    }
+
+    return () => setLoading(true);
+
+  }, [profile]);
 
   return (
     <Grid container spacing={gridSpacing}>
@@ -41,7 +52,7 @@ const Dashboard = () => {
           <Grid item lg={4} md={12} sm={12} xs={12}>
             <Grid container spacing={gridSpacing}>
               <Grid item sm={6} xs={12} md={6} lg={12}>
-                <TotalIncomeDarkCard isLoading={isLoading} />
+                <TotalIncomeDarkCard isLoading={isLoading} value={"$230K"} text={"Total income"}/>
               </Grid>
               <Grid item sm={6} xs={12} md={6} lg={12}>
                 <TotalIncomeLightCard
@@ -57,19 +68,24 @@ const Dashboard = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12}>
+      { !isLoading ? (<Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
-          <Grid item xs={12} md={8}>
-            {Object.entries(profile).map(([key, value]) => (
-                <p key={key}>{`${key}: ${value}`}</p>
-            ))}
-            <p>{user.token}</p>
+
+          {Object.entries(profile).map(([key, value]) => (
+              <Grid item key={key} sm={6} xs={12} md={6} lg={12}>
+                <TotalIncomeDarkCard isLoading={isLoading} value={key} text={value} />
+              </Grid>
+          ))}
+          <Grid item  xs={12} >
+            <TotalIncomeLightCard isLoading={isLoading} title={"TOKEN"} label={user.token} />
           </Grid>
+
           <Grid item xs={12} md={4}>
             <PopularCard isLoading={isLoading} />
           </Grid>
         </Grid>
-      </Grid>
+      </Grid>) : (<Grid item xs={12}><TotalIncomeCard /></Grid>)}
+
     </Grid>
   );
 };

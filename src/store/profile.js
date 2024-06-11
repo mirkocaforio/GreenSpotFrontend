@@ -1,4 +1,4 @@
-import {GET_PROFILE_SUCCESS, GET_PROFILE_FAIL} from '../actions/types';
+import {GET_PROFILE_SUCCESS, GET_PROFILE_FAIL, LOGOUT} from '../actions/types';
 
 const profile = JSON.parse(localStorage.getItem("profile"));
 
@@ -16,6 +16,11 @@ export default function (state = initialState, action) {
                 profile: payload.profile,
             };
         case GET_PROFILE_FAIL:
+            return {
+                ...state,
+                profile: null,
+            };
+        case LOGOUT:
             return {
                 ...state,
                 profile: null,

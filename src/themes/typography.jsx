@@ -101,11 +101,14 @@ export default function themeTypography(theme) {
       padding: '30.5px 14px 11.5px !important'
     },
     '& .css-phng8t-MuiInputBase-input-MuiOutlinedInput-input': {
-      padding: '30.5px 14px 11.5px !important'
+      padding: '30.5px 14px 11.5px !important' // Padding del campo DatePicker
     }
     ,
     '& .MuiInputLabel-outlined.MuiInputLabel-shrink': {
-      transform: 'translate(14px, 13px) scale(0.75)',
+      transform: 'translate(14px, 10px) scale(0.75)', // Transform del label interno a Datepicker quando è shrinkato
+    },
+    '& .css-1u3bzj6-MuiFormControl-root-MuiTextField-root > label':{
+      padding: '5px 0px 0px 0px !important' // Posizione label all'interno del campo DatePicker
     }
     ,
     '& legend': {
@@ -152,7 +155,8 @@ export default function themeTypography(theme) {
     mediumAvatar: {
       width: '34px',
       height: '34px',
-      fontSize: '1.2rem'
+      fontSize: '1.2rem',
+      color: theme.lightTextPrimary,
     },
     largeAvatar: {
       width: '44px',

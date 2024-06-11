@@ -2,7 +2,7 @@
 
 import {AuthHeader, ApiClient, CurrentUser} from "./AuthUtils";
 import {ProfileModel} from "./ProfileModel";
-import {ROLE_MEMBER} from "./AuthConstants";
+import {ROLE_MEMBER} from "../config";
 
 export const updateProfile = (name,surname,date,city,address,tel,email) => {
     const params = AuthHeader();

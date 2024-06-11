@@ -13,7 +13,7 @@ import AuthCardWrapper from '../AuthCardWrapper';
 import AuthLogin from '../authentication/auth-forms/AuthLogin';
 import Logo from 'ui-component/Logo';
 import AuthFooter from 'ui-component/cards/AuthFooter';
-import { REGISTER_PATH } from "../../../services/AuthConstants";
+import { REGISTER_PATH } from "../../../config";
 
 // ================================|| AUTH3 - LOGIN ||================================ //
 

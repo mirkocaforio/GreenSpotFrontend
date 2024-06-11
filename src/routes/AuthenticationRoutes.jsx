@@ -3,7 +3,7 @@ import { lazy } from 'react';
 // project imports
 import Loadable from 'ui-component/Loadable';
 import MinimalLayout from 'layout/MinimalLayout';
-import {LOGIN_PATH, REGISTER_PATH} from "../services/AuthConstants";
+import {LOGIN_PATH, REGISTER_PATH} from "../config";
 import AuthGuard from "./AuthGuard";
 
 // login option 3 routing

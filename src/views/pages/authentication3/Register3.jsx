@@ -13,7 +13,7 @@ import AuthCardWrapper from '../AuthCardWrapper';
 import Logo from 'ui-component/Logo';
 import AuthRegister from '../authentication/auth-forms/AuthRegister';
 import AuthFooter from 'ui-component/cards/AuthFooter';
-import { LOGIN_PATH } from "../../../services/AuthConstants";
+import { LOGIN_PATH } from "../../../config";
 
 // assets
 
