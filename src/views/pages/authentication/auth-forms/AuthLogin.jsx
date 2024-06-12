@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -18,7 +19,6 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
-import {Alert} from '@mui/material'
 
 // third party
 import * as Yup from 'yup';
@@ -27,10 +27,13 @@ import { Formik } from 'formik';
 // project imports
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import { login } from '../../../../actions/auth';
+import {RECOVERY_PATH} from "../../../../config";
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import AlertBoxMsg from "../../../../ui-component/form/AlertBoxMsg";
+
 
 
 // ============================|| FIREBASE - LOGIN ||============================ //
@@ -43,8 +46,6 @@ const AuthLogin = ({ ...others }) => {
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const customization = useSelector((state) => state.customization);
   const [checked, setChecked] = useState(true);
-
-  const {message} = useSelector((state) => state.message);
 
 
   const [showPassword, setShowPassword] = useState(false);
@@ -63,8 +64,8 @@ const AuthLogin = ({ ...others }) => {
             //window.location.reload();
             return Promise.resolve();
         },
-        (error) => {
-            return Promise.reject(error);
+        () => {
+            return Promise.reject();
         }
     );
   };
@@ -121,12 +122,11 @@ const AuthLogin = ({ ...others }) => {
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
           password: Yup.string().max(255).required('Password is required')
         })}
-       onSubmit={(values, {setSubmitting, setErrors }) => {
+       onSubmit={(values, {setSubmitting }) => {
            setSubmitting(true);
            handleLogin(values).then(() => {
                setSubmitting(false);
-           }).catch((error) => {
-               setErrors({ submit: error });
+           }).catch(() => {
                setSubmitting(false);
            });
 
@@ -140,7 +140,7 @@ const AuthLogin = ({ ...others }) => {
               values }) => (
           <form noValidate onSubmit={handleSubmit} {...others}>
             <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
-              <InputLabel htmlFor="outlined-adornment-email-login">Email Address / Username</InputLabel>
+              <InputLabel htmlFor="outlined-adornment-email-login">Email Address</InputLabel>
               <OutlinedInput
                 id="outlined-adornment-email-login"
                 type="email"
@@ -196,22 +196,12 @@ const AuthLogin = ({ ...others }) => {
                 }
                 label="Remember me"
               />
-              <Typography variant="subtitle1" color="secondary" sx={{ textDecoration: 'none', cursor: 'pointer' }}>
+              <Typography component={Link} to={RECOVERY_PATH} variant="subtitle1" color="secondary" sx={{ textDecoration: 'none', cursor: 'pointer' }}>
                 Forgot Password?
               </Typography>
             </Stack>
 
-              {errors.submit && (
-                  <Box sx={{ mt: 3 }}>
-                      <Alert severity="error">{errors.submit}</Alert>
-                  </Box>
-              )}
-
-              {message && message.startsWith("Session expired") && (
-                  <Box sx={{ mt: 3 }}>
-                      <Alert severity="warning">{message}</Alert>
-                  </Box>
-              )}
+              <AlertBoxMsg location="login"/>
 
             <Box sx={{ mt: 2 }}>
               <AnimateButton>

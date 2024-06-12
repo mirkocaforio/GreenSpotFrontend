@@ -68,6 +68,38 @@ const register = (name,surname,date,city,address,tel,email, password) => {
 
 }
 
+const requestRecovery = (email) => {
+    const params = {email: email};
+    const body = {};
+    const additionalParams = {};
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1UsersRecoverGet(params, body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+}
+
+
+const resetPassword = (recoverId, password) => {
+    const params = {requestId: recoverId};
+    const body = {newPassword: password};
+    const additionalParams = {};
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1UsersRecoverRequestIdPost(params, body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+
+}
+
 const logout = () => {
     localStorage.removeItem('user');
 }
@@ -76,5 +108,7 @@ const logout = () => {
 export default {
     login,
     logout,
-    register
+    register,
+    requestRecovery,
+    resetPassword
 };

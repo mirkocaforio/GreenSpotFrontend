@@ -389,6 +389,42 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.apiV1UsersProfileDisableProfileEmailPut = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['profileEmail', 'Authorization'], ['body']);
+        
+        var apiV1UsersProfileDisableProfileEmailPutRequest = {
+            verb: 'put'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/users/profile/disable/{profileEmail}').expand(apiGateway.core.utils.parseParametersToObject(params, ['profileEmail', ])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1UsersProfileDisableProfileEmailPutRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1UsersProfileDisableProfileEmailOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1UsersProfileDisableProfileEmailOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/users/profile/disable/{profileEmail}').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1UsersProfileDisableProfileEmailOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.apiV1UsersProfileEnableOptions = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -407,6 +443,60 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.apiV1UsersProfileEnableProfileEmailPut = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['profileEmail', 'Authorization'], ['body']);
+        
+        var apiV1UsersProfileEnableProfileEmailPutRequest = {
+            verb: 'put'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/users/profile/enable/{profileEmail}').expand(apiGateway.core.utils.parseParametersToObject(params, ['profileEmail', ])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1UsersProfileEnableProfileEmailPutRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1UsersProfileEnableProfileEmailOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1UsersProfileEnableProfileEmailOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/users/profile/enable/{profileEmail}').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1UsersProfileEnableProfileEmailOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1UsersProfileFindGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'role', 'isEnabled', 'phoneNumber', 'email', 'name', 'residenceCity', 'residenceAddress', 'birthDate', 'surname', 'fiscalCode', 'registrationDate'], ['body']);
+        
+        var apiV1UsersProfileFindGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/users/profile/find').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['role', 'isEnabled', 'phoneNumber', 'email', 'name', 'residenceCity', 'residenceAddress', 'birthDate', 'surname', 'fiscalCode', 'registrationDate']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1UsersProfileFindGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.apiV1UsersProfileFindOptions = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -422,6 +512,24 @@ apigClientFactory.newClient = function (config) {
         
         
         return apiGatewayClient.makeRequest(apiV1UsersProfileFindOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1UsersProfileFindAllGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization'], ['body']);
+        
+        var apiV1UsersProfileFindAllGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/users/profile/find/all').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1UsersProfileFindAllGetRequest, authType, additionalParams, config.apiKey);
     };
     
     
@@ -518,11 +626,11 @@ apigClientFactory.newClient = function (config) {
     apigClient.apiV1UsersRecoverRequestIdPost = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['requestId'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['requestId', 'body'], ['body']);
         
         var apiV1UsersRecoverRequestIdPostRequest = {
             verb: 'post'.toUpperCase(),
-            path: pathComponent + uritemplate('/api/v1/users/recover/{requestId}').expand(apiGateway.core.utils.parseParametersToObject(params, ['requestId'])),
+            path: pathComponent + uritemplate('/api/v1/users/recover/{requestId}').expand(apiGateway.core.utils.parseParametersToObject(params, ['requestId', ])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
@@ -530,6 +638,24 @@ apigClientFactory.newClient = function (config) {
         
         
         return apiGatewayClient.makeRequest(apiV1UsersRecoverRequestIdPostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1UsersRecoverRequestIdOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1UsersRecoverRequestIdOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/users/recover/{requestId}').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1UsersRecoverRequestIdOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
     

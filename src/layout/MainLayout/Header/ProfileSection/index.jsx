@@ -31,14 +31,14 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import MainCard from 'ui-component/cards/MainCard';
 import Transitions from 'ui-component/extended/Transitions';
 //import UpgradePlanCard from './UpgradePlanCard';
-import User1 from 'assets/images/users/user-round.svg';
+//import User1 from 'assets/images/users/user-round.svg';
 import {logout} from "../../../../actions/auth";
 import {LOGIN_PATH} from "../../../../config";
 import logoutItem from "./profile-menu-items/logout";
 
 // assets
 import {IconSearch, IconSettings} from '@tabler/icons-react';
-import accountSettingsItem from "./profile-menu-items/accountSettings.";
+import accountSettingsItem from "./profile-menu-items/accountSettings";
 import socialProfileItem from "./profile-menu-items/socialProfile";
 import AvatarPic from "../../../../ui-component/AvatarPic";
 
@@ -48,6 +48,7 @@ const ProfileSection = () => {
   const theme = useTheme();
   const customization = useSelector((state) => state.customization);
 
+  const [isLoading, setLoading] = useState(true);
   const { profile } = useSelector((state) => state.profile);
   const navigate = useNavigate();
 
@@ -114,6 +115,20 @@ const ProfileSection = () => {
 
     prevOpen.current = open;
   }, [open]);
+  
+  useEffect(() => {
+
+    if (profile) {
+      setLoading(false);
+    } else {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+
+        }, 1000);
+    }
+
+  },[profile]);
 
   useEffect(() => {
         const allItems = [
@@ -188,13 +203,21 @@ const ProfileSection = () => {
                 <MainCard border={false} elevation={16} content={false} boxShadow shadow={theme.shadows[16]}>
                   <Box sx={{ p: 2, pb: 0 }}>
                     <Stack>
+                        { !isLoading
+                            ? (<>
                       <Stack direction="row" spacing={0.5} alignItems="center">
+
                         <Typography component="span" variant="h4">
                             {getName()} {getSurname()}
                         </Typography>
                       </Stack>
                         <Typography variant="subtitle">{getEmail()}</Typography>
-                      <Typography variant="subtitle2">{getRole()}</Typography>
+                       <Typography variant="subtitle2">{getRole()}</Typography>
+                        </>)
+                            : (<Typography component="span" variant="h4">
+                           User
+                        </Typography>
+                            )}
                     </Stack>
                     <OutlinedInput
                       sx={{ width: '100%', pr: 1, pl: 2, my: 2 }}

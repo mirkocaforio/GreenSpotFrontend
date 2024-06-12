@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -31,12 +31,13 @@ import {register} from "../../../../actions/auth";
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import {Alert} from "@mui/material";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import TextField from "@mui/material/TextField";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {LocalizationProvider} from "@mui/x-date-pickers";
 import dayjs from "dayjs";
+import {LOGIN_PATH} from "../../../../config";
+import AlertBoxMsg from "../../../../ui-component/form/AlertBoxMsg";
 
 
 // ===========================|| FIREBASE - REGISTER ||=========================== //
@@ -56,7 +57,7 @@ const AuthRegister = ({ ...others }) => {
 
   const handleSuccess = () => {
         setTimeout(() => {
-            navigate('/login', { replace: true });
+            navigate(LOGIN_PATH, { replace: true });
         }, 1500);
     }
 
@@ -94,10 +95,6 @@ const AuthRegister = ({ ...others }) => {
     setStrength(temp);
     setLevel(strengthColor(temp));
   };
-
-  useEffect(() => {
-    changePassword('123456');
-  }, []);
 
   return (
     <>
@@ -152,14 +149,12 @@ const AuthRegister = ({ ...others }) => {
             surname: Yup.string().max(255).required('First Name is required'),
             phone: Yup.string().matches(/^[0-9]+$/, 'Must be only digits').min(10, 'Must be exactly 10 digits').max(10, 'Must be exactly 10 digits')
         })}
-       onSubmit={(values,{setSubmitting, setErrors }) => {
+       onSubmit={(values,{setSubmitting }) => {
            setSubmitting(true);
            handleRegister(values).then(() => {
                setSubmitting(false);
-               setErrors({ success: 'Registration successful' });
                handleSuccess();
-            }).catch((error) => {
-                setErrors({ submit: error });
+            }).catch(() => {
                 setSubmitting(false);
             });
        }}>
@@ -167,7 +162,6 @@ const AuthRegister = ({ ...others }) => {
               handleBlur,
               handleChange,
               handleSubmit,
-                setValues,
               isSubmitting,
               touched,
               values }) => (
@@ -387,17 +381,7 @@ const AuthRegister = ({ ...others }) => {
                 />
               </Grid>
             </Grid>
-                {errors.submit && typeof errors.submit === 'string' && (
-                  <Box sx={{ mt: 3 }}>
-                      <Alert severity="error">{errors.submit}</Alert>
-                  </Box>
-                )}
-
-              {errors.success && typeof errors.success === 'string' && (
-                  <Box sx={{ mt: 3 }}>
-                      <Alert severity="success">{errors.success}</Alert>
-                  </Box>
-              )}
+                <AlertBoxMsg location="register"/>
 
             <Box sx={{ mt: 2 }}>
               <AnimateButton>

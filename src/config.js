@@ -9,12 +9,18 @@ const config = {
 
 export default config;
 
+export const MSG_SUCCESS = "success";
+export const MSG_ERROR = "error";
+export const MSG_INFO = "info";
+export const MSG_WARNING = "warning";
+
 export const ROLE_ADMIN = "ADMIN";
 export const ROLE_UTENTE = "UTENTE";
 export const ROLE_MEMBER = "MEMBRO";
 
 export const LOGIN_PATH = "/login";
 export const REGISTER_PATH = "/register";
+export const RECOVERY_PATH = "/recover";
 
 export const HOME_PATH = "/home";
 

@@ -1,33 +1,21 @@
+
+//mui
 import Avatar from "@mui/material/Avatar";
 import {useTheme} from "@mui/material/styles";
+
+//react
 import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
+
+//project imports
 import {useEffect, useState} from "react";
+import {stringToColor} from "../utils/random-color";
 
 export default function AvatarPic({anchorRef,open}) {
     const theme = useTheme();
     const {profile} = useSelector((state) => state.profile);
     const [loading, setLoading] = useState(true);
 
-    const stringToColor = (string) => {
-        let hash = 0;
-        let i;
-
-        /* eslint-disable no-bitwise */
-        for (i = 0; i < string.length; i += 1) {
-            hash = string.charCodeAt(i) + ((hash << 5) - hash);
-        }
-
-        let color = '#';
-
-        for (i = 0; i < 3; i += 1) {
-            const value = (hash >> (i * 13)) & 0xff;
-            color += `00${value.toString(16)}`.slice(-2);
-        }
-        /* eslint-enable no-bitwise */
-
-        return color;
-    }
 
     useEffect(() => {
         if (profile === null) {
