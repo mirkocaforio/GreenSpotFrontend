@@ -26,13 +26,10 @@ const Dashboard = () => {
   const {user} = useSelector(state => state.auth);
 
   useEffect(() => {
-    if ( profile === null) {
+    if ( profile === null || profile === undefined) {
         setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-        },1000);
     } else {
-      setLoading(false);
+        setLoading(false);
     }
 
     return () => setLoading(true);

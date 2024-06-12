@@ -121,11 +121,7 @@ const ProfileSection = () => {
     if (profile) {
       setLoading(false);
     } else {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-
-        }, 1000);
+      setLoading(true);
     }
 
   },[profile]);

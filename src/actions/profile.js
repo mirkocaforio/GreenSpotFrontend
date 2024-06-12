@@ -3,6 +3,7 @@ import {GET_PROFILE_SUCCESS, GET_PROFILE_FAIL, SET_MESSAGE} from './types';
 import ProfileService from '../services/ProfileService';
 import {isTokenExpired} from "../services/AuthUtils";
 import {logout} from "./auth";
+import {MSG_ERROR, MSG_WARNING} from "../config";
 
 
 export const getProfileData = () => (dispatch) => {
@@ -31,16 +32,22 @@ export const getProfileData = () => (dispatch) => {
 
             if ( isTokenExpired(message)){
                 console.log("Token expired");
+
                 dispatch({
                     type: SET_MESSAGE,
-                    payload: "Session expired. Please login again.",
+                    payload: {message: "Session expired. Please login again.",
+                            type: MSG_WARNING},
                 });
 
                 dispatch(logout());
             } else {
                 dispatch({
                     type: SET_MESSAGE,
-                    payload: message,
+                    payload: {
+                        message: message,
+                        type: MSG_ERROR,
+                        location: "profile"
+                    },
                 });
             }
 

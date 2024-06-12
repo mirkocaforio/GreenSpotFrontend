@@ -20,9 +20,6 @@ export default function AvatarPic({anchorRef,open}) {
     useEffect(() => {
         if (profile === null) {
             setLoading(true);
-            setTimeout(() => {
-                setLoading(false);
-            }, 1000);
         } else {
             setLoading(false);
         }
