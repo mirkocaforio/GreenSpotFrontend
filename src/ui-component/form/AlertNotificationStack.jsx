@@ -17,7 +17,14 @@ export default function AlertNotificationStack() {
 
     useEffect(() => {
         if(message){
-            enqueueSnackbar(message, { variant: type })
+            enqueueSnackbar(message,
+                {   variant: type,
+                    anchorOrigin:
+                        {
+                            vertical: 'bottom',
+                            horizontal: 'right'
+                        }
+                })
         }
         return () => {
             clear();

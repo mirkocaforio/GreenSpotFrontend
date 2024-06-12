@@ -19,7 +19,7 @@ import navigation from 'menu-items';
 
 // assets
 import { IconChevronRight } from '@tabler/icons-react';
-import AlertNotificationBox from "../../ui-component/form/AlertNotificationBox";
+import AlertNotificationStack from "../../ui-component/form/AlertNotificationStack";
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' && prop !== 'theme' })(({ theme, open }) => ({
   ...theme.typography.mainContent,
@@ -95,7 +95,7 @@ const MainLayout = () => {
         <Outlet />
       </Main>
       <Customization />
-      <AlertNotificationBox/>
+      <AlertNotificationStack/>
     </Box>
   );
 };
