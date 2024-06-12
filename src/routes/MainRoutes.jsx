@@ -4,8 +4,9 @@ import { lazy } from 'react';
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 import RouteGuard from './RouteGuard';
-import {ROLE_ADMIN, ROLE_MEMBER, ROLE_UTENTE, HOME_PATH} from "../config";
+import {ROLE_ADMIN, ROLE_MEMBER, ROLE_UTENTE, HOME_PATH, NOTIFICATION_DURATION} from "../config";
 import FetchData from "./FetchData";
+import {SnackbarProvider} from "notistack";
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
@@ -26,7 +27,9 @@ const MainRoutes = {
   path: '/',
   element: <RouteGuard allowedRoles={[ROLE_ADMIN, ROLE_UTENTE, ROLE_MEMBER]}>
               <FetchData>
-                <MainLayout />
+                <SnackbarProvider maxSnack={5} autoHideDuration={NOTIFICATION_DURATION}>
+                  <MainLayout />
+                </SnackbarProvider>
               </FetchData>
             </RouteGuard>,
   children: [

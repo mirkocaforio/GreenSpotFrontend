@@ -1,14 +1,20 @@
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
+import {Snackbar} from "@mui/material";
+import {useTheme} from "@mui/material/styles";
+import Fade from "@mui/material/Fade";
 
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import PropTypes from "prop-types";
+
 import {clearMessage} from "../../actions/message";
-import {Snackbar} from "@mui/material";
+import {NOTIFICATION_DURATION} from "../../config";
+
+
 
 export default function AlertNotificationBox({location}) {
-
+    const theme = useTheme();
     const {message, type, location: loc} = useSelector((state) => state.message);
     const [open, setOpen] = useState(false);
     const [arrived, setArrived] = useState(false);
@@ -31,28 +37,26 @@ export default function AlertNotificationBox({location}) {
 
 
     return <>
-        { location && arrived && loc === location // if a location is specified, show the message only if it matches
-            ? (<Snackbar open={open} autoHideDuration={6000} onClose={clear} anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}>
-                <Box sx={{width: '100%'}}>
-                    <Alert
-                        severity={type}
-                        variant="filled"
-                        onClose={clear}
-                        sx={{
-                            '&.MuiSnackbar-root': { top: 0, bottom: 'auto'},
-                        }}
-                    >{message}</Alert>
-                </Box>
-            </Snackbar>)
-            : arrived && location === undefined // if no location is specified, show the message anyway
-                ?(<Box sx={{width: '100%'}} anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}>
+        { arrived && ((location && loc === location) || location === undefined) // if a location is specified, show the message only if it matches
+            ? (<Box>
+                <Snackbar open={open}
+                          autoHideDuration={NOTIFICATION_DURATION}
+                          onClose={clear}
+                          anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
+                          TransitionComponent={Fade}
+                          sx={{
+                              zIndex: theme.zIndex.speedDial,
+                              position: 'fixed',
+                              borderRadius: 0,}}>
+
                     <Alert
                         severity={type}
                         variant="filled"
                         onClose={clear}
                     >{message}</Alert>
-                </Box>)
-                : (<></>)
+                </Snackbar>
+            </Box>)
+            : (<></>)
         }
     </>
 

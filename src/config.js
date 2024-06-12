@@ -24,4 +24,4 @@ export const RECOVERY_PATH = "/recover";
 
 export const HOME_PATH = "/home";
 
-
+export const NOTIFICATION_DURATION = 5000;
