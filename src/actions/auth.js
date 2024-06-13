@@ -8,7 +8,8 @@ import {
 } from "./types";
 
 import AuthService from "../services/AuthService";
-import {MSG_ERROR, MSG_SUCCESS} from "../config";
+import {MSG_ERROR, MSG_SUCCESS, MSG_WARNING} from "../config";
+import {isTokenExpired} from "../services/AuthUtils";
 
 export const login = (email, password, persist) => (dispatch) => {
     return AuthService.login(email, password, persist).then(
@@ -21,7 +22,7 @@ export const login = (email, password, persist) => (dispatch) => {
             dispatch({
                 type: SET_MESSAGE,
                 payload: {
-                    message: "Logged in!",
+                    message: "Welcome!",
                     type: MSG_SUCCESS,
                     location: "login"
                 },
@@ -162,17 +163,70 @@ export const resetPassword = (recoverId, password) => (dispatch) => {
                 error.message ||
                 error.toString();
 
+            if ( isTokenExpired(message)){
+                console.log("Token expired");
+
+                dispatch({
+                    type: SET_MESSAGE,
+                    payload: {message: "Session expired. Please login again.",
+                        type: MSG_WARNING},
+                });
+
+                dispatch(logout());
+            }else {
+                dispatch({
+                    type: SET_MESSAGE,
+                    payload: {
+                        message: message,
+                        type: MSG_ERROR,
+                        location: "reset-password"
+                    }
+                });
+            }
+
+            return Promise.reject(message);
+        }
+    );
+}
+
+export const changePassword = (oldPassword, newPassword) => (dispatch) => {
+    return AuthService.changePassword(oldPassword, newPassword).then(
+        (response) => {
+            dispatch({
+                type: SET_MESSAGE,
+                payload: {
+                    message:  response ? response.msg : "Password has been changed." ,
+                    type: MSG_SUCCESS,
+                    location: "change-password"
+                },
+            });
+
+            dispatch(logout());
+
+            return Promise.resolve();
+        },
+        (error) => {
+
+            const message =
+                (error.data && error.data.message) ||
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
             dispatch({
                 type: SET_MESSAGE,
                 payload: {message: message,
                           type: MSG_ERROR,
-                          location: "reset-password"
+                          location: "change-password"
                 }
             });
 
             return Promise.reject(message);
         }
     );
+
 }
 
 export const logout = () => (dispatch) => {

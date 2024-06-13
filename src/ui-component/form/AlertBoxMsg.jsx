@@ -26,18 +26,13 @@ export default function AlertBoxMsg({location}) {
 
 
     return <>
-        { location && arrived && loc === location // if a location is specified, show the message only if it matches
+        { arrived && ((location && loc === location) || location === undefined) // if a location is specified, show the message only if it matches
         ? (<Box sx={{width: '100%'}}>
             <Alert
                 severity={type}
                 onClose={clear}>{message}</Alert>
            </Box>)
-        : arrived && location === undefined // if no location is specified, show the message anyway
-            ?(<Box sx={{width: '100%'}}>
-                <Alert severity={type}
-                       onClose={clear}>{message}</Alert>
-             </Box>)
-            : (<></>)
+        : (<></>)
         }
     </>
 

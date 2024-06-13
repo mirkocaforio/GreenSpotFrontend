@@ -167,7 +167,7 @@ const ProfileSection = () => {
           }
         }}
         icon={
-            <AvatarPic open={open} anchorRef={anchorRef}  />
+            <AvatarPic open={open} anchorRef={anchorRef} type="profile-pic" size="sm"/>
         }
         label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main} />}
         variant="outlined"

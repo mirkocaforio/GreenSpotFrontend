@@ -8,7 +8,7 @@ const accountSettingsItem = ({onClick }) => {
         index: 0,
         label: 'Account Settings',
         icon: <IconSettings stroke={1.5} size="1.3rem"/>,
-        route: '#',
+        route: '/profile',
         onCick: onClick
     }
 }

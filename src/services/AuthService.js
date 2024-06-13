@@ -2,7 +2,7 @@
 
 
 
-import {ApiClient} from "./AuthUtils";
+import {ApiClient, AuthHeader} from "./AuthUtils";
 import {UserModel} from "./UserModel";
 import localStorage from "redux-persist/es/storage";
 import {updateProfile} from "./ProfileService";
@@ -100,6 +100,25 @@ const resetPassword = (recoverId, password) => {
 
 }
 
+const changePassword = (oldPassword, newPassword) => {
+    const params = AuthHeader();
+    const body = {
+        oldPassword: oldPassword,
+        newPassword: newPassword
+    };
+    const additionalParams = {};
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1UsersChangePasswordPost(params, body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+
+}
+
 const logout = () => {
     localStorage.removeItem('user');
 }
@@ -110,5 +129,6 @@ export default {
     logout,
     register,
     requestRecovery,
-    resetPassword
+    resetPassword,
+    changePassword
 };
