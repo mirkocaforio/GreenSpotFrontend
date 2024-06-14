@@ -29,13 +29,11 @@ export const updateProfile = (name,surname,date,city,address,tel,fiscalCode,emai
                 error.message ||
                 error.toString();
 
-            console.error(message);
             dispatch({
                 type: GET_PROFILE_FAIL,
             });
 
             if ( isTokenExpired(message)){
-                console.log("Token expired");
 
                 dispatch({
                     type: SET_MESSAGE,

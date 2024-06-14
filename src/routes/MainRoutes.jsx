@@ -105,7 +105,9 @@ const MainRoutes = {
     {
       path: 'wallet',
       element: <RouteGuard allowedRoles={[ROLE_MEMBER]}>
+                <FetchData type="wallet">
                   <WalletPage />
+                </FetchData>
               </RouteGuard>
     }
   ]

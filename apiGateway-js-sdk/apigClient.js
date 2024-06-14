@@ -766,6 +766,42 @@ apigClientFactory.newClient = function (config) {
         return apiGatewayClient.makeRequest(apiV1UsersUserEmailOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
+    
+    apigClient.apiV1WalletFindGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'email'], ['body']);
+        
+        var apiV1WalletFindGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/wallet/find').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['email']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1WalletFindGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1WalletFindOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1WalletFindOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/wallet/find').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1WalletFindOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
 
     return apigClient;
 };
