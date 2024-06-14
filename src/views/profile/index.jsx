@@ -16,6 +16,7 @@ const ProfilePage = () => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
     return (
     <MainCard>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import {useState} from "react";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -8,19 +7,25 @@ import dayjs from "dayjs";
 
 // ===========================|| FORM PICKER - DATE PICKER ||=========================== //
 
-const FormDatePicker = ({ handleChange, valueName, value, setValue }) => {
+const FormDatePicker = ({ label,handleBlur, handleChange, valueName, value, setValue, dataFormat, outputFormat }) => {
+
+    let format = dataFormat ? dataFormat : 'YYYY-MM-DD';
+    let output = outputFormat ? outputFormat : 'YYYY-MM-DDTHH:mm:ss';
 
     return (
         <>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                     id={"outlined-adornment-date-register"}
+                    name={valueName}
+                    onBlur={handleBlur}
                     onChange={(data) => {
-                        const formattedDate = dayjs(data).format('DD/MM/YY');
-                        setValue(data);
-                        handleChange({target: {name: {valueName}, value: formattedDate}});}}
-                    label={"Date of Birth"}
-                    inputFormat="DD/MM/YYYY"
+                        const formattedDate = dayjs(data).isValid() ? dayjs(data).format(output) : '';
+                        setValue && setValue(data);
+                        handleChange && handleChange({target: {name: valueName, value: formattedDate}});
+                    }}
+                    label={label}
+                    inputFormat={format}
                     value={value}
                     renderInput={(params) => <TextField {...params} variant="outlined" />}/>
             </LocalizationProvider>
@@ -29,10 +34,14 @@ const FormDatePicker = ({ handleChange, valueName, value, setValue }) => {
 }
 
 FormDatePicker.propTypes = {
+    label: PropTypes.string,
+    handleBlur: PropTypes.func,
     handleChange: PropTypes.func,
     valueName: PropTypes.string,
     value: PropTypes.string,
-    setValue: PropTypes.func
+    setValue: PropTypes.func,
+    dataFormat: PropTypes.string,
+    outputFormat: PropTypes.string
 }
 
 export default FormDatePicker;

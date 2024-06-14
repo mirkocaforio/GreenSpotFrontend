@@ -16,14 +16,13 @@ const TabList = ({content, value, handleChange}) => {
                 />
             case "content":
                 return <TabPanel key={"Panel"+item.value} value={item.value}>
-                    <item.tab />
+                    {item.tab}
                 </TabPanel>;
         }
     });
     return <>{ content === "content"
         ? (<TabContext value={value}>{tabItems}</TabContext>)
         : (<Tabs value={value} onChange={handleChange} aria-label="icon position profile tabs">{tabItems}</Tabs>) }</>;
-    //return <>{tabItems}</>;
 }
 
 TabList.propTypes = {

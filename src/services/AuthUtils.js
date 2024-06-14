@@ -24,6 +24,10 @@ export function CurrentUser() {
     return JSON.parse(localStorage.getItem('user'));
 }
 
+export function CurrentProfile() {
+    return JSON.parse(localStorage.getItem('profile'));
+}
+
 export function AuthHeader(){
     const token = JSON.parse(localStorage.getItem('user'));
 

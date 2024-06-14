@@ -1,12 +1,13 @@
 // ----- PROFILES MANAGEMENT ----- //
 
-import {AuthHeader, ApiClient, CurrentUser} from "./AuthUtils";
+import {AuthHeader, ApiClient, CurrentUser, CurrentProfile} from "./AuthUtils";
 import {ProfileModel} from "./ProfileModel";
-import {ROLE_MEMBER} from "../config";
 
-export const updateProfile = (name,surname,date,city,address,tel,email) => {
+export const updateProfile = (name,surname,date,city,address,tel,fiscalCode,email) => {
+    email = email ? email : CurrentUser().email;
+    let role = CurrentProfile().role;
     const params = AuthHeader();
-    const body = ProfileModel.setProfile(email,name,surname,date,city,address,tel, ROLE_MEMBER);
+    const body = ProfileModel.setProfile(email,name,surname,date,city,address,tel,fiscalCode,role);
     const additionalParams = {};
 
     let apigClient = ApiClient();

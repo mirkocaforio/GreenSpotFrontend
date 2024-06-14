@@ -18,7 +18,7 @@ export default function (state = initialState, action) {
         case GET_PROFILE_FAIL:
             return {
                 ...state,
-                profile: null,
+                profile: profile ? profile : null,
             };
         case LOGOUT:
             return {

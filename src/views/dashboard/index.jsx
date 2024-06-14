@@ -67,16 +67,9 @@ const Dashboard = () => {
       </Grid>
       { !isLoading ? (<Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
-
-          {Object.entries(profile).map(([key, value]) => (
-              <Grid item key={key} sm={6} xs={12} md={6} lg={12}>
-                <TotalIncomeDarkCard isLoading={isLoading} value={key} text={value} />
-              </Grid>
-          ))}
           <Grid item  xs={12} >
             <TotalIncomeLightCard isLoading={isLoading} title={"TOKEN"} label={user.token} />
           </Grid>
-
           <Grid item xs={12} md={4}>
             <PopularCard isLoading={isLoading} />
           </Grid>

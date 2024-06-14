@@ -84,7 +84,7 @@ export default function AvatarPic({anchorRef,open,size,type}) {
                 aria-controls={open ? 'menu-list-grow' : undefined}
                 aria-haspopup="true"
                 color="inherit"
-                {...stringAvatar(`${profile.name} ${profile.surname}`)}
+                {...stringAvatar(`${profile ? profile.name : "User"} ${profile ? profile.surname : "User"}`)}
             />)
             : (<MuiAvatar aria-controls={open ? 'menu-list-grow' : undefined}
                        aria-haspopup="true"

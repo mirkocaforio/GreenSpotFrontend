@@ -1,6 +1,6 @@
 
 //react
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Formik} from "formik";
@@ -26,14 +26,11 @@ import { gridSpacing } from 'store/constant';
 import AlertBoxMsg from "../../../../ui-component/form/AlertBoxMsg";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import {strengthColor, strengthIndicator} from "../../../../utils/password-strength";
-import {LOGIN_PATH} from "../../../../config";
 import {changePassword} from "../../../../actions/auth";
 
 
 const SecurityTab = () => {
-    let navigate = useNavigate();
     const dispatch = useDispatch();
-
 
     const theme = useTheme();
     //const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
@@ -194,7 +191,7 @@ const SecurityTab = () => {
 
                                     <Box sx={{ mt: 2 }}>
                                         <AnimateButton>
-                                            <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
+                                            <Button disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary">
                                                 Change Password
                                             </Button>
                                         </AnimateButton>

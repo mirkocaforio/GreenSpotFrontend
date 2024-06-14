@@ -212,12 +212,13 @@ const AuthRegister = ({ ...others }) => {
                 <DatePicker
                             id={"outlined-adornment-date-register"}
                             name="birthDate"
+                            onBlur={handleBlur}
                             onChange={(data) => {
                                 const formattedDate = dayjs(data).format('YYYY-MM-DDTHH:mm:ss');
                                 setDate(data);
                                 handleChange({target: {name: 'birthDate', value: formattedDate}});
                             }}
-                            label={"Date of Birth"}
+                            label={"Birthdate"}
                             inputFormat="DD/MM/YYYY"
                             value={date}
                             renderInput={(params) => <TextField {...params} variant="outlined" />}/>
