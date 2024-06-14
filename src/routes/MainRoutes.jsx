@@ -4,7 +4,7 @@ import { lazy } from 'react';
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 import RouteGuard from './RouteGuard';
-import {ROLE_ADMIN, ROLE_MEMBER, ROLE_UTENTE, HOME_PATH, NOTIFICATION_DURATION} from "../config";
+import { ROLE_MEMBER, HOME_PATH, NOTIFICATION_DURATION} from "../config";
 import FetchData from "./FetchData";
 import {SnackbarProvider} from "notistack";
 
@@ -16,6 +16,7 @@ const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')
 const ProfilePage = Loadable(lazy(() => import('views/profile')));
 const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
 const UtilsShadow = Loadable(lazy(() => import('views/utilities/Shadow')));
+const WalletPage = Loadable(lazy(() => import('views/wallet')));
 // const UtilsMaterialIcons = Loadable(lazy(() => import('views/utilities/MaterialIcons')));
 // const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons')));
 
@@ -26,7 +27,7 @@ const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 
 const MainRoutes = {
   path: '/',
-  element: <RouteGuard allowedRoles={[ROLE_ADMIN, ROLE_UTENTE, ROLE_MEMBER]}>
+  element: <RouteGuard>
               <FetchData>
                 <SnackbarProvider maxSnack={5} autoHideDuration={NOTIFICATION_DURATION}>
                   <MainLayout />
@@ -96,9 +97,16 @@ const MainRoutes = {
     {
       path: 'sample-page',
       element:<SamplePage />
-    },{
+    },
+    {
       path: 'profile',
       element: <ProfilePage />
+    },
+    {
+      path: 'wallet',
+      element: <RouteGuard allowedRoles={[ROLE_MEMBER]}>
+                  <WalletPage />
+              </RouteGuard>
     }
   ]
 };

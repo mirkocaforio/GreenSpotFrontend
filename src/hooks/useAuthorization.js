@@ -1,18 +1,19 @@
+import {CurrentProfile} from "../services/AuthUtils";
 import {useSelector} from "react-redux";
 
-export const useAuthorization = (allowedRoles) => {
-    const user = useSelector((state) => state.auth.user);
 
-    if (user === undefined || user === null) {
+export const useAuthorization = (allowedRoles) => {
+    const profile = CurrentProfile();
+
+    if (profile === undefined || profile === null) {
         return false;
     }
 
-    // DEBUG
-    if (!Object.keys(user).includes('role')) {
+    if (allowedRoles === undefined || allowedRoles === null) {
         return true;
     }
 
-    return allowedRoles.includes(user.role);
+    return allowedRoles.includes(profile.role);
 }
 
 export const useIsAuthenticated = () => {

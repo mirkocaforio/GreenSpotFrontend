@@ -18,14 +18,11 @@ import SkeletonEarningCard from 'ui-component/cards/Skeleton/EarningCard';
 import EarningIcon from 'assets/images/icons/earning.svg';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import GetAppTwoToneIcon from '@mui/icons-material/GetAppOutlined';
-import FileCopyTwoToneIcon from '@mui/icons-material/FileCopyOutlined';
-import PictureAsPdfTwoToneIcon from '@mui/icons-material/PictureAsPdfOutlined';
-import ArchiveTwoToneIcon from '@mui/icons-material/ArchiveOutlined';
+import {MonetizationOnOutlined, PriceCheck, ShoppingBasket} from "@mui/icons-material";
 
 // ===========================|| DASHBOARD DEFAULT - EARNING CARD ||=========================== //
 
-const EarningCard = ({ isLoading }) => {
+const EarningCard = ({ isLoading, title, value }) => {
   const theme = useTheme();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -124,16 +121,10 @@ const EarningCard = ({ isLoading }) => {
                             }}
                         >
                           <MenuItem onClick={handleClose}>
-                            <GetAppTwoToneIcon sx={{ mr: 1.75 }} /> Import Card
+                            <ShoppingBasket sx={{ mr: 1.75 }} /> Redeem
                           </MenuItem>
                           <MenuItem onClick={handleClose}>
-                            <FileCopyTwoToneIcon sx={{ mr: 1.75 }} /> Copy Data
-                          </MenuItem>
-                          <MenuItem onClick={handleClose}>
-                            <PictureAsPdfTwoToneIcon sx={{ mr: 1.75 }} /> Export
-                          </MenuItem>
-                          <MenuItem onClick={handleClose}>
-                            <ArchiveTwoToneIcon sx={{ mr: 1.75 }} /> Archive File
+                            <PriceCheck sx={{ mr: 1.75 }} /> Earn
                           </MenuItem>
                         </Menu>
                       </Grid>
@@ -142,7 +133,9 @@ const EarningCard = ({ isLoading }) => {
                   <Grid item>
                     <Grid container alignItems="center">
                       <Grid item>
-                        <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>$500.00</Typography>
+                        <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
+                          <MonetizationOnOutlined fontSize="medium"/> {value}
+                        </Typography>
                       </Grid>
                       <Grid item>
                         <Avatar
@@ -166,7 +159,7 @@ const EarningCard = ({ isLoading }) => {
                           color: 'secondary.200'
                         }}
                     >
-                      Total Earning
+                      {title}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -178,7 +171,9 @@ const EarningCard = ({ isLoading }) => {
 };
 
 EarningCard.propTypes = {
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  title: PropTypes.string,
+  value: PropTypes.number
 };
 
 export default EarningCard;
