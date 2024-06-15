@@ -51,9 +51,9 @@ const TransactionsCard = () => {
   const readableKeys = {
     id: 'ID',
     creationDate: 'Date',
+    transactionOwner: 'Owner',
     senderEmail: 'Sender',
     receiverEmail: 'Receiver',
-    transactionOwner: 'Owner',
     amount: 'Amount',
     description: 'Description',
   };
