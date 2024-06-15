@@ -89,7 +89,8 @@ export const getProfileData = () => (dispatch) => {
                 dispatch({
                     type: SET_MESSAGE,
                     payload: {message: "Session expired. Please login again.",
-                            type: MSG_WARNING},
+                            type: MSG_WARNING,
+                    location: "login"},
                 });
 
                 dispatch(logout());

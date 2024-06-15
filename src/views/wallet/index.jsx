@@ -12,7 +12,6 @@ import {getWallet} from "../../actions/wallet";
 
 const Wallet = () => {
 
-    const dispatch = useDispatch();
     const [isLoading, setLoading] = useState(true);
     const {wallet} = useSelector(state => state.wallet);
 
@@ -28,12 +27,11 @@ const Wallet = () => {
 
     return(
         <MainCard title="Wallet">
-            { !isLoading && (
             <Grid container spacing={gridSpacing}>
                 <Grid item xs={12}>
                     <Grid container spacing={gridSpacing}>
                         <Grid item xs={12} sm={6}>
-                            <EarningCard isLoading={isLoading} title="Credits" value={wallet.balance}/>
+                            <EarningCard isLoading={isLoading} title="Credits" value={wallet ? wallet.balance : 0}/>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                            <TimeEarningCard isLoading={isLoading} title="Total Earnings"/>
@@ -42,10 +40,10 @@ const Wallet = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <SubCard title="Recent Transactions">
-                        <TransactionsCard/>
+                        <TransactionsCard isLoading={isLoading}/>
                     </SubCard>
                 </Grid>
-            </Grid>)}
+            </Grid>
         </MainCard>
     );
 }

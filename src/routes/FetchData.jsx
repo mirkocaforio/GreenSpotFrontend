@@ -2,6 +2,7 @@ import {useDispatch} from "react-redux";
 import {getProfileData} from "../actions/profile";
 import {useEffect} from "react";
 import {getWallet} from "../actions/wallet";
+import {getProfileTransactions} from "../actions/transaction";
 
 
 
@@ -14,6 +15,9 @@ const FetchData = ({ children, type}) => {
             break;
         case "wallet":
             fetchData = getWallet;
+            break;
+        case "transactions":
+            fetchData = getProfileTransactions;
             break;
         default:
             fetchData = getProfileData;

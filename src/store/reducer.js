@@ -6,6 +6,7 @@ import auth from './auth';
 import message from "./message";
 import profile from "./profile";
 import wallet from "./wallet";
+import transaction from "./transaction";
 
 // ==============================|| COMBINE REDUCER ||============================== //
 
@@ -14,7 +15,8 @@ const reducer = combineReducers({
   auth,
   message,
   profile,
-  wallet
+  wallet,
+  transaction
 });
 
 export default reducer;

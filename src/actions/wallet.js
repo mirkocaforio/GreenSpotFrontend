@@ -34,7 +34,8 @@ export const getWallet = () =>  (dispatch) => {
                 dispatch({
                     type: SET_MESSAGE,
                     payload: {message: "Session expired. Please login again.",
-                        type: MSG_WARNING},
+                        type: MSG_WARNING,
+                    location: "login"},
                 });
 
                 dispatch(logout());
@@ -44,7 +45,6 @@ export const getWallet = () =>  (dispatch) => {
                     payload: {
                         message: message,
                         type: MSG_ERROR,
-                        location: "profile"
                     },
                 });
             }
