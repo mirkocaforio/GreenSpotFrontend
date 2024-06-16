@@ -6,7 +6,7 @@ import {
     LOGOUT,
 } from "../actions/types";
 
-//const user = localStorage.getItem("token");
+//const wallet = localStorage.getItem("token");
 const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = user

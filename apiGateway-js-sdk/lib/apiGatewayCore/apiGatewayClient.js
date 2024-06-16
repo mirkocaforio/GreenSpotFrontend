@@ -36,7 +36,7 @@ apiGateway.core.apiGatewayClientFactory.newClient = function (simpleHttpClientCo
             request.body = undefined;
         }
 
-        // If the user specified any additional headers or query params that may not have been modeled
+        // If the wallet specified any additional headers or query params that may not have been modeled
         // merge them into the appropriate request properties
         request.headers = apiGateway.core.utils.mergeInto(request.headers, additionalParams.headers);
         request.queryParams = apiGateway.core.utils.mergeInto(request.queryParams, additionalParams.queryParams);

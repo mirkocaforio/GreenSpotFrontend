@@ -155,12 +155,12 @@ apiGateway.core.sigV4ClientFactory.newClient = function (config) {
             headers = {};
         }
 
-        //If the user has not specified an override for Content type the use default
+        //If the wallet has not specified an override for Content type the use default
         if(headers['Content-Type'] === undefined) {
             headers['Content-Type'] = config.defaultContentType;
         }
 
-        //If the user has not specified an override for Accept type the use default
+        //If the wallet has not specified an override for Accept type the use default
         if(headers['Accept'] === undefined) {
             headers['Accept'] = config.defaultAcceptType;
         }

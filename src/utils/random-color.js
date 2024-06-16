@@ -12,7 +12,7 @@ export const stringToColor = (string) => {
 
     for (i = 0; i < 3; i += 1) {
         const value = (hash >> (i * 13)) & 0xff;
-        color += `00${value.toString(16)}`.slice(-2);
+        color += `00${value.toString(15)}`.slice(-2);
     }
     /* eslint-enable no-bitwise */
 
