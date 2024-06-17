@@ -3,7 +3,7 @@ For the JavaScript SDK to work your APIs need to support CORS. The Amazon API Ga
 The generated SDK depends on third-party libraries. Include all of the scripts in your webpage
 
     <script type="text/javascript" src="lib/axios/dist/axios.standalone.js"></script>
-    <script type="text/javascript" src="lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="lib/CryptoJS/rollups/crypto-js.js"></script>
     <script type="text/javascript" src="lib/CryptoJS/rollups/sha256.js"></script>
     <script type="text/javascript" src="lib/CryptoJS/components/hmac.js"></script>
     <script type="text/javascript" src="lib/CryptoJS/components/enc-base64.js"></script>
