@@ -119,6 +119,276 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.apiV1ResourceOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1ResourceOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1ResourceAvailableOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1ResourceAvailableOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/available').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceAvailableOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1ResourceAvailableIdResourcePut = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['idResource', 'Authorization'], ['body']);
+        
+        var apiV1ResourceAvailableIdResourcePutRequest = {
+            verb: 'put'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/available/{idResource}').expand(apiGateway.core.utils.parseParametersToObject(params, ['idResource', ])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceAvailableIdResourcePutRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1ResourceAvailableIdResourceOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1ResourceAvailableIdResourceOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/available/{idResource}').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceAvailableIdResourceOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1ResourceFindGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'memberEmail', 'greenEnergyType', 'kWh', 'name', 'region', 'type', 'city', 'from', 'to', 'country', 'isAvailable'], ['body']);
+        
+        var apiV1ResourceFindGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/find').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['memberEmail', 'greenEnergyType', 'kWh', 'name', 'region', 'type', 'city', 'from', 'to', 'country', 'isAvailable']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceFindGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1ResourceFindOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1ResourceFindOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/find').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceFindOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1ResourceFindAllGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization'], ['body']);
+        
+        var apiV1ResourceFindAllGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/find/all').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceFindAllGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1ResourceFindAllOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1ResourceFindAllOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/find/all').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceFindAllOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1ResourceInsertPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'body'], ['body']);
+        
+        var apiV1ResourceInsertPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/insert').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceInsertPostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1ResourceInsertOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1ResourceInsertOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/insert').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceInsertOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1ResourceUnavailableOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1ResourceUnavailableOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/unavailable').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceUnavailableOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1ResourceUnavailableIdResourcePut = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['idResource', 'Authorization'], ['body']);
+        
+        var apiV1ResourceUnavailableIdResourcePutRequest = {
+            verb: 'put'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/unavailable/{idResource}').expand(apiGateway.core.utils.parseParametersToObject(params, ['idResource', ])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceUnavailableIdResourcePutRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1ResourceUnavailableIdResourceOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1ResourceUnavailableIdResourceOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/unavailable/{idResource}').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceUnavailableIdResourceOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1ResourceUpdatePut = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'body'], ['body']);
+        
+        var apiV1ResourceUpdatePutRequest = {
+            verb: 'put'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/update').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceUpdatePutRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1ResourceUpdateOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1ResourceUpdateOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/update').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceUpdateOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.apiV1ScoresOptions = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
