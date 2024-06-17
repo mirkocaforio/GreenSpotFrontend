@@ -13,7 +13,7 @@ const analytics = {
             id: 'analytics',
             title: 'Analytics',
             type: 'item',
-            url: '/sample-page',
+            url: '/',
             icon: icons.IconDeviceAnalytics,
             breadcrumbs: false
         }

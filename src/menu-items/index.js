@@ -15,9 +15,9 @@ import store from "./store";
 //TODO: CAMBIARE MAN MANO TUTTI I LINK NEI VARI ITEMS
 
 const menuItems = {
-  userItems: [task, wallet, billing, analytics],
-  memberItems: [resource, reward, wallet, analytics],
-  adminItems: [profile, store, analytics, dashboard, pages, utilities, other]
+  userItems: [analytics,task, wallet, billing ],
+  memberItems: [analytics,resource, reward, wallet],
+  adminItems: [analytics,profile, store, dashboard, pages, utilities, other]
 };
 
 export default menuItems;

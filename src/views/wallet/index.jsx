@@ -40,7 +40,7 @@ const Wallet = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <SubCard title="Recent Transactions">
-                        <TransactionsCard isLoading={isLoading}/>
+                        <TransactionsCard isLoading={isLoading} maxRows={10}/>
                     </SubCard>
                 </Grid>
             </Grid>

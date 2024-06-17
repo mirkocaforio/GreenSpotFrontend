@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import React, {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
 
 // material-ui
 import Button from '@mui/material/Button';
@@ -6,7 +8,8 @@ import CardActions from '@mui/material/CardActions';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
-
+import {CurrentUser} from "../../services/AuthUtils";
+import SkeletonTransactionCard from "../../ui-component/cards/Skeleton/TransactionCard";
 
 // assets
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
@@ -14,21 +17,19 @@ import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "
 import Paper from "@mui/material/Paper";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
-import {useSelector} from "react-redux";
-import {CurrentUser} from "../../services/AuthUtils";
-import {useEffect, useState} from "react";
-import SkeletonTransactionCard from "../../ui-component/cards/Skeleton/TransactionCard";
-import {useTheme} from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import TransactionsDialog from "./TransactionsDialog";
+
+
+
+
 
 // ==============================|| TRANSACTION CARD ||============================== //
 
-const TransactionsCard = () => {
+const TransactionsCard = ({maxRows = 10}) => {
   const { transactions: jsonData } = useSelector((state) => state.transaction);
   const [isLoading, setLoading] = useState(true);
   const loggedInUserEmail = CurrentUser() ? CurrentUser().email : '';
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (jsonData === null) {
@@ -37,6 +38,15 @@ const TransactionsCard = () => {
       setLoading(false);
     }
   }, [jsonData]);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
 
   const getAmountStyle = (transaction) => {
     if (transaction.senderEmail === loggedInUserEmail) {
@@ -59,6 +69,9 @@ const TransactionsCard = () => {
   };
 
   const keys = Object.keys(readableKeys);
+  const sortedTransactions = isLoading
+      ? []
+      : [...jsonData.transactions].sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate)).slice(0, maxRows);
 
   return (
     <>
@@ -66,8 +79,8 @@ const TransactionsCard = () => {
         <SkeletonTransactionCard />
       ) : (
         <MainCard content={false}>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: "100%", overflow: 'auto' , wordBreak: 'break-word'}} aria-label="simple table">
+          <TableContainer component={Paper} sx={{ minWidth: "40%", overflow: 'auto' , wordBreak: 'break-word' }}>
+            <Table  aria-label="simple table" sx={{tableLayout: 'fixed'}}>
               <TableHead>
                 <TableRow>
                   {keys.map((key) => (
@@ -77,7 +90,7 @@ const TransactionsCard = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {jsonData.transactions.map((transaction) => (
+                {sortedTransactions.map((transaction) => (
                     <TableRow key={transaction.id} hover>
                       {keys.map((key) => (
                           <TableCell key={key} sx={key === 'amount' ? getAmountStyle(transaction) : {}}>{transaction[key]}</TableCell>
@@ -98,10 +111,11 @@ const TransactionsCard = () => {
           </TableContainer>
           <Divider sx={{border: 0, height: 20}} />
           <CardActions sx={{ p: 1.25, pt: 0, justifyContent: 'center' }}>
-            <Button size="small" disableElevation>
+            <Button size="small" onClick={handleClickOpen} disableElevation>
               View All
               <ChevronRightOutlinedIcon />
             </Button>
+            <TransactionsDialog onClose={handleClose} transactions={jsonData.transactions} open={open} owner={loggedInUserEmail}/>
           </CardActions>
         </MainCard>
       )}
@@ -110,7 +124,7 @@ const TransactionsCard = () => {
 };
 
 TransactionsCard.propTypes = {
-  isLoading: PropTypes.bool
+    maxRows: PropTypes.number,
 };
 
 export default TransactionsCard;
