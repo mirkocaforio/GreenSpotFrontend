@@ -4,9 +4,10 @@ import { lazy } from 'react';
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 import RouteGuard from './RouteGuard';
-import { ROLE_MEMBER, HOME_PATH, NOTIFICATION_DURATION} from "../config";
+import {ROLE_MEMBER, HOME_PATH, NOTIFICATION_DURATION, ROLE_UTENTE} from "../config";
 import FetchData from "./FetchData";
 import {SnackbarProvider} from "notistack";
+import NetworkCheck from "./NetworkCheck";
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
@@ -31,6 +32,7 @@ const MainRoutes = {
               <FetchData>
                 <SnackbarProvider maxSnack={5} autoHideDuration={NOTIFICATION_DURATION}>
                   <MainLayout />
+                  <NetworkCheck/>
                 </SnackbarProvider>
               </FetchData>
             </RouteGuard>,
@@ -104,7 +106,7 @@ const MainRoutes = {
     },
     {
       path: 'wallet',
-      element: <RouteGuard allowedRoles={[ROLE_MEMBER]}>
+      element: <RouteGuard allowedRoles={[ROLE_MEMBER,ROLE_UTENTE]}>
                 <FetchData type="wallet">
                   <FetchData type="transactions">
                     <WalletPage />

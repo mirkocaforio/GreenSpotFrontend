@@ -1,4 +1,4 @@
-
+import Pagination from '@mui/material/Pagination';
 import {
     TableContainer,
     Paper,
@@ -43,7 +43,7 @@ const TransactionsDialog = ({ open, onClose, transactions, owner }) => {
     };
 
     const handleChangePage = (event, newPage) => {
-        setPage(newPage);
+        setPage(newPage -1);
     };
 
     const handleChangeRowsPerPage = (event) => {
@@ -148,7 +148,10 @@ const TransactionsDialog = ({ open, onClose, transactions, owner }) => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <TablePagination
+                <CardActions sx={{ p: 1.25, pt: 2, justifyContent: 'right' }}>
+                    <Pagination count={Math.round(transactions.length / rowsPerPage) + 1} color="primary" onChange={handleChangePage} />
+                </CardActions>
+{/*                <TablePagination
                     rowsPerPageOptions={[30, 50, 100]}
                     component="div"
                     count={transactions.length}
@@ -156,7 +159,7 @@ const TransactionsDialog = ({ open, onClose, transactions, owner }) => {
                     page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
-                />
+                />*/}
                 <Divider sx={{border: 0, height: 20}} />
                 <CardActions sx={{ p: 1.25, pt: 0, justifyContent: 'center' }}>
                     <Button size="medium" onClick={onClose} disableElevation>
