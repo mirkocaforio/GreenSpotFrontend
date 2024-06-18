@@ -25,7 +25,7 @@ import { SET_BORDER_RADIUS, SET_FONT_FAMILY } from 'store/actions';
 import { gridSpacing } from 'store/constant';
 
 // assets
-import { IconSettings } from '@tabler/icons-react';
+import AssistantOutlinedIcon from '@mui/icons-material/AssistantOutlined';
 
 // concat 'px'
 function valueText(value) {
@@ -91,7 +91,7 @@ const Customization = () => {
   return (
     <>
       {/* toggle button */}
-      <Tooltip title="Live Customize">
+      <Tooltip title="SpotAssistant">
         <Fab
           component="div"
           onClick={handleToggle}
@@ -104,17 +104,17 @@ const Customization = () => {
             borderBottomLeftRadius: '50%',
             borderTopRightRadius: '50%',
             borderBottomRightRadius: '4px',
-            top: '25%',
+            top: '90%',
             position: 'fixed',
             right: 10,
             zIndex: theme.zIndex.speedDial
           }}
         >
-          <AnimateButton type="rotate">
+          {/*<AnimateButton type="rotate">*/}
             <IconButton color="inherit" size="large" disableRipple>
-              <IconSettings />
+              <AssistantOutlinedIcon />
             </IconButton>
-          </AnimateButton>
+            {/*</AnimateButton>*/}
         </Fab>
       </Tooltip>
 
