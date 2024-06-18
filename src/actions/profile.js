@@ -4,6 +4,7 @@ import ProfileService from '../services/ProfileService';
 import {isTokenExpired} from "../services/AuthUtils";
 import {logout} from "./auth";
 import {MSG_ERROR, MSG_SUCCESS, MSG_WARNING} from "../config";
+import {onError} from "./expiration";
 
 export const updateProfile = (name,surname,date,city,address,tel,fiscalCode,email) => (dispatch) => {
     return ProfileService.updateProfile(name,surname,date,city,address,tel,fiscalCode,email).then(
@@ -33,27 +34,8 @@ export const updateProfile = (name,surname,date,city,address,tel,fiscalCode,emai
                 type: GET_PROFILE_FAIL,
             });
 
-            if ( isTokenExpired(message)){
-
-                dispatch({
-                    type: SET_MESSAGE,
-                    payload: {message: "Session expired. Please login again.",
-                        type: MSG_WARNING},
-                });
-
-                dispatch(logout());
-            } else {
-                dispatch({
-                    type: SET_MESSAGE,
-                    payload: {
-                        message: message,
-                        type: MSG_ERROR,
-                        location: "profile"
-                    },
-                });
-            }
-
-            return Promise.reject(message);
+            dispatch(onError(message,"profile"));
+            return Promise.reject();
         }
     );
 
@@ -78,34 +60,12 @@ export const getProfileData = () => (dispatch) => {
                 error.message ||
                 error.toString();
 
-            console.error(message);
             dispatch({
                 type: GET_PROFILE_FAIL,
             });
 
-            if ( isTokenExpired(message)){
-                console.log("Token expired");
-
-                dispatch({
-                    type: SET_MESSAGE,
-                    payload: {message: "Session expired. Please login again.",
-                            type: MSG_WARNING,
-                    location: "login"},
-                });
-
-                dispatch(logout());
-            } else {
-                dispatch({
-                    type: SET_MESSAGE,
-                    payload: {
-                        message: message,
-                        type: MSG_ERROR,
-                        location: "profile"
-                    },
-                });
-            }
-
-            return Promise.reject(message);
+            dispatch(onError(message,"profile"));
+            return Promise.reject();
         }
     );
 }

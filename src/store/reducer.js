@@ -7,6 +7,7 @@ import message from "./message";
 import profile from "./profile";
 import wallet from "./wallet";
 import transaction from "./transaction";
+import tasks from "./tasks";
 
 // ==============================|| COMBINE REDUCER ||============================== //
 
@@ -16,7 +17,8 @@ const reducer = combineReducers({
   message,
   profile,
   wallet,
-  transaction
+  transaction,
+  tasks
 });
 
 export default reducer;

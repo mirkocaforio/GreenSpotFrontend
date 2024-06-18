@@ -3,6 +3,7 @@ import {getProfileData} from "../actions/profile";
 import {useEffect} from "react";
 import {getWallet} from "../actions/wallet";
 import {getProfileTransactions} from "../actions/transaction";
+import {getTasks} from "../actions/task";
 
 
 
@@ -18,6 +19,9 @@ const FetchData = ({ children, type}) => {
             break;
         case "transactions":
             fetchData = getProfileTransactions;
+            break;
+        case "tasks":
+            fetchData = getTasks;
             break;
         default:
             fetchData = getProfileData;

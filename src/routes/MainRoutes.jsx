@@ -8,6 +8,7 @@ import {ROLE_MEMBER, HOME_PATH, NOTIFICATION_DURATION, ROLE_UTENTE} from "../con
 import FetchData from "./FetchData";
 import {SnackbarProvider} from "notistack";
 import NetworkCheck from "./NetworkCheck";
+import TaskManagerPage from "../views/task/TaskManagerPage";
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
@@ -18,8 +19,8 @@ const ProfilePage = Loadable(lazy(() => import('views/profile')));
 const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
 const UtilsShadow = Loadable(lazy(() => import('views/utilities/Shadow')));
 const WalletPage = Loadable(lazy(() => import('views/wallet')));
-// const UtilsMaterialIcons = Loadable(lazy(() => import('views/utilities/MaterialIcons')));
-// const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons')));
+const TaskPage = Loadable(lazy(() => import('views/task/TaskCreatePage')));
+const TaskListPage = Loadable(lazy(() => import('views/task/TaskManagerPage')));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
@@ -113,6 +114,22 @@ const MainRoutes = {
                   </FetchData>
                 </FetchData>
               </RouteGuard>
+    },
+    {
+      path: 'task',
+      element: <RouteGuard allowedRoles={[ROLE_UTENTE]}>
+                <FetchData type="tasks">
+                  <TaskPage />
+                </FetchData>
+              </RouteGuard>
+    },
+    {
+      path: 'task/list',
+      element: <RouteGuard allowedRoles={[ROLE_UTENTE]}>
+        <FetchData type="tasks">
+          <TaskManagerPage />
+        </FetchData>
+      </RouteGuard>
     }
   ]
 };

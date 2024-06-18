@@ -626,12 +626,12 @@ apigClientFactory.newClient = function (config) {
     apigClient.apiV1TaskEnableIdPut = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'id', 'asdasd'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'id'], ['body']);
         
         var apiV1TaskEnableIdPutRequest = {
             verb: 'put'.toUpperCase(),
-            path: pathComponent + uritemplate('/api/v1/task/enable/{id}').expand(apiGateway.core.utils.parseParametersToObject(params, ['id', ])),
-            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', 'asdasd']),
+            path: pathComponent + uritemplate('/api/v1/task/enable/{id}').expand(apiGateway.core.utils.parseParametersToObject(params, ['id'])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };

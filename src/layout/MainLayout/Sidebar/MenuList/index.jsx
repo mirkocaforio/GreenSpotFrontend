@@ -13,8 +13,6 @@ const MenuList = () => {
     const {profile} = useSelector(state => state.profile);
     const role = profile?.role;
 
-    console.log("role: ", role);
-
     let items = [];
 
     switch (role) {

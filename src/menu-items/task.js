@@ -28,25 +28,17 @@ const task = {
                     id: 'assignTask',
                     title: 'Assign Task',
                     type: 'item',
-                    url: '/sample-page',
+                    url: '/task',
                     icon: icons.AddTaskOutlinedIcon,
-                    target: true
-                },
-                {
-                    id: 'taskList',
-                    title: 'Task List',
-                    type: 'item',
-                    url: '/sample-page',
-                    icon: icons.FormatListBulletedOutlinedIcon,
-                    target: true
+                    target: false
                 },
                 {
                     id: 'manageTask',
-                    title: 'Manage Task',
+                    title: 'Manage Tasks',
                     type: 'item',
-                    url: '/sample-page',
+                    url: '/task/list',
                     icon: icons.AssignmentOutlinedIcon,
-                    target: true
+                    target: false
                 }
             ]
         }

@@ -1,8 +1,6 @@
 import WalletService from "../services/WalletService";
-import {GET_PROFILE_FAIL, GET_PROFILE_SUCCESS, GET_WALLET_FAIL, GET_WALLET_SUCCESS, SET_MESSAGE} from "./types";
-import {MSG_ERROR, MSG_SUCCESS, MSG_WARNING} from "../config";
-import {isTokenExpired} from "../services/AuthUtils";
-import {logout} from "./auth";
+import { GET_WALLET_FAIL, GET_WALLET_SUCCESS} from "./types";
+import {onError} from "./expiration";
 
 
 export const getWallet = () =>  (dispatch) => {
@@ -28,28 +26,8 @@ export const getWallet = () =>  (dispatch) => {
                 type: GET_WALLET_FAIL,
             });
 
-            if ( isTokenExpired(message)){
-                console.log("Token expired");
-
-                dispatch({
-                    type: SET_MESSAGE,
-                    payload: {message: "Session expired. Please login again.",
-                        type: MSG_WARNING,
-                    location: "login"},
-                });
-
-                dispatch(logout());
-            } else {
-                dispatch({
-                    type: SET_MESSAGE,
-                    payload: {
-                        message: message,
-                        type: MSG_ERROR,
-                    },
-                });
-            }
-
-            return Promise.reject(error);
+            dispatch(onError(message,"wallet"));
+            return Promise.reject();
         }
     );
 }
