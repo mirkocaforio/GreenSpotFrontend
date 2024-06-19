@@ -1,4 +1,7 @@
 import React, {useEffect, useState} from 'react';
+import PropTypes from "prop-types";
+
+// material-ui
 import {
     Table,
     TableBody,
@@ -11,25 +14,31 @@ import {
     TableSortLabel
 } from '@mui/material';
 import {Visibility, Edit, BlockTwoTone, PauseCircleFilled, PlayArrowTwoTone} from '@mui/icons-material';
-import TaskModel from "../../services/TaskModel";
-import {useDispatch, useSelector} from "react-redux";
-import SkeletonTransactionCard from "../../ui-component/cards/Skeleton/TransactionCard";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import MainCard from "../../ui-component/cards/MainCard";
 import Chip from "@mui/material/Chip";
 import {useTheme} from "@mui/material/styles";
 import InputAdornment from "@mui/material/InputAdornment";
 import {IconSearch} from "@tabler/icons-react";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import Tooltip from "@mui/material/Tooltip";
+import CardActions from "@mui/material/CardActions";
+
+// project
+import TaskModel from "../../services/TaskModel";
+import SkeletonTransactionCard from "../../ui-component/cards/Skeleton/TransactionCard";
+import MainCard from "../../ui-component/cards/MainCard";
 import TaskInfo from "./TaskInfo";
 import TaskUpdate from "./TaskUpdate";
 import {disableTask, enableTask, stopTask} from "../../actions/task";
-import Tooltip from "@mui/material/Tooltip";
+import Paging from "../../ui-component/table/Paging";
+
+// third-party
+import {useDispatch, useSelector} from "react-redux";
 
 
-const TaskTable = () => {
+const TaskTable = ({maxRows = 2}) => {
     const theme = useTheme();
     const dispatch = useDispatch();
     const {tasks: tasksData} = useSelector((state) => state.tasks);
@@ -41,6 +50,8 @@ const TaskTable = () => {
     const [selectedTask, setSelectedTask] = useState(null);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [modifyDialogOpen, setModifyDialogOpen] = useState(false);
+    const [rowsPerPage] = useState(maxRows);
+    const [page, setPage] = useState(0);
 
     useEffect(() => {
         if(tasksData){
@@ -87,7 +98,7 @@ const TaskTable = () => {
     const getTaskActions = (task) => {
         let actions = [];
         actions.push(
-            <Tooltip title={"View"}>
+            <Tooltip title={"View"} key={"view_"+task?.id}>
                 <IconButton aria-label="view" onClick={() => {
                 handleViewClick(task);
             }}>
@@ -96,8 +107,8 @@ const TaskTable = () => {
             </Tooltip>);
         if(!task?.endTime && task?.enabled) {
             actions.push(
-                <Tooltip title="Pause">
-                    <IconButton key={"pause_" + task?.id} aria-label="pause" onClick={() => {
+                <Tooltip title="Pause" key={"pause_" + task?.id}>
+                    <IconButton aria-label="pause" onClick={() => {
                     handlePauseTask(task);
                     }}>
                         <PauseCircleFilled color="warning"/>
@@ -106,18 +117,18 @@ const TaskTable = () => {
         }
         if(!task?.endTime && !task?.enabled) {
             actions.push(
-                <Tooltip title="Resume">
-                    <IconButton key={"play_"+task?.id} aria-label="play" onClick={() => {
+                <Tooltip title="Resume" key={"play_"+task?.id}>
+                    <IconButton  aria-label="play" onClick={() => {
                     handleResumeTask(task);
                     }}>
                         <PlayArrowTwoTone color="success"/>
                     </IconButton>
                 </Tooltip>);
         }
-        if(task?.running) {
+        if(task?.running && task?.enabled) {
             actions.push(
-                <Tooltip title={"Kill"}>
-                    <IconButton key={"stop_"+task?.id} aria-label="stop" onClick={() => {
+                <Tooltip title={"Kill"} key={"stop_"+task?.id}>
+                    <IconButton  aria-label="stop" onClick={() => {
                     handleKillTask(task);
                     }}>
                         <BlockTwoTone color="error"/>
@@ -126,8 +137,8 @@ const TaskTable = () => {
         }
         if(!task?.endTime) {
             actions.push(
-                <Tooltip title={"Edit"}>
-                    <IconButton key={"edit_"+task?.id} aria-label="edit" onClick={() => {
+                <Tooltip title={"Edit"} key={"edit_"+task?.id}>
+                    <IconButton  aria-label="edit" onClick={() => {
                         handleModifyClick(task);
                     }}>
                         <Edit color="secondary"/>
@@ -157,7 +168,7 @@ const TaskTable = () => {
 
     const filteredTasks = tasks.filter(task =>
         task.name.toLowerCase().includes(search.toLowerCase())
-    );
+    ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
     const sortedTasks = filteredTasks.sort((a, b) => {
         if (orderBy === 'status') {
@@ -241,6 +252,9 @@ const TaskTable = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <CardActions sx={{ p: 1.25, pt: 2, justifyContent: 'right' }}>
+                <Paging setPage={setPage} totalRows={tasks.length} maxRows={rowsPerPage}/>
+            </CardActions>
             {selectedTask && (
                 <>
                 <TaskInfo task={selectedTask} open={dialogOpen} onClose={handleDialogClose} />
@@ -259,6 +273,10 @@ const TaskTable = () => {
                 </Box>
             </MainCard>)}
     </>);
+};
+
+TaskTable.propTypes = {
+    maxRows: PropTypes.number
 };
 
 export default TaskTable;

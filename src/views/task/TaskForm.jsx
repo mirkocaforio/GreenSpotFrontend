@@ -43,7 +43,6 @@ const TaskForm = ({task, handleAssign, action}) => {
         setOpen(false);
     }
 
-    console.log(task);
 
     const handleConfirm = () => {
         const data =
@@ -65,7 +64,7 @@ const TaskForm = ({task, handleAssign, action}) => {
             task?.endTime,
             task?.assignedResources,
             task?.id);
-        console.log(data.toJson());
+
         dispatch(handleAssign(data.toJson())).then(() => {
             navigate('/task/list', { replace: true });
         });
@@ -79,17 +78,17 @@ const TaskForm = ({task, handleAssign, action}) => {
             <Grid item xs={12} sm={12}>
                 <Formik
                     initialValues={{
-                        taskTitle: task?.name,
-                        script: task?.script,
-                        description: task?.description,
-                        maxTime: task?.taskDuration ? task.taskDuration : 0,
-                        minTime: task?.minWorkingTime ? task.minWorkingTime : 0,
-                        minCPower: task?.minComputingPower ? task.minComputingPower : 0,
-                        maxCPower: task?.maxComputingPower ? task.maxComputingPower : 0,
-                        minCudaPower: task?.minCudaPower ? task.minCudaPower : 0,
-                        maxCudaPower: task?.maxCudaPower ? task.maxCudaPower : 0,
-                        minPower: task?.minEnergyConsumption ? task.minEnergyConsumption : 0,
-                        maxPower: task?.maxEnergyConsumption ? task.maxEnergyConsumption : 0,
+                        taskTitle: task?.name ? task.name : '',
+                        script: task?.script ? task.script : '',
+                        description: task?.description ? task.description : '',
+                        maxTime: task?.taskDuration ? task.taskDuration : 0.0,
+                        minTime: task?.minWorkingTime ? task.minWorkingTime : 0.0,
+                        minCPower: task?.minComputingPower ? task.minComputingPower : 0.0,
+                        maxCPower: task?.maxComputingPower ? task.maxComputingPower : 0.0,
+                        minCudaPower: task?.minCudaPower ? task.minCudaPower : 0.0,
+                        maxCudaPower: task?.maxCudaPower ? task.maxCudaPower : 0.0,
+                        minPower: task?.minEnergyConsumption ? task.minEnergyConsumption : 0.0,
+                        maxPower: task?.maxEnergyConsumption ? task.maxEnergyConsumption : 0.0,
                         submit: null
                     }}
                     validationSchema={Yup.object().shape({

@@ -15,6 +15,8 @@ export const createTask = (data) => (dispatch) => {
             }
         });
 
+        dispatch(getTasks());
+
         return Promise.resolve(data);
     }, (error) => {
         const message =
@@ -40,6 +42,8 @@ export const updateTask = (data) => (dispatch) => {
                 type: MSG_SUCCESS
             }
         });
+
+        dispatch(getTasks());
 
         return Promise.resolve(data);
     }, (error) => {

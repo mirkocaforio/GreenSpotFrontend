@@ -1,4 +1,3 @@
-import Pagination from '@mui/material/Pagination';
 import {
     TableContainer,
     Paper,
@@ -11,7 +10,7 @@ import {
     Dialog,
     DialogTitle,
     DialogContent,
-    TableSortLabel, TablePagination
+    TableSortLabel
 } from '@mui/material';
 import React, {useState} from "react";
 import PropTypes from "prop-types";
@@ -22,6 +21,7 @@ import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import CardActions from "@mui/material/CardActions";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
+import Paging from "../../ui-component/table/Paging";
 
 const TransactionsDialog = ({ open, onClose, transactions, owner }) => {
 
@@ -42,15 +42,6 @@ const TransactionsDialog = ({ open, onClose, transactions, owner }) => {
         }
     };
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage -1);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-
     const handleRequestSort = (property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -61,8 +52,14 @@ const TransactionsDialog = ({ open, onClose, transactions, owner }) => {
         return data.sort((a, b) => {
             if (orderBy === 'amount') {
                 return order === 'asc' ? a[orderBy] - b[orderBy] : b[orderBy] - a[orderBy];
-            } else {
+            } else if (orderBy === 'creationDate') {
                 return order === 'asc' ? new Date(a[orderBy]) - new Date(b[orderBy]) : new Date(b[orderBy]) - new Date(a[orderBy]);
+            } else if(orderBy === 'status'){
+                return order === 'asc' ? a.completed - b.completed : b.completed - a.completed;
+            }else {
+                if (a[orderBy] < b[orderBy]) return order === 'asc' ? -1 : 1;
+                if (a[orderBy] > b[orderBy]) return order === 'asc' ? 1 : -1;
+                return 0;
             }
         });
     };
@@ -149,7 +146,7 @@ const TransactionsDialog = ({ open, onClose, transactions, owner }) => {
                     </Table>
                 </TableContainer>
                 <CardActions sx={{ p: 1.25, pt: 2, justifyContent: 'right' }}>
-                    <Pagination count={Math.round(transactions.length / rowsPerPage) + 1} color="primary" onChange={handleChangePage} />
+                    <Paging setPage={setPage} totalRows={transactions.length} maxRows={rowsPerPage} />
                 </CardActions>
 {/*                <TablePagination
                     rowsPerPageOptions={[30, 50, 100]}
