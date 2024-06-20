@@ -1,28 +1,33 @@
 function getComputingPowerRange(analytics) {
-    const maxComputingPower = Math.max(...analytics.map(item => item?.computingPowerUsed));
-    const minComputingPower = Math.min(...analytics.map(item => item?.computingPowerUsed));
+    let maxComputingPower = Math.max(...analytics.map(item => item?.computingPowerUsed));
+    let minComputingPower = Math.min(...analytics.map(item => item?.computingPowerUsed));
+    if( minComputingPower === maxComputingPower){
+        minComputingPower = 0;
+    }
 
     return [maxComputingPower,minComputingPower]
 
 }
 
 function getEnergyConsumptionRange(analytics) {
-    const maxEnergyConsumption = Math.max(...analytics.map(item => item?.energySaved));
-    const minEnergyConsumption = Math.min(...analytics.map(item => item?.energySaved));
-
+    let maxEnergyConsumption = Math.max(...analytics.map(item => item?.energySaved));
+    let minEnergyConsumption = Math.min(...analytics.map(item => item?.energySaved));
+    if( minEnergyConsumption === maxEnergyConsumption){
+        minEnergyConsumption = 0;
+    }
     return [maxEnergyConsumption,minEnergyConsumption]
 
 }
 
-export const getTaskAnalytics = (analytics , task, type) => {
+export const getTaskAnalytics = (analytics , taskId, type) => {
     let computingPower = 0;
     let energyConsumption = 0;
     switch (type){
         case 'computingPower':
-            computingPower = analytics.find(item => item?.taskId === task?.id)?.computingPowerUsed;
+            computingPower = analytics.find(item => item?.taskId === taskId)?.computingPowerUsed;
             return computingPower ? computingPower : 0;
         case 'energyConsumption':
-            energyConsumption = analytics.find(item => item?.taskId === task?.id)?.energySaved;
+            energyConsumption = analytics.find(item => item?.taskId === taskId)?.energySaved;
             return energyConsumption ? energyConsumption : 0;
     }
 

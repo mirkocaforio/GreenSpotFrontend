@@ -34,7 +34,7 @@ const CircularProgressBar = ({ progress, values, unit, sx }) => {
                     }}
                 >
                     <Typography variant="caption" component="div" color="text.secondary">
-                        {progress} {unit}
+                        {progress}{unit}
                     </Typography>
                 </Box>
             </IconButton>

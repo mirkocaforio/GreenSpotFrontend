@@ -87,7 +87,7 @@ const TaskInfoComponent = ({ values }) => {
                         </Grid>
                         <Grid item xs={6}>
                             <Typography variant="h6" >Assigned Resources</Typography>
-                            <Typography variant="body1">{values.assignedResources}</Typography>
+                            <Typography variant="body1">{values?.assignedResources.length}</Typography>
                         </Grid>
                     </Grid>
                 </SubCard>

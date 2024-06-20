@@ -244,7 +244,7 @@ const TaskTable = ({maxRows = 2}) => {
                                     active={orderBy === 'energyPercentage'}
                                     direction={orderBy === 'energyPercentage' ? order : 'asc'}
                                     onClick={() => handleRequestSort('energyPercentage')}
-                                    >Energy Consumption</TableSortLabel>
+                                    >Consumption (kW/h)</TableSortLabel>
                             </TableCell>
                             <TableCell align="center">
                                 <TableSortLabel
@@ -275,7 +275,7 @@ const TaskTable = ({maxRows = 2}) => {
                                         :(<CircularProgressBar values={analyticsRange?.energyConsumption}
                                                                                     progress={getTaskAnalytics(tasksAnalytics?.list, task?.id, "energyConsumption")}
                                                                sx={{color: theme.palette.success[200],}}
-                                                               unit={"kWh"}/>)}
+                                                               />)}
                                 </TableCell>
                                 <TableCell align="center">
                                     { isAnalyticsLoading ? (<CircularProgress />) : (

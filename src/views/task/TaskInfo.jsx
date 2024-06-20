@@ -10,7 +10,6 @@ const TaskInfo = ({ task, open, onClose }) => {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-
     return (
         <Dialog open={open} onClose={onClose} aria-labelledby="task-dialog-title" maxWidth="lg" fullWidth fullScreen={fullScreen} scroll="paper">
             <DialogTitle id="task-dialog-title" fontSize="medium">{task.name}</DialogTitle>
