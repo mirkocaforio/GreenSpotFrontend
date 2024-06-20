@@ -300,7 +300,7 @@ const TaskTable = ({maxRows = 2}) => {
             </CardActions>
             {selectedTask && (
                 <>
-                <TaskInfo task={selectedTask} open={dialogOpen} onClose={handleDialogClose} />
+                <TaskInfo task={selectedTask} analytics={tasksAnalytics} open={dialogOpen} onClose={handleDialogClose} />
                 <TaskUpdate task={selectedTask} open={modifyDialogOpen} onClose={handleDialogClose} />
                 </>
             )}

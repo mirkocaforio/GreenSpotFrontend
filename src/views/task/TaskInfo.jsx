@@ -6,7 +6,7 @@ import {useTheme} from "@mui/material/styles";
 import TaskInfoComponent from "./TaskInfoComponent";
 
 
-const TaskInfo = ({ task, open, onClose }) => {
+const TaskInfo = ({ task, analytics, open, onClose }) => {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -14,7 +14,7 @@ const TaskInfo = ({ task, open, onClose }) => {
         <Dialog open={open} onClose={onClose} aria-labelledby="task-dialog-title" maxWidth="lg" fullWidth fullScreen={fullScreen} scroll="paper">
             <DialogTitle id="task-dialog-title" fontSize="medium">{task.name}</DialogTitle>
             <DialogContent dividers>
-                <TaskInfoComponent values={task}/>
+                <TaskInfoComponent values={task} analytics={analytics}/>
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose} color="primary">Close</Button>
@@ -27,6 +27,7 @@ TaskInfo.propTypes = {
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
     task: PropTypes.object.isRequired,
+    analytics: PropTypes.object
 };
 
 export default TaskInfo;
