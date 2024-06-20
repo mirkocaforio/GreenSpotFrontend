@@ -11,9 +11,13 @@ import {
     TableRow,
     Paper,
     IconButton,
-    TableSortLabel
+    TableSortLabel, CircularProgress
 } from '@mui/material';
-import {Visibility, Edit, BlockTwoTone, PauseCircleFilled, PlayArrowTwoTone} from '@mui/icons-material';
+import {
+    BlockTwoTone,
+    PlayArrowTwoTone,
+    EditTwoTone, VisibilityTwoTone, PauseCircleTwoTone
+} from '@mui/icons-material';
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -36,12 +40,19 @@ import Paging from "../../ui-component/table/Paging";
 
 // third-party
 import {useDispatch, useSelector} from "react-redux";
+import CircularProgressBar from "../../ui-component/CircularProgress";
+import {getAnalyticsRange, getTaskAnalytics} from "../../utils/analytics-range";
 
 
 const TaskTable = ({maxRows = 2}) => {
     const theme = useTheme();
     const dispatch = useDispatch();
     const {tasks: tasksData} = useSelector((state) => state.tasks);
+
+    const {tasksAnalytics} = useSelector((state) => state.analytics);
+    const [analyticsRange, setAnalyticsRange] = useState({});
+    const [isAnalyticsLoading, setAnalyticsLoading] = useState(true);
+
     const [tasks, setTasks] = useState([]);
     const [search, setSearch] = useState('');
     const [order, setOrder] = useState('asc');
@@ -61,7 +72,17 @@ const TaskTable = ({maxRows = 2}) => {
         }else{
             setLoading(true);
         }
-    }, [tasksData]);
+
+        if(tasksAnalytics){
+            setAnalyticsLoading(false);
+            setAnalyticsRange({
+                computingPower: getAnalyticsRange(tasksAnalytics?.list, 'computingPower'),
+                energyConsumption: getAnalyticsRange(tasksAnalytics?.list, 'energyConsumption')
+        });
+        } else {
+            setAnalyticsLoading(true);
+        }
+    }, [tasksAnalytics, tasksData]);
 
     const handleViewClick = (task) => {
         setSelectedTask(task);
@@ -102,7 +123,7 @@ const TaskTable = ({maxRows = 2}) => {
                 <IconButton aria-label="view" onClick={() => {
                 handleViewClick(task);
             }}>
-                <Visibility color="primary" />
+                <VisibilityTwoTone color="primary" />
             </IconButton>
             </Tooltip>);
         if(!task?.endTime && task?.enabled) {
@@ -111,7 +132,7 @@ const TaskTable = ({maxRows = 2}) => {
                     <IconButton aria-label="pause" onClick={() => {
                     handlePauseTask(task);
                     }}>
-                        <PauseCircleFilled color="warning"/>
+                        <PauseCircleTwoTone color="warning"/>
                     </IconButton>
                 </Tooltip>);
         }
@@ -141,7 +162,7 @@ const TaskTable = ({maxRows = 2}) => {
                     <IconButton  aria-label="edit" onClick={() => {
                         handleModifyClick(task);
                     }}>
-                        <Edit color="secondary"/>
+                        <EditTwoTone color="secondary"/>
                     </IconButton>
                 </Tooltip>);
         }
@@ -217,14 +238,21 @@ const TaskTable = ({maxRows = 2}) => {
                                     Task Name
                                 </TableSortLabel>
                             </TableCell>
-                            <TableCell>
+                            <TableCell align="center">
                                 <TableSortLabel
-                                    active={orderBy === 'assignedResources'}
-                                    direction={orderBy === 'assignedResources' ? order : 'asc'}
-                                    onClick={() => handleRequestSort('assignedResources')}
-                                >
-                                    Assigned Resources
-                                </TableSortLabel>
+                                    align="center"
+                                    active={orderBy === 'energyPercentage'}
+                                    direction={orderBy === 'energyPercentage' ? order : 'asc'}
+                                    onClick={() => handleRequestSort('energyPercentage')}
+                                    >Energy Consumption</TableSortLabel>
+                            </TableCell>
+                            <TableCell align="center">
+                                <TableSortLabel
+                                    align="center"
+                                    active={orderBy === 'powerPercentage'}
+                                    direction={orderBy === 'powerPercentage' ? order : 'asc'}
+                                    onClick={() => handleRequestSort('powerPercentage')}
+                                >Computational Power</TableSortLabel>
                             </TableCell>
                             <TableCell>
                                 <TableSortLabel
@@ -242,7 +270,22 @@ const TaskTable = ({maxRows = 2}) => {
                         {sortedTasks.map((task) => (
                             <TableRow key={task?.id} hover>
                                 <TableCell>{task?.name}</TableCell>
-                                <TableCell>{task?.assignedResources ? task?.assignedResources : 0 }</TableCell>
+                                <TableCell align="center">
+                                    { isAnalyticsLoading ? (<CircularProgress />)
+                                        :(<CircularProgressBar values={analyticsRange?.energyConsumption}
+                                                                                    progress={getTaskAnalytics(tasksAnalytics?.list, task?.id, "energyConsumption")}
+                                                               sx={{color: theme.palette.success[200],}}
+                                                               unit={"kWh"}/>)}
+                                </TableCell>
+                                <TableCell align="center">
+                                    { isAnalyticsLoading ? (<CircularProgress />) : (
+                                    <CircularProgressBar values={analyticsRange?.computingPower}
+                                                         progress={getTaskAnalytics(tasksAnalytics?.list, task?.id, "computingPower")}
+                                                         sx={{
+                                                             color: theme.palette.orange.dark,
+                                                         }}/>
+                                    )}
+                                </TableCell>
                                 <TableCell>{getStatus(task?.running, task?.enabled, task?.endTime)}</TableCell>
                                 <TableCell align="center">
                                     {getTaskActions(task)}
@@ -263,7 +306,25 @@ const TaskTable = ({maxRows = 2}) => {
             )}
         </Paper>)
 
-            : (<MainCard>
+            : (<Paper>
+                    <Box sx={{padding: "0px 0px 0px 0px"}}>
+                        <OutlinedInput
+                            sx={{ pr: 1, pl: 2, my: 2 }}
+                            id="input-search-task"
+                            value={search}
+                            onChange={handleSearch}
+                            placeholder="Search task by Name"
+                            startAdornment={
+                                <InputAdornment position="start">
+                                    <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
+                                </InputAdornment>
+                            }
+                            aria-describedby="search-helper-text"
+                            inputProps={{
+                                'aria-label': 'weight'
+                            }}
+                        />
+                    </Box>
                 <Box sx={{ p: 3, textAlign: 'center' }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
@@ -271,7 +332,7 @@ const TaskTable = ({maxRows = 2}) => {
                         </Grid>
                     </Grid>
                 </Box>
-            </MainCard>)}
+            </Paper>)}
     </>);
 };
 

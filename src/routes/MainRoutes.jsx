@@ -118,16 +118,16 @@ const MainRoutes = {
     {
       path: 'task',
       element: <RouteGuard allowedRoles={[ROLE_UTENTE]}>
-                <FetchData type="tasks">
                   <TaskPage />
-                </FetchData>
               </RouteGuard>
     },
     {
       path: 'task/list',
       element: <RouteGuard allowedRoles={[ROLE_UTENTE]}>
         <FetchData type="tasks">
-          <TaskManagerPage />
+          <FetchData type="taskAnalytics">
+            <TaskManagerPage />
+          </FetchData>
         </FetchData>
       </RouteGuard>
     }

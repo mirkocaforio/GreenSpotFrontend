@@ -8,6 +8,7 @@ import profile from "./profile";
 import wallet from "./wallet";
 import transaction from "./transaction";
 import tasks from "./tasks";
+import analytics from "./analytics";
 
 // ==============================|| COMBINE REDUCER ||============================== //
 
@@ -18,7 +19,8 @@ const reducer = combineReducers({
   profile,
   wallet,
   transaction,
-  tasks
+  tasks,
+  analytics
 });
 
 export default reducer;

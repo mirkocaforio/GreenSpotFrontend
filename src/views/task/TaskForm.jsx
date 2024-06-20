@@ -2,10 +2,18 @@
 //react
 import {Formik} from "formik";
 import * as Yup from "yup";
+import {createRef, useEffect, useState} from "react";
+import {useDispatch} from "react-redux";
 
 // material-ui
 import Grid from "@mui/material/Grid";
-import {Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography} from "@mui/material";
+import {
+    Box,
+    Step,
+    StepLabel,
+    Stepper,
+    Typography
+} from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -13,49 +21,76 @@ import FormHelperText from "@mui/material/FormHelperText";
 import Button from "@mui/material/Button";
 import {useTheme} from "@mui/material/styles";
 import LinkIcon from '@mui/icons-material/Link';
+import Divider from "@mui/material/Divider";
+import {
+    AccessAlarmOutlined,
+    ArrowBackIosRounded,
+    EnergySavingsLeafOutlined,
+    WorkHistory,
+    WorkHistoryOutlined
+} from "@mui/icons-material";
+import Stack from "@mui/material/Stack";
 
 // project imports
 import SubCard from "../../ui-component/cards/SubCard";
 import { gridSpacing } from 'store/constant';
 import AnimateButton from "../../ui-component/extended/AnimateButton";
-import Divider from "@mui/material/Divider";
-import {useState} from "react";
-import {useDispatch} from "react-redux";
 import TaskModel from "../../services/TaskModel";
 
 import PropTypes from "prop-types";
 import {useNavigate} from "react-router-dom";
+import TaskInfoComponent from "./TaskInfoComponent";
+import {IconCpu, IconInputAi} from "@tabler/icons-react";
+
 
 
 const TaskForm = ({task, handleAssign, action}) => {
 
     const theme = useTheme();
+    const ref = createRef()
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [open, setOpen] = useState(false);
-    const [fieldsValues, setFieldsValues] = useState({});
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const [fieldsValues, setFieldsValues] = useState(null);
+    const [activeStep, setActiveStep] = useState(0);
+
+    const steps = ['Task Configuration', 'Recap'];
+
+    const handleSubmit = () => {
+        handleNext();
     }
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleNext = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
     }
+
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+    };
 
 
     const handleConfirm = () => {
         const data =
             new TaskModel(fieldsValues?.taskTitle,
             null,
-            fieldsValues?.maxCPower,
-            fieldsValues?.maxTime,
-            fieldsValues?.maxPower,
+            fieldsValues?.maxComputingPower,
+            fieldsValues?.taskDuration,
+            fieldsValues?.maxEnergyConsumption,
             fieldsValues?.maxCudaPower,
             fieldsValues?.minCudaPower,
-            fieldsValues?.minCPower,
-            fieldsValues?.minPower,
-            fieldsValues?.minTime,
+            fieldsValues?.minComputingPower,
+            fieldsValues?.minEnergyConsumption,
+            fieldsValues?.minWorkingTime,
             fieldsValues?.description,
             fieldsValues?.script,
             task?.running,
@@ -68,45 +103,77 @@ const TaskForm = ({task, handleAssign, action}) => {
         dispatch(handleAssign(data.toJson())).then(() => {
             navigate('/task/list', { replace: true });
         });
-        setOpen(false);
+
     }
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+    }, []);
 
 
 
     return (
-        <Grid container spacing={gridSpacing}>
+        <Grid container spacing={gridSpacing} justify = "center" ref={ref}>
+            <Grid item xs={12} sm={3}/>
+            <Grid item xs={12} sm={6}>
+                <Stepper activeStep={activeStep} >
+                    {steps.map((label) => {
+                        const stepProps = {};
+                        const labelProps = {};
+
+                        return (
+                            <Step key={label} {...stepProps}>
+                                <StepLabel {...labelProps}>{label}</StepLabel>
+                            </Step>
+                        );
+                    })}
+                </Stepper>
+            </Grid>
+            <Grid item xs={12} sm={3}/>
+            { activeStep === steps.length ? (
+                <Grid item xs={12} sm={12}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <Typography sx={{ mt: 2, mb: 2 }}>All steps completed - you&apos;re finished</Typography>
+                    </Box>
+                </Grid>
+                )
+                : activeStep === 0 ? (
             <Grid item xs={12} sm={12}>
                 <Formik
-                    initialValues={{
+                    initialValues={ fieldsValues ? fieldsValues : {
                         taskTitle: task?.name ? task.name : '',
                         script: task?.script ? task.script : '',
                         description: task?.description ? task.description : '',
-                        maxTime: task?.taskDuration ? task.taskDuration : 0.0,
-                        minTime: task?.minWorkingTime ? task.minWorkingTime : 0.0,
-                        minCPower: task?.minComputingPower ? task.minComputingPower : 0.0,
-                        maxCPower: task?.maxComputingPower ? task.maxComputingPower : 0.0,
+                        taskDuration: task?.taskDuration ? task.taskDuration : 0.0,
+                        minWorkingTime: task?.minWorkingTime ? task.minWorkingTime : 0.0,
+                        minComputingPower: task?.minComputingPower ? task.minComputingPower : 0.0,
+                        maxComputingPower: task?.maxComputingPower ? task.maxComputingPower : 0.0,
                         minCudaPower: task?.minCudaPower ? task.minCudaPower : 0.0,
                         maxCudaPower: task?.maxCudaPower ? task.maxCudaPower : 0.0,
-                        minPower: task?.minEnergyConsumption ? task.minEnergyConsumption : 0.0,
-                        maxPower: task?.maxEnergyConsumption ? task.maxEnergyConsumption : 0.0,
+                        minEnergyConsumption: task?.minEnergyConsumption ? task.minEnergyConsumption : 0.0,
+                        maxEnergyConsumption: task?.maxEnergyConsumption ? task.maxEnergyConsumption : 0.0,
                         submit: null
                     }}
                     validationSchema={Yup.object().shape({
-                        maxTime: Yup.string().matches(/^\d*\.?\d*$/, 'Must be only digits').required('Task duration is required'),
-                        minTime: Yup.string().matches(/^\d*\.?\d*$/, 'Must be only digits').required('Min working time is required'),
-                        minCPower: Yup.string().matches(/^\d*\.?\d*$/, 'Must be only digits').required('Min computing power is required'),
-                        maxCPower: Yup.string().matches(/^\d*\.?\d*$/, 'Must be only digits').required('Max computing power is required'),
+                        taskDuration: Yup.string().matches(/^\d*\.?\d*$/, 'Must be only digits').required('Task duration is required'),
+                        minWorkingTime: Yup.string().matches(/^\d*\.?\d*$/, 'Must be only digits').required('Min working time is required'),
+                        minComputingPower: Yup.string().matches(/^\d*\.?\d*$/, 'Must be only digits').required('Min computing power is required'),
+                        maxComputingPower: Yup.string().matches(/^\d*\.?\d*$/, 'Must be only digits').required('Max computing power is required'),
                         minCudaPower: Yup.string().matches(/^\d*\.?\d*$/, 'Must be only digits').required('Min machine learning power is required'),
                         maxCudaPower: Yup.string().matches(/^\d*\.?\d*$/, 'Must be only digits').required('Max machine learning power is required'),
-                        minPower: Yup.string().matches(/^\d*\.?\d*$/, 'Must be only digits').required('Min power is required'),
-                        maxPower: Yup.string().matches(/^\d*\.?\d*$/, 'Must be only digits').required('Max power is required'),
+                        minEnergyConsumption: Yup.string().matches(/^\d*\.?\d*$/, 'Must be only digits').required('Min power is required'),
+                        maxEnergyConsumption: Yup.string().matches(/^\d*\.?\d*$/, 'Must be only digits').required('Max power is required'),
                         taskTitle: Yup.string().required('Task title is required'),
                         script: Yup.string().matches(/((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/, 'Invalid URL').required('Payload link is required'),
                         description: Yup.string().required('Description is required')
                     })}
                     onSubmit={(values,{setSubmitting }) => {
                         setFieldsValues(values);
-                        handleClickOpen();
+                        handleSubmit();
                         setSubmitting(false);
                     }}>
                     {({ errors,
@@ -119,7 +186,7 @@ const TaskForm = ({task, handleAssign, action}) => {
                         <form noValidate onSubmit={handleSubmit}>
                             <Grid container spacing={gridSpacing}>
                                 <Grid item xs={12} sm={12}>
-                                    <SubCard title="Task details">
+                                    <SubCard title="Task Details">
                                         <Grid container spacing={gridSpacing}>
                                             <Grid item xs={12} sm={12}>
                                                 <FormControl fullWidth error={Boolean(touched.taskTitle && errors.taskTitle)} sx={{ ...theme.typography.customInput }}>
@@ -190,20 +257,21 @@ const TaskForm = ({task, handleAssign, action}) => {
                                                 <Typography variant="body1">Determine the task&apos;s duration and the minimum working time for a resource to be assigned to it.</Typography>
                                             </Grid>
                                             <Grid item xs={12} sm={12}>
-                                                <FormControl fullWidth error={Boolean(touched.maxTime && errors.maxTime)} sx={{ ...theme.typography.customInput }}>
-                                                    <InputLabel htmlFor="outlined-adornment-maxTime-register">Task Duration</InputLabel>
+                                                <FormControl fullWidth error={Boolean(touched.taskDuration && errors.taskDuration)} sx={{ ...theme.typography.customInput }}>
+                                                    <InputLabel htmlFor="outlined-adornment-taskDuration-register">Task Duration</InputLabel>
                                                     <OutlinedInput
                                                         fullWidth
                                                         label="Task Duration"
-                                                        name="maxTime"
+                                                        name="taskDuration"
                                                         type="number"
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
-                                                        value={values.maxTime}
+                                                        value={values.taskDuration}
+                                                        endAdornment={<AccessAlarmOutlined/>}
                                                     />
-                                                    {touched.maxTime && errors.maxTime ? (
+                                                    {touched.taskDuration && errors.taskDuration ? (
                                                         <FormHelperText error id="standard-weight-helper-text--register">
-                                                            {errors.maxTime}
+                                                            {errors.taskDuration}
                                                         </FormHelperText>
                                                     ) : (
                                                     <FormHelperText id="outlined-weight-helper-text">Task duration in seconds (time to elapse after which it is interrupted)</FormHelperText>
@@ -211,20 +279,21 @@ const TaskForm = ({task, handleAssign, action}) => {
                                                 </FormControl>
                                             </Grid>
                                             <Grid item xs={12} sm={12}>
-                                                <FormControl fullWidth error={Boolean(touched.minTime && errors.minTime)} sx={{ ...theme.typography.customInput }}>
-                                                    <InputLabel htmlFor="outlined-adornment-minTime-register">Min Working Time</InputLabel>
+                                                <FormControl fullWidth error={Boolean(touched.minWorkingTime && errors.minWorkingTime)} sx={{ ...theme.typography.customInput }}>
+                                                    <InputLabel htmlFor="outlined-adornment-minWorkingTime-register">Min Working Time</InputLabel>
                                                     <OutlinedInput
                                                         fullWidth
                                                         label="Min"
-                                                        name="minTime"
+                                                        name="minWorkingTime"
                                                         type="number"
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
-                                                        value={values.minTime}
+                                                        value={values.minWorkingTime}
+                                                        endAdornment={<WorkHistoryOutlined/>}
                                                     />
-                                                    {touched.minTime && errors.minTime ? (
+                                                    {touched.minWorkingTime && errors.minWorkingTime ? (
                                                             <FormHelperText error id="standard-weight-helper-text--register">
-                                                                {errors.minTime}
+                                                                {errors.minWorkingTime}
                                                             </FormHelperText>
                                                         )
                                                         : (<FormHelperText id="outlined-weight-helper-text">es: 1800 (s)</FormHelperText>)}
@@ -240,49 +309,51 @@ const TaskForm = ({task, handleAssign, action}) => {
                                                 <Typography variant="body1">Determine the computing power and machine learning power required for the task.</Typography>
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
-                                                <FormControl fullWidth error={Boolean(touched.minCPower && errors.minCPower)} sx={{ ...theme.typography.customInput }}>
-                                                    <InputLabel htmlFor="outlined-adornment-minPower-register">Min Computing Power</InputLabel>
+                                                <FormControl fullWidth error={Boolean(touched.minComputingPower && errors.minComputingPower)} sx={{ ...theme.typography.customInput }}>
+                                                    <InputLabel htmlFor="outlined-adornment-minEnergyConsumption-register">Min Computing Power</InputLabel>
                                                     <OutlinedInput
                                                         fullWidth
                                                         label="Min Computing Power"
-                                                        name="minCPower"
+                                                        name="minComputingPower"
                                                         type="number"
                                                         onBlur={handleBlur}
                                                         step={0.1}
                                                         onChange={handleChange}
-                                                        value={values.minCPower}
+                                                        value={values.minComputingPower}
+                                                        endAdornment={<IconCpu/>}
                                                     />
-                                                    {touched.minCPower && errors.minCPower ? (
+                                                    {touched.minComputingPower && errors.minComputingPower ? (
                                                         <FormHelperText error id="standard-weight-helper-text--register">
-                                                            {errors.minCPower}
+                                                            {errors.minComputingPower}
                                                         </FormHelperText>
                                                     ) : (<FormHelperText id="outlined-weight-helper-text">es: 1000 - 5000</FormHelperText>)}
                                                 </FormControl>
 
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
-                                                <FormControl fullWidth error={Boolean(touched.maxCPower && errors.maxCPower)} sx={{ ...theme.typography.customInput }}>
+                                                <FormControl fullWidth error={Boolean(touched.maxComputingPower && errors.maxComputingPower)} sx={{ ...theme.typography.customInput }}>
                                                     <InputLabel htmlFor="outlined-adornment-phone-register">Max Computing Power</InputLabel>
                                                     <OutlinedInput
                                                         fullWidth
                                                         label="Max Computing Power"
-                                                        name="maxCPower"
+                                                        name="maxComputingPower"
                                                         type="number"
                                                         step={0.1}
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
-                                                        value={values.maxCPower}
+                                                        value={values.maxComputingPower}
+                                                        endAdornment={<IconCpu/>}
                                                     />
-                                                    {touched.maxCPower && errors.maxCPower && (
+                                                    {touched.maxComputingPower && errors.maxComputingPower && (
                                                         <FormHelperText error id="standard-weight-helper-text--register">
-                                                            {errors.maxCPower}
+                                                            {errors.maxComputingPower}
                                                         </FormHelperText>
                                                     )}
                                                 </FormControl>
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
                                                 <FormControl fullWidth error={Boolean(touched.minCudaPower && errors.minCudaPower)} sx={{ ...theme.typography.customInput }}>
-                                                    <InputLabel htmlFor="outlined-adornment-minPower-register">Min ML Power</InputLabel>
+                                                    <InputLabel htmlFor="outlined-adornment-minEnergyConsumption-register">Min ML Power</InputLabel>
                                                     <OutlinedInput
                                                         fullWidth
                                                         label="Min Machine Learning Power"
@@ -292,6 +363,7 @@ const TaskForm = ({task, handleAssign, action}) => {
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
                                                         value={values.minCudaPower}
+                                                        endAdornment={<IconInputAi/>}
                                                     />
                                                     {touched.minCudaPower && errors.minCudaPower ? (
                                                         <FormHelperText error id="standard-weight-helper-text--register">
@@ -312,6 +384,7 @@ const TaskForm = ({task, handleAssign, action}) => {
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
                                                         value={values.maxCudaPower}
+                                                        endAdornment={<IconInputAi/>}
                                                     />
                                                     {touched.maxCudaPower && errors.maxCudaPower && (
                                                         <FormHelperText error id="standard-weight-helper-text--register">
@@ -330,41 +403,43 @@ const TaskForm = ({task, handleAssign, action}) => {
                                                 <Typography variant="body1">Determine the energy consumption range for the task.</Typography>
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
-                                                <FormControl fullWidth error={Boolean(touched.minPower && errors.minPower)} sx={{ ...theme.typography.customInput }}>
-                                                    <InputLabel htmlFor="outlined-adornment-minPower-register">Min Power</InputLabel>
+                                                <FormControl fullWidth error={Boolean(touched.minEnergyConsumption && errors.minEnergyConsumption)} sx={{ ...theme.typography.customInput }}>
+                                                    <InputLabel htmlFor="outlined-adornment-minEnergyConsumption-register">Min Power</InputLabel>
                                                     <OutlinedInput
                                                         fullWidth
                                                         label="Min Power"
-                                                        name="minPower"
+                                                        name="minEnergyConsumption"
                                                         type="number"
                                                         step={0.1}
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
-                                                        value={values.minPower}
+                                                        value={values.minEnergyConsumption}
+                                                        endAdornment={<EnergySavingsLeafOutlined/>}
                                                     />
-                                                    {touched.minPower && errors.minPower ? (
+                                                    {touched.minEnergyConsumption && errors.minEnergyConsumption ? (
                                                         <FormHelperText error id="standard-weight-helper-text--register">
-                                                            {errors.minPower}
+                                                            {errors.minEnergyConsumption}
                                                         </FormHelperText>
                                                     ) : (<FormHelperText id="outlined-weight-helper-text">es: 10 kW/h - 50 kW/h</FormHelperText>)}
                                                 </FormControl>
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
-                                                <FormControl fullWidth error={Boolean(touched.maxPower && errors.maxPower)} sx={{ ...theme.typography.customInput }}>
+                                                <FormControl fullWidth error={Boolean(touched.maxEnergyConsumption && errors.maxEnergyConsumption)} sx={{ ...theme.typography.customInput }}>
                                                     <InputLabel htmlFor="outlined-adornment-phone-register">Max Power</InputLabel>
                                                     <OutlinedInput
                                                         fullWidth
                                                         label="Max Power"
-                                                        name="maxPower"
+                                                        name="maxEnergyConsumption"
                                                         type="number"
                                                         step={0.1}
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
-                                                        value={values.maxPower}
+                                                        value={values.maxEnergyConsumption}
+                                                        endAdornment={<EnergySavingsLeafOutlined/>}
                                                     />
-                                                    {touched.maxPower && errors.maxPower && (
+                                                    {touched.maxEnergyConsumption && errors.maxEnergyConsumption && (
                                                         <FormHelperText error id="standard-weight-helper-text--register">
-                                                            {errors.maxPower}
+                                                            {errors.maxEnergyConsumption}
                                                         </FormHelperText>
                                                     )}
                                                 </FormControl>
@@ -383,7 +458,7 @@ const TaskForm = ({task, handleAssign, action}) => {
                                                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                                                     <AnimateButton>
                                                         <Button type="submit" size="large" fullWidth disabled={isSubmitting} variant="contained" color="primary">
-                                                            {action} Task
+                                                            Next
                                                         </Button>
                                                     </AnimateButton>
                                                 </Box>
@@ -392,54 +467,37 @@ const TaskForm = ({task, handleAssign, action}) => {
                                     </SubCard>
                                 </Grid>
                             </Grid>
-                            <Dialog
-                                open={open}
-                                onClose={handleClose}
-                                aria-labelledby="alert-dialog-title"
-                                aria-describedby="alert-dialog-description"
-                            >
-                                <DialogTitle id="alert-dialog-title">
-                                    {"Are you sure you want to create this task?"}
-                                </DialogTitle>
-                                <DialogContent>
-                                    <DialogContentText id="alert-dialog-description">
-                                        Confirm the creation of the task with the following details:
-                                        <br/>
-                                        <br/>
-                                        <strong>Title:</strong> {values.taskTitle}
-                                        <br/>
-                                        <strong>Payload:</strong> {values.script}
-                                        <br/>
-                                        <strong>Description:</strong> {values.description}
-                                        <br/>
-                                        <strong>Task Duration:</strong> {values.maxTime}
-                                        <br/>
-                                        <strong>Min Working Time:</strong> {values.minTime}
-                                        <br/>
-                                        <strong>Min Computing Power:</strong> {values.minCPower}
-                                        <br/>
-                                        <strong>Max Computing Power:</strong> {values.maxCPower}
-                                        <br/>
-                                        <strong>Min Machine Learning Power:</strong> {values.minCudaPower}
-                                        <br/>
-                                        <strong>Max Machine Learning Power:</strong> {values.maxCudaPower}
-                                        <br/>
-                                        <strong>Min Power:</strong> {values.minPower}
-                                        <br/>
-                                        <strong>Max Power:</strong> {values.maxPower}
-                                    </DialogContentText>
-                                </DialogContent>
-                                <DialogActions>
-                                    <Button color="error" onClick={handleClose}>Cancel</Button>
-                                    <Button onClick={handleConfirm} autoFocus>
-                                        {action}
-                                    </Button>
-                                </DialogActions>
-                            </Dialog>
                         </form>
                     )}
                 </Formik>
             </Grid>
+                )
+                : (<>
+                    <Grid item xs={12} sm={12}>
+                        <SubCard title="Task Recap" sx={{ backgroundColor: theme.palette.grey[50]}}>
+                            <TaskInfoComponent values={fieldsValues}/>
+                        </SubCard>
+                    </Grid>
+                    <Grid item xs={12}>
+                            <Stack direction="row" justifyContent="end" spacing={2}>
+                                <AnimateButton>
+                                    <Button size="large" color="primary" onClick={handleBack}>
+                                        <ArrowBackIosRounded fontSize="small"/> Back
+                                    </Button>
+                                </AnimateButton>
+                                <AnimateButton>
+                                    <Button type="submit" size="large" onClick={
+                                        () => {
+                                            handleNext();
+                                            handleConfirm();}
+                                    } fullWidth variant="contained" color="primary">
+                                        {action} Task
+                                    </Button>
+                                </AnimateButton>
+                            </Stack>
+                        </Grid>
+                    </>
+                )}
         </Grid>)};
 
 TaskForm.propTypes = {
