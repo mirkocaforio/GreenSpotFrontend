@@ -43,13 +43,13 @@ const DetailsTab = () => {
             <Grid item xs={12} sm={12}>
                 <Formik
                     initialValues={{
-                        birthDate: profile ? profile.birthDate : '',
-                        name: profile ? profile.name : '',
-                        surname: profile ? profile.surname : '',
-                        phone: profile ? profile.phoneNumber : '',
-                        city: profile ? profile.residenceCity : '',
-                        address: profile ? profile.residenceAddress : '',
-                        fiscalCode: (profile && profile.fiscalCode !== null) ? profile.fiscalCode : '',
+                        birthDate: profile?.birthDate ? profile.birthDate : '',
+                        name: profile?.name ? profile.name : '',
+                        surname: profile?.surname ? profile.surname : '',
+                        phone: profile?.phoneNumber ? profile?.phoneNumber : '',
+                        city: profile?.residenceCity ? profile?.residenceCity : '',
+                        address: profile?.residenceAddress ? profile.residenceAddress : '',
+                        fiscalCode: profile?.fiscalCode ? profile.fiscalCode : '',
                         submit: null
                     }}
                     validationSchema={Yup.object().shape({
