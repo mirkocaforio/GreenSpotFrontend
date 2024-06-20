@@ -2,9 +2,8 @@ import Grid from "@mui/material/Grid";
 import SubCard from "../../ui-component/cards/SubCard";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
-import {EnergySavingsLeafOutlined} from "@mui/icons-material";
+import {EnergySavingsLeafTwoTone, MemoryTwoTone} from "@mui/icons-material";
 import {getTaskAnalytics} from "../../utils/analytics-range";
-import {IconCpu} from "@tabler/icons-react";
 import {useTheme} from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
 
@@ -24,7 +23,7 @@ const TaskInfoComponent = ({ values, analytics }) => {
                                         <Typography variant="h5" >Energy Saved</Typography>
                                     </Grid>
                                     <Grid item>
-                                        <EnergySavingsLeafOutlined sx={{color: theme.palette.success.dark}}/>
+                                        <EnergySavingsLeafTwoTone fontSize={"large"} sx={{color: theme.palette.success.dark}}/>
                                     </Grid>
                                     <Grid item>
                                         <Typography variant="body1">
@@ -40,7 +39,7 @@ const TaskInfoComponent = ({ values, analytics }) => {
                                         <Typography variant="h5" >Computing Power Used</Typography>
                                     </Grid>
                                     <Grid item>
-                                        <IconCpu color={theme.palette.orange.dark}/>
+                                        <MemoryTwoTone fontSize={"large"} sx={{color: theme.palette.orange.dark}}/>
                                     </Grid>
                                     <Grid item>
                                         <Typography variant="body1">
@@ -76,29 +75,53 @@ const TaskInfoComponent = ({ values, analytics }) => {
                 </SubCard>
             </Grid>
             <Grid item xs={6}>
-                <SubCard title="Energy Consumption">
+                <SubCard title="Energy Consumption Params">
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
-                            <Typography variant="h6" >Max Energy Consumption</Typography>
-                            <Typography variant="body1">{values?.maxEnergyConsumption}</Typography>
+                            <Grid container spacing={1} alignItems="center">
+                                <Grid item xs={12}>
+                                    <Typography variant="h6" >Max Energy Consumption</Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Typography variant="body1">{values?.maxEnergyConsumption}</Typography>
+                                </Grid>
+                            </Grid>
                         </Grid>
                         <Grid item xs={6}>
-                            <Typography variant="h6" >Min Energy Consumption</Typography>
-                            <Typography variant="body1">{values?.minEnergyConsumption}</Typography>
+                            <Grid container spacing={1} alignItems="center">
+                                <Grid item xs={12}>
+                                    <Typography variant="h6" >Min Energy Consumption</Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Typography variant="body1">{values?.minEnergyConsumption}</Typography>
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </SubCard>
             </Grid>
             <Grid item xs={6}>
-                <SubCard title="Task Time Params">
+                <SubCard title={<>{"Task Time Params"}</>}>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
-                            <Typography variant="h6" >Task Duration</Typography>
-                            <Typography variant="body1">{values?.taskDuration}</Typography>
+                            <Grid container spacing={1} alignItems="center">
+                                <Grid item xs={12}>
+                                    <Typography variant="h6" >Task Duration</Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Typography variant="body1">{values?.taskDuration}</Typography>
+                                </Grid>
+                            </Grid>
                         </Grid>
                         <Grid item xs={6}>
-                            <Typography variant="h6" >Min Working Time</Typography>
-                            <Typography variant="body1">{values?.minWorkingTime}</Typography>
+                            <Grid container spacing={1} alignItems="center">
+                                <Grid item xs={12}>
+                                    <Typography variant="h6" >Min Working Time</Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Typography variant="body1">{values?.minWorkingTime}</Typography>
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </SubCard>
