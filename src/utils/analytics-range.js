@@ -15,6 +15,7 @@ function getEnergyConsumptionRange(analytics) {
     if( minEnergyConsumption === maxEnergyConsumption){
         minEnergyConsumption = 0;
     }
+
     return [maxEnergyConsumption,minEnergyConsumption]
 
 }

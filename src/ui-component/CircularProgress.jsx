@@ -9,9 +9,8 @@ import {useTheme} from "@mui/material/styles";
 const CircularProgressBar = ({ progress, values, unit, sx }) => {
     const theme = useTheme();
     const convertToPercentage = (value, values) => {
-        let min = Math.min(...values);
         let max = Math.max(...values);
-        return Math.min(100,((Math.max(0,value - min)) / (max - min)) * 100);
+        return value / Math.max(1, max) * 100;
     }
 
     return (

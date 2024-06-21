@@ -32,7 +32,6 @@ import CardActions from "@mui/material/CardActions";
 // project
 import TaskModel from "../../services/TaskModel";
 import SkeletonTransactionCard from "../../ui-component/cards/Skeleton/TransactionCard";
-import MainCard from "../../ui-component/cards/MainCard";
 import TaskInfo from "./TaskInfo";
 import TaskUpdate from "./TaskUpdate";
 import {disableTask, enableTask, stopTask} from "../../actions/task";
@@ -195,6 +194,10 @@ const TaskTable = ({maxRows = 2}) => {
         if (orderBy === 'status') {
             if (a.running === b.running) return 0;
             return (a.running ? 1 : -1) * (order === 'asc' ? 1 : -1);
+        } else if (orderBy === 'energyPercentage' || orderBy === 'powerPercentage') {
+            const aValue = getTaskAnalytics(tasksAnalytics?.list, a?.id, orderBy);
+            const bValue = getTaskAnalytics(tasksAnalytics?.list, b?.id, orderBy);
+            return (aValue < bValue ? -1 : 1) * (order === 'asc' ? 1 : -1);
         } else {
             if (a[orderBy] < b[orderBy]) return order === 'asc' ? -1 : 1;
             if (a[orderBy] > b[orderBy]) return order === 'asc' ? 1 : -1;
@@ -254,7 +257,7 @@ const TaskTable = ({maxRows = 2}) => {
                                     onClick={() => handleRequestSort('powerPercentage')}
                                 >Computational Power</TableSortLabel>
                             </TableCell>
-                            <TableCell>
+                            <TableCell align="center">
                                 <TableSortLabel
                                     active={orderBy === 'status'}
                                     direction={orderBy === 'status' ? order : 'asc'}
@@ -286,7 +289,9 @@ const TaskTable = ({maxRows = 2}) => {
                                                          }}/>
                                     )}
                                 </TableCell>
-                                <TableCell>{getStatus(task?.running, task?.enabled, task?.endTime)}</TableCell>
+                                <TableCell align="center">
+                                    {getStatus(task?.running, task?.enabled, task?.endTime)}
+                                </TableCell>
                                 <TableCell align="center">
                                     {getTaskActions(task)}
                                 </TableCell>

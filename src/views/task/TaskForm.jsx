@@ -450,7 +450,7 @@ const TaskForm = ({task, handleAssign, action}) => {
                                             <Grid item xs={12} sm={12}>
                                                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                                                 <Typography variant="subtitle2">
-                                                    Fill all fields to create a new task.
+                                                    Fill all fields to proceed.
                                                 </Typography>
                                                 </Box>
                                             </Grid>
