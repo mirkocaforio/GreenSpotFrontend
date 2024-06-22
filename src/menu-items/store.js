@@ -15,7 +15,7 @@ const store = {
             type: 'item',
             url: '/sample-page',
             icon: icons.IconBasketPlus,
-            breadcrumbs: false
+            breadcrumbs: true
         }
     ]
 };

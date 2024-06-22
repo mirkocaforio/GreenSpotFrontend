@@ -5,6 +5,7 @@ import {getWallet} from "../actions/wallet";
 import {getProfileTransactions} from "../actions/transaction";
 import {getTasks} from "../actions/task";
 import {getTasksAnalytics} from "../actions/analytics";
+import {getRewards} from "../actions/reward";
 
 
 
@@ -26,6 +27,9 @@ const FetchData = ({ children, type}) => {
             break;
         case "taskAnalytics":
             fetchData = getTasksAnalytics;
+            break;
+        case "reward":
+            fetchData = getRewards;
             break;
         default:
             fetchData = getProfileData;

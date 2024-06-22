@@ -13,9 +13,9 @@ const reward = {
             id: 'store',
             title: 'Rewards Store',
             type: 'item',
-            url: '/sample-page',
+            url: '/store',
             icon: icons.IconAward,
-            breadcrumbs: false
+            breadcrumbs: true
         }
     ]
 };

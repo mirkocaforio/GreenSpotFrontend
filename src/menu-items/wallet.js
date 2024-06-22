@@ -18,7 +18,7 @@ const wallet = {
             type: 'item',
             url: '/wallet',
             icon: icons.AccountBalanceWalletOutlined,
-            breadcrumbs: false
+            breadcrumbs: true
         }
     ]
 };

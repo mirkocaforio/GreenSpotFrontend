@@ -12,13 +12,16 @@ import Typography from '@mui/material/Typography';
 import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 
 // project import
-import navigation from 'menu-items';
+import menuItem from "../../menu-items";
 
 // assets
 import { IconChevronRight, IconTallymark1 } from '@tabler/icons-react';
 import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
 import HomeIcon from '@mui/icons-material/Home';
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
+import {useSelector} from "react-redux";
+import {ROLE_ADMIN, ROLE_MEMBER, ROLE_UTENTE} from "../../config";
+
 
 // ==============================|| BREADCRUMBS TITLE ||============================== //
 
@@ -77,8 +80,28 @@ const Breadcrumbs = ({
 
   let customLocation = location.pathname;
 
+  const {profile} = useSelector(state => state.profile);
+  const role = profile?.role;
+
+  let items = [];
+
+  switch (role) {
+    case ROLE_ADMIN:
+      items = menuItem.adminItems;
+      break;
+    case ROLE_UTENTE:
+      items = menuItem.userItems;
+      break;
+    case ROLE_MEMBER:
+      items = menuItem.memberItems;
+      break;
+    default:
+      break;
+  }
+
   useEffect(() => {
-    navigation?.items?.map((menu) => {
+    resetMenu();
+    items?.map((menu) => {
       if (menu.type && menu.type === 'group') {
         if (menu?.url && menu.url === customLocation) {
           setMain(menu);
@@ -89,7 +112,16 @@ const Breadcrumbs = ({
       }
       return false;
     });
+
   });
+
+  function resetMenu() {
+
+    if (item?.url !== customLocation && main?.url !== customLocation){
+      setMain(undefined);
+      setItem(undefined);
+    }
+  }
 
   // set active item state
   const getCollapse = (menu) => {

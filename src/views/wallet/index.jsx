@@ -26,7 +26,7 @@ const Wallet = () => {
     }, [ wallet]);
 
     return(
-        <MainCard title="Wallet">
+        <MainCard>
             <Grid container spacing={gridSpacing}>
                 <Grid item xs={12}>
                     <Grid container spacing={gridSpacing}>
