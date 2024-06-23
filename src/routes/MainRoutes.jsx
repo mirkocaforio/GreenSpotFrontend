@@ -22,6 +22,7 @@ const WalletPage = Loadable(lazy(() => import('views/wallet')));
 const TaskPage = Loadable(lazy(() => import('views/task/TaskCreatePage')));
 const TaskManagerPage = Loadable(lazy(() => import("views/task/TaskManagerPage")));
 const StorePage = Loadable(lazy(() => import("views/store")));
+const ProductPage = Loadable(lazy(() => import("views/store/ProductPage")));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
@@ -139,6 +140,13 @@ const MainRoutes = {
                <StorePage />
             </FetchData>
           </RouteGuard>
+    },{
+      path: 'store/product/:id',
+      element: <RouteGuard allowedRoles={[ROLE_MEMBER]}>
+                    <FetchData type="reward">
+                        <ProductPage />
+                    </FetchData>
+                </RouteGuard>
     }
   ]
 };
