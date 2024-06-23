@@ -11,10 +11,8 @@ import {useTheme} from "@mui/material/styles";
 import AnimateButton from "../../ui-component/extended/AnimateButton";
 import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
 import {TabContext, TabPanel} from "@mui/lab";
-import {HelpTwoTone, ShoppingCart, ShoppingCartOutlined} from "@mui/icons-material";
+import {HelpTwoTone, ShoppingCartOutlined} from "@mui/icons-material";
 import Chip from "@mui/material/Chip";
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import ProductDetailSkeleton from "../../ui-component/cards/Skeleton/ProductPage";
 import ValueIncrementer from "../../ui-component/ValueIncrementer";
 

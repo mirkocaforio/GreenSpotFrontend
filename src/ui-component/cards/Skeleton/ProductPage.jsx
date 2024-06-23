@@ -1,6 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography, Grid, Box, IconButton, Avatar, Skeleton, Divider } from '@mui/material';
-import { styled } from '@mui/system';
+import { Grid, Box, IconButton, Skeleton, Divider } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
