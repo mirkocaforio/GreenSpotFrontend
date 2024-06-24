@@ -2,14 +2,12 @@
 import { IconCpu } from '@tabler/icons-react';
 import ComputerOutlinedIcon from '@mui/icons-material/ComputerOutlined';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
-import { IconEdit } from '@tabler/icons-react';
 
 // constant
 const icons = {
     ComputerOutlinedIcon,
     FormatListBulletedOutlinedIcon,
-    IconCpu,
-    IconEdit
+    IconCpu
 };
 
 const resource = {
@@ -25,28 +23,18 @@ const resource = {
 
             children: [
                 {
-                    id: 'assignResource',
-                    title: 'Assign Resource',
-                    type: 'item',
-                    url: '/sample-page',
-                    icon: icons.IconCpu,
-                    target: true
-                },
-                {
                     id: 'resourceList',
-                    title: 'Resource List',
+                    title: 'Shared Resources',
                     type: 'item',
-                    url: '/sample-page',
-                    icon: icons.FormatListBulletedOutlinedIcon,
-                    target: true
+                    url: '/resource/shared',
+                    icon: icons.FormatListBulletedOutlinedIcon
                 },
                 {
-                    id: 'updateResource',
-                    title: 'Update Resource',
+                    id: 'shareResource',
+                    title: 'Add Resource',
                     type: 'item',
-                    url: '/sample-page',
-                    icon: icons.IconEdit,
-                    target: true
+                    url: '/resource/add',
+                    icon: icons.IconCpu
                 }
             ]
         }

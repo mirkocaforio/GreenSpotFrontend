@@ -3,7 +3,7 @@
 
 
 import {ApiClient, AuthHeader} from "./AuthUtils";
-import {UserModel} from "./UserModel";
+import {UserModel} from "./Model/UserModel";
 import localStorage from "redux-persist/es/storage";
 import {updateProfile} from "./ProfileService";
 

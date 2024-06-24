@@ -17,7 +17,6 @@ const billing = {
             title: 'Billing',
             type: 'collapse',
             icon: icons.PaymentsOutlinedIcon,
-            breadcrumbs: false,
 
             children: [
                 {
@@ -25,24 +24,21 @@ const billing = {
                     title: 'Invoice',
                     type: 'item',
                     url: '/sample-page',
-                    icon: icons.ReceiptOutlinedIcon,
-                    breadcrumbs: false
+                    icon: icons.ReceiptOutlinedIcon
                 },
                 {
                     id: 'funds',
                     title: 'Add funds',
                     type: 'item',
                     url: '/sample-page',
-                    icon: icons.IconCreditCardRefund,
-                    breadcrumbs: false
+                    icon: icons.IconCreditCardRefund
                 },
                 {
                     id: 'payment',
                     title: 'Payment Method',
                     type: 'item',
                     url: '/sample-page',
-                    icon: icons.PaymentOutlinedIcon,
-                    breadcrumbs: false
+                    icon: icons.PaymentOutlinedIcon
                 }
             ]
         }

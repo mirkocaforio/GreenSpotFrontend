@@ -6,6 +6,8 @@ import {getProfileTransactions} from "../actions/transaction";
 import {getTasks} from "../actions/task";
 import {getTasksAnalytics} from "../actions/analytics";
 import {getRewards} from "../actions/reward";
+import {getCpuNames, getGpuNames} from "../actions/score";
+import {getResourceByEmail} from "../actions/resource";
 
 
 
@@ -21,6 +23,15 @@ const FetchData = ({ children, type}) => {
             break;
         case "transactions":
             fetchData = getProfileTransactions;
+            break;
+        case "resource":
+            fetchData = getResourceByEmail;
+            break;
+        case "score_cpu_names":
+            fetchData = getCpuNames;
+            break;
+        case "score_gpu_names":
+            fetchData = getGpuNames;
             break;
         case "tasks":
             fetchData = getTasks;

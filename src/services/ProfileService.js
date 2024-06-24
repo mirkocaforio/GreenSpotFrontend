@@ -1,7 +1,7 @@
 // ----- PROFILES MANAGEMENT ----- //
 
 import {AuthHeader, ApiClient, CurrentUser, CurrentProfile} from "./AuthUtils";
-import {ProfileModel} from "./ProfileModel";
+import {ProfileModel} from "./Model/ProfileModel";
 
 export const updateProfile = (name,surname,date,city,address,tel,fiscalCode,email) => {
     email = email ? email : CurrentUser().email;

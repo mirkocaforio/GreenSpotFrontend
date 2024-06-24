@@ -23,6 +23,7 @@ const TaskPage = Loadable(lazy(() => import('views/task/TaskCreatePage')));
 const TaskManagerPage = Loadable(lazy(() => import("views/task/TaskManagerPage")));
 const StorePage = Loadable(lazy(() => import("views/store")));
 const ProductPage = Loadable(lazy(() => import("views/store/ProductPage")));
+let ResourcePage = Loadable(lazy(() => import('views/resource')));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
@@ -116,6 +117,34 @@ const MainRoutes = {
                   </FetchData>
                 </FetchData>
               </RouteGuard>
+    },
+    {
+      path: 'resource',
+      children: [
+        {
+          path: 'shared',
+          element: <RouteGuard allowedRoles={[ROLE_MEMBER]}>
+            <FetchData type={"resource"}>
+              <FetchData type={"score_cpu_names"}>
+                <FetchData type={"score_gpu_names"}>
+                  <ResourcePage initialValue={"1"}/>
+                </FetchData>
+              </FetchData>
+            </FetchData>
+          </RouteGuard>
+        },
+        {
+          path: 'add',
+          element:
+              <RouteGuard allowedRoles={[ROLE_MEMBER]}>
+                <FetchData type={"score_cpu_names"}>
+                  <FetchData type={"score_gpu_names"}>
+                    <ResourcePage initialValue={"2"}/>
+                  </FetchData>
+                </FetchData>
+              </RouteGuard>
+        }
+      ]
     },
     {
       path: 'task',

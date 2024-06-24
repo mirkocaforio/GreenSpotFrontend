@@ -10,6 +10,8 @@ import transaction from "./transaction";
 import tasks from "./tasks";
 import analytics from "./analytics";
 import reward from "./reward";
+import score from "./score";
+import resource from "./resource";
 
 // ==============================|| COMBINE REDUCER ||============================== //
 
@@ -18,6 +20,8 @@ const reducer = combineReducers({
   auth,
   message,
   profile,
+  resource,
+  score,
   wallet,
   transaction,
   tasks,
