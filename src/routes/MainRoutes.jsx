@@ -8,7 +8,7 @@ import {ROLE_MEMBER, HOME_PATH, NOTIFICATION_DURATION, ROLE_UTENTE} from "../con
 import FetchData from "./FetchData";
 import {SnackbarProvider} from "notistack";
 import NetworkCheck from "./NetworkCheck";
-import TaskManagerPage from "../views/task/TaskManagerPage";
+import {Navigate} from "react-router-dom";
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
@@ -20,7 +20,9 @@ const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
 const UtilsShadow = Loadable(lazy(() => import('views/utilities/Shadow')));
 const WalletPage = Loadable(lazy(() => import('views/wallet')));
 const TaskPage = Loadable(lazy(() => import('views/task/TaskCreatePage')));
-const TaskListPage = Loadable(lazy(() => import('views/task/TaskManagerPage')));
+const TaskManagerPage = Loadable(lazy(() => import("views/task/TaskManagerPage")));
+const StorePage = Loadable(lazy(() => import("views/store")));
+const ProductPage = Loadable(lazy(() => import("views/store/ProductPage")));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
@@ -118,18 +120,33 @@ const MainRoutes = {
     {
       path: 'task',
       element: <RouteGuard allowedRoles={[ROLE_UTENTE]}>
-                <FetchData type="tasks">
                   <TaskPage />
-                </FetchData>
               </RouteGuard>
     },
     {
       path: 'task/list',
       element: <RouteGuard allowedRoles={[ROLE_UTENTE]}>
         <FetchData type="tasks">
-          <TaskManagerPage />
+          <FetchData type="taskAnalytics">
+            <TaskManagerPage />
+          </FetchData>
         </FetchData>
       </RouteGuard>
+    },{
+      path: 'store',
+      element:
+          <RouteGuard allowedRoles={[ROLE_MEMBER]}>
+            <FetchData type="reward">
+               <StorePage />
+            </FetchData>
+          </RouteGuard>
+    },{
+      path: 'store/product/:id',
+      element: <RouteGuard allowedRoles={[ROLE_MEMBER]}>
+                    <FetchData type="reward">
+                        <ProductPage />
+                    </FetchData>
+                </RouteGuard>
     }
   ]
 };

@@ -4,7 +4,7 @@ import TaskTable from "./TaskTable";
 const TaskManagerPage = () => {
     return (
         <MainCard title="Task Manager">
-            <TaskTable/>
+            <TaskTable maxRows={20}/>
         </MainCard>
     )
 }

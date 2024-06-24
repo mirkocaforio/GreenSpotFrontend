@@ -1,8 +1,11 @@
 // assets
 import {IconWallet} from '@tabler/icons-react';
+import {AccountBalanceWalletOutlined} from "@mui/icons-material";
 
 // constant
-const icons = {IconWallet};
+const icons = {
+    IconWallet,
+    AccountBalanceWalletOutlined};
 
 const wallet = {
     id: 'walletManagement',
@@ -14,8 +17,8 @@ const wallet = {
             title: 'Wallet Balance',
             type: 'item',
             url: '/wallet',
-            icon: icons.IconWallet,
-            breadcrumbs: false
+            icon: icons.AccountBalanceWalletOutlined,
+            breadcrumbs: true
         }
     ]
 };

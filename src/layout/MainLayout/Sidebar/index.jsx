@@ -41,8 +41,8 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
             paddingRight: '16px'
           }}
         >
-          <MenuList />
-          <MenuCard />
+            <MenuList />
+            {/*<MenuCard />*/}
           <Stack direction="row" justifyContent="center" sx={{ mb: 2 }}>
             <Chip label={import.meta.env.VITE_APP_VERSION} disabled chipcolor="secondary" size="small" sx={{ cursor: 'pointer' }} />
           </Stack>
