@@ -28,6 +28,7 @@ const SearchField = ({ placeHolder ,value, onChange, sx = {} }) => (
             paddingLeft: "16px",
             width: '100%',
             maxWidth: 400,
+            minWidth: 100,
             '& .MuiInputBase-input': {
                 paddingLeft: 1,
             },

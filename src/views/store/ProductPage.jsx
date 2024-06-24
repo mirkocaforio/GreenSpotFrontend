@@ -11,10 +11,12 @@ import {useTheme} from "@mui/material/styles";
 import AnimateButton from "../../ui-component/extended/AnimateButton";
 import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
 import {TabContext, TabPanel} from "@mui/lab";
-import {HelpTwoTone, ShoppingCartOutlined} from "@mui/icons-material";
+import {HelpTwoTone, MonetizationOnTwoTone, ShoppingCartOutlined} from "@mui/icons-material";
 import Chip from "@mui/material/Chip";
 import ProductDetailSkeleton from "../../ui-component/cards/Skeleton/ProductPage";
 import ValueIncrementer from "../../ui-component/ValueIncrementer";
+import {dateBeauty} from "../../utils/date-beauty";
+import Stack from "@mui/material/Stack";
 
 const ProductPage = () => {
     const { id } = useParams();
@@ -57,7 +59,13 @@ const ProductPage = () => {
         } else{
             setIsLoading(true);
         }
-    }, [id, rewards]);
+
+        if(product){
+            setIsLoading(false);
+        }else {
+            setIsLoading(true);
+        }
+    }, [id, product, rewards]);
 
 
     return (
@@ -126,14 +134,19 @@ const ProductPage = () => {
                                 </Grid>
                                 <Grid item container alignItems="center" justifyContent="flex-start">
                                     <Grid item>
-                                        <Typography variant="h2" color="primary" gutterBottom>
-                                            ${product?.cost}
-                                        </Typography>
+                                        <Stack direction="row" spacing={1}>
+                                            <Box sx={{ paddingTop: 0.2 }}>
+                                                <MonetizationOnTwoTone color="primary" fontSize="large"/>
+                                            </Box>
+                                            <Typography variant="h1" color="primary" >
+                                                {product?.cost}
+                                            </Typography>
+                                        </Stack>
                                     </Grid>
                                     {product?.oldCost > 0 &&
                                         (<Grid item>
                                             <Typography variant="body2" component="span" color="textSecondary" sx={{ textDecoration: 'line-through', ml: 1 }}>
-                                                ${product?.oldCost}
+                                                {product?.oldCost}
                                             </Typography>
                                         </Grid>)}
                                 </Grid>
@@ -195,7 +208,11 @@ const ProductPage = () => {
                                         </TabPanel>
                                         <TabPanel value={"2"}>
                                             <Typography variant="body1">
-                                                Product added on: {product?.addDate}
+                                                Reward added on:
+                                                <Typography variant="body1"
+                                                            fontWeight="600"
+                                                >{dateBeauty(product?.addDate)}
+                                                </Typography>
                                             </Typography>
                                         </TabPanel>
                                     </TabContext>

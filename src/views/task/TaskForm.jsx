@@ -35,7 +35,7 @@ import Stack from "@mui/material/Stack";
 import SubCard from "../../ui-component/cards/SubCard";
 import { gridSpacing } from 'store/constant';
 import AnimateButton from "../../ui-component/extended/AnimateButton";
-import TaskModel from "../../services/TaskModel";
+import TaskModel from "../../services/Model/TaskModel";
 
 import PropTypes from "prop-types";
 import {useNavigate} from "react-router-dom";
@@ -241,7 +241,7 @@ const TaskForm = ({task, handleAssign, action}) => {
                                                         value={values.description}
                                                     />
                                                     {touched.description && errors.description && (
-                                                        <FormHelperText error id="standard-weight-helper-text--birthDate">
+                                                        <FormHelperText error id="standard-weight-helper-text--description">
                                                             {errors.description}
                                                         </FormHelperText>
                                                     )}

@@ -118,12 +118,12 @@ apigClientFactory.newClient = function (config) {
         return apiGatewayClient.makeRequest(apiV1OptionsRequest, authType, additionalParams, config.apiKey);
     };
     
-
+    
     apigClient.apiV1AnalyticsUserGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
-
+        
         apiGateway.core.utils.assertParametersDefined(params, ['Authorization'], ['body']);
-
+        
         var apiV1AnalyticsUserGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/api/v1/analytics/user').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
@@ -131,17 +131,17 @@ apigClientFactory.newClient = function (config) {
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
-
-
+        
+        
         return apiGatewayClient.makeRequest(apiV1AnalyticsUserGetRequest, authType, additionalParams, config.apiKey);
     };
-
-
+    
+    
     apigClient.apiV1AnalyticsUserOptions = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
-
+        
         apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
-
+        
         var apiV1AnalyticsUserOptionsRequest = {
             verb: 'options'.toUpperCase(),
             path: pathComponent + uritemplate('/api/v1/analytics/user').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
@@ -149,17 +149,17 @@ apigClientFactory.newClient = function (config) {
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
-
-
+        
+        
         return apiGatewayClient.makeRequest(apiV1AnalyticsUserOptionsRequest, authType, additionalParams, config.apiKey);
     };
-
-
+    
+    
     apigClient.apiV1AnalyticsUserFilterGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
-
+        
         apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'startDate', 'taskId', 'endDate'], ['body']);
-
+        
         var apiV1AnalyticsUserFilterGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/api/v1/analytics/user/filter').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
@@ -167,17 +167,17 @@ apigClientFactory.newClient = function (config) {
             queryParams: apiGateway.core.utils.parseParametersToObject(params, ['startDate', 'taskId', 'endDate']),
             body: body
         };
-
-
+        
+        
         return apiGatewayClient.makeRequest(apiV1AnalyticsUserFilterGetRequest, authType, additionalParams, config.apiKey);
     };
-
-
+    
+    
     apigClient.apiV1AnalyticsUserFilterOptions = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
-
+        
         apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
-
+        
         var apiV1AnalyticsUserFilterOptionsRequest = {
             verb: 'options'.toUpperCase(),
             path: pathComponent + uritemplate('/api/v1/analytics/user/filter').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
@@ -185,17 +185,17 @@ apigClientFactory.newClient = function (config) {
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
-
-
+        
+        
         return apiGatewayClient.makeRequest(apiV1AnalyticsUserFilterOptionsRequest, authType, additionalParams, config.apiKey);
     };
-
-
+    
+    
     apigClient.apiV1AnalyticsUserTasksGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
-
+        
         apiGateway.core.utils.assertParametersDefined(params, ['Authorization'], ['body']);
-
+        
         var apiV1AnalyticsUserTasksGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/api/v1/analytics/user/tasks').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
@@ -203,17 +203,17 @@ apigClientFactory.newClient = function (config) {
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
-
-
+        
+        
         return apiGatewayClient.makeRequest(apiV1AnalyticsUserTasksGetRequest, authType, additionalParams, config.apiKey);
     };
-
-
+    
+    
     apigClient.apiV1AnalyticsUserTasksOptions = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
-
+        
         apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
-
+        
         var apiV1AnalyticsUserTasksOptionsRequest = {
             verb: 'options'.toUpperCase(),
             path: pathComponent + uritemplate('/api/v1/analytics/user/tasks').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
@@ -221,12 +221,12 @@ apigClientFactory.newClient = function (config) {
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
-
-
+        
+        
         return apiGatewayClient.makeRequest(apiV1AnalyticsUserTasksOptionsRequest, authType, additionalParams, config.apiKey);
     };
-
-
+    
+    
     apigClient.apiV1ResourceOptions = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -496,12 +496,12 @@ apigClientFactory.newClient = function (config) {
         return apiGatewayClient.makeRequest(apiV1ResourceUpdateOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
-
+    
     apigClient.apiV1RewardsGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
-
+        
         apiGateway.core.utils.assertParametersDefined(params, ['Authorization'], ['body']);
-
+        
         var apiV1RewardsGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/api/v1/rewards').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
@@ -509,17 +509,17 @@ apigClientFactory.newClient = function (config) {
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
-
-
+        
+        
         return apiGatewayClient.makeRequest(apiV1RewardsGetRequest, authType, additionalParams, config.apiKey);
     };
-
-
+    
+    
     apigClient.apiV1RewardsOptions = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
-
+        
         apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
-
+        
         var apiV1RewardsOptionsRequest = {
             verb: 'options'.toUpperCase(),
             path: pathComponent + uritemplate('/api/v1/rewards').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
@@ -527,17 +527,125 @@ apigClientFactory.newClient = function (config) {
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
-
-
+        
+        
         return apiGatewayClient.makeRequest(apiV1RewardsOptionsRequest, authType, additionalParams, config.apiKey);
     };
-
-
+    
+    
+    apigClient.apiV1RewardsAddPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'body'], ['body']);
+        
+        var apiV1RewardsAddPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/rewards/add').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1RewardsAddPostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1RewardsAddOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1RewardsAddOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/rewards/add').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1RewardsAddOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1RewardsDisableIdPatch = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['id', 'Authorization'], ['body']);
+        
+        var apiV1RewardsDisableIdPatchRequest = {
+            verb: 'patch'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/rewards/disable/{id}').expand(apiGateway.core.utils.parseParametersToObject(params, ['id', ])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1RewardsDisableIdPatchRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1RewardsDisableIdOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1RewardsDisableIdOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/rewards/disable/{id}').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1RewardsDisableIdOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1RewardsEnableIdPatch = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'id'], ['body']);
+        
+        var apiV1RewardsEnableIdPatchRequest = {
+            verb: 'patch'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/rewards/enable/{id}').expand(apiGateway.core.utils.parseParametersToObject(params, ['id'])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1RewardsEnableIdPatchRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1RewardsEnableIdOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1RewardsEnableIdOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/rewards/enable/{id}').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1RewardsEnableIdOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.apiV1RewardsRedeemPost = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
-
+        
         apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'body'], ['body']);
-
+        
         var apiV1RewardsRedeemPostRequest = {
             verb: 'post'.toUpperCase(),
             path: pathComponent + uritemplate('/api/v1/rewards/redeem').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
@@ -545,17 +653,17 @@ apigClientFactory.newClient = function (config) {
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
-
-
+        
+        
         return apiGatewayClient.makeRequest(apiV1RewardsRedeemPostRequest, authType, additionalParams, config.apiKey);
     };
-
-
+    
+    
     apigClient.apiV1RewardsRedeemOptions = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
-
+        
         apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
-
+        
         var apiV1RewardsRedeemOptionsRequest = {
             verb: 'options'.toUpperCase(),
             path: pathComponent + uritemplate('/api/v1/rewards/redeem').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
@@ -563,17 +671,53 @@ apigClientFactory.newClient = function (config) {
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
-
-
+        
+        
         return apiGatewayClient.makeRequest(apiV1RewardsRedeemOptionsRequest, authType, additionalParams, config.apiKey);
     };
-
-
+    
+    
+    apigClient.apiV1RewardsUpdatePatch = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'body'], ['body']);
+        
+        var apiV1RewardsUpdatePatchRequest = {
+            verb: 'patch'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/rewards/update').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1RewardsUpdatePatchRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1RewardsUpdateOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1RewardsUpdateOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/rewards/update').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1RewardsUpdateOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.apiV1RewardsIdGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
-
+        
         apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'id'], ['body']);
-
+        
         var apiV1RewardsIdGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/api/v1/rewards/{id}').expand(apiGateway.core.utils.parseParametersToObject(params, ['id'])),
@@ -581,17 +725,17 @@ apigClientFactory.newClient = function (config) {
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
-
-
+        
+        
         return apiGatewayClient.makeRequest(apiV1RewardsIdGetRequest, authType, additionalParams, config.apiKey);
     };
-
-
+    
+    
     apigClient.apiV1RewardsIdOptions = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
-
+        
         apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
-
+        
         var apiV1RewardsIdOptionsRequest = {
             verb: 'options'.toUpperCase(),
             path: pathComponent + uritemplate('/api/v1/rewards/{id}').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
@@ -599,12 +743,12 @@ apigClientFactory.newClient = function (config) {
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
-
-
+        
+        
         return apiGatewayClient.makeRequest(apiV1RewardsIdOptionsRequest, authType, additionalParams, config.apiKey);
     };
-
-
+    
+    
     apigClient.apiV1ScoresOptions = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         

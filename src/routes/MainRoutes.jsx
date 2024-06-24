@@ -4,7 +4,7 @@ import { lazy } from 'react';
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 import RouteGuard from './RouteGuard';
-import {ROLE_MEMBER, HOME_PATH, NOTIFICATION_DURATION, ROLE_UTENTE} from "../config";
+import {ROLE_MEMBER, HOME_PATH, NOTIFICATION_DURATION, ROLE_UTENTE, ROLE_ADMIN} from "../config";
 import FetchData from "./FetchData";
 import {SnackbarProvider} from "notistack";
 import NetworkCheck from "./NetworkCheck";
@@ -24,6 +24,8 @@ const TaskManagerPage = Loadable(lazy(() => import("views/task/TaskManagerPage")
 const StorePage = Loadable(lazy(() => import("views/store")));
 const ProductPage = Loadable(lazy(() => import("views/store/ProductPage")));
 let ResourcePage = Loadable(lazy(() => import('views/resource')));
+const StoreManagement = Loadable(lazy(() => import("views/store/management")));
+const ProductAdd = Loadable(lazy(() => import("views/store/management/reward")));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
@@ -174,6 +176,20 @@ const MainRoutes = {
       element: <RouteGuard allowedRoles={[ROLE_MEMBER]}>
                     <FetchData type="reward">
                         <ProductPage />
+                    </FetchData>
+                </RouteGuard>
+    },{
+      path: 'store/management',
+      element: <RouteGuard allowedRoles={[ROLE_ADMIN]}>
+                  <FetchData type="reward">
+                    <StoreManagement />
+                  </FetchData>
+                </RouteGuard>
+    },{
+      path: 'store/management/:id',
+      element: <RouteGuard allowedRoles={[ROLE_ADMIN]}>
+                    <FetchData type="reward">
+                        <ProductAdd/>
                     </FetchData>
                 </RouteGuard>
     }

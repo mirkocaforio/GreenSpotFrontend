@@ -11,9 +11,9 @@ const store = {
     children: [
         {
             id: 'store',
-            title: 'Add reward',
+            title: 'Reward List',
             type: 'item',
-            url: '/sample-page',
+            url: '/store/management',
             icon: icons.IconBasketPlus,
             breadcrumbs: true
         }

@@ -27,3 +27,5 @@ export const WALLET_PATH = "/wallet";
 export const HOME_PATH = "/home";
 
 export const NOTIFICATION_DURATION = 5000;
+
+export const NEW_REWARD = "new";

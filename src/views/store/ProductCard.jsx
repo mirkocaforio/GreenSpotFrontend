@@ -52,12 +52,12 @@ const ProductCard = ({ product, handleRedeem }) => (
                     <Grid item>
                         <Grid container={true} spacing={1}>
                             <Grid item>
-                                <Typography variant="h6" fontSize={"medium"} color="primary">${product?.cost}</Typography>
+                                <Typography variant="h6" fontSize={"medium"} color="primary">{product?.cost}</Typography>
                             </Grid>
                             {product?.oldCost > 0 && (
                                 <Grid item>
                                     <Typography variant="body2"  fontSize={"small"} color="text.secondary" sx={{ textDecoration: 'line-through' }}>
-                                        ${product?.oldCost}
+                                        {product?.oldCost}
                                     </Typography>
                                 </Grid>
                             )}

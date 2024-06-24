@@ -30,7 +30,7 @@ import Tooltip from "@mui/material/Tooltip";
 import CardActions from "@mui/material/CardActions";
 
 // project
-import TaskModel from "../../services/TaskModel";
+import TaskModel from "../../services/Model/TaskModel";
 import SkeletonTransactionCard from "../../ui-component/cards/Skeleton/TransactionCard";
 import TaskInfo from "./TaskInfo";
 import TaskUpdate from "./TaskUpdate";
