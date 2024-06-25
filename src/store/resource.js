@@ -25,7 +25,7 @@ const {type, payload} = action;
         case LOGOUT:
             return {
                 ...state,
-                resources: null,
+                resourcesList: null,
             };
         default:
             return state;

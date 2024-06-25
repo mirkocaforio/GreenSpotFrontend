@@ -12,6 +12,7 @@ import {useSelector} from "react-redux";
 import SkeletonResourceCard from "../../../../ui-component/cards/Skeleton/SkeletonReourceCard";
 import ResourceCard from "./ResourceCard";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 const SharedResource = () => {
     const {resourcesList: resources} = useSelector((state) => state.resource);
@@ -22,6 +23,8 @@ const SharedResource = () => {
 
     useEffect(() => {
         if (resources) {
+            console.log("resources", resources)
+            console.log("resources length", resources.length)
             setResourcesList(resources.resourcesList);
             setLoading(false);
         } else {
@@ -99,9 +102,11 @@ const SharedResource = () => {
                                 />
                             </Grid>
                             <Grid item xs={12} sm={12} md={12}>
-                                <Typography variant="caption">
-                                    No resources have been shared yet
-                                </Typography>
+                                <Box display="flex" justifyContent="center">
+                                    <Typography variant="caption">
+                                        No resources have been shared yet
+                                    </Typography>
+                                </Box>
                             </Grid>
                         </Grid>
                     </MainCard>
