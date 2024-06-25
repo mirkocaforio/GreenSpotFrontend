@@ -9,7 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 
 const Paging = ({ setPage, totalRows, maxRows, setMaxRows, color = "primary" }) => {
 
-    const [currPage, setCurrPage] = useState(0);
+    const [currPage, setCurrPage] = useState(1);
 
     const handleChangePage = (event, newPage) => {
         let page = newPage - 1;
