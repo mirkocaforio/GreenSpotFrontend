@@ -14,7 +14,8 @@ const Paging = ({ page, setPage, totalRows, maxRows, setMaxRows, color = "primar
     };
 
     const pageCount = () =>{
-        const count = Math.round(totalRows / maxRows);
+        const count = Math.ceil(totalRows / maxRows);
+
         return count === 0 ? 1 : count;
     }
 
@@ -33,7 +34,7 @@ const Paging = ({ page, setPage, totalRows, maxRows, setMaxRows, color = "primar
                             setPage(0);
                             setMaxRows(e.target.value);
                         }}>
-                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
                     <MenuItem value={10}>10</MenuItem>
                     <MenuItem value={25}>25</MenuItem>
                 </Select>

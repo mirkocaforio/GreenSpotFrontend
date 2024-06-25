@@ -8,7 +8,7 @@ import {getTasksAnalytics} from "../actions/analytics";
 import {getRewards} from "../actions/reward";
 import {getCpuNames, getGpuNames} from "../actions/score";
 import {getResourceByEmail} from "../actions/resource";
-
+import {getRedeems} from "../actions/reward";
 
 
 const FetchData = ({ children, type}) => {
@@ -41,6 +41,9 @@ const FetchData = ({ children, type}) => {
             break;
         case "reward":
             fetchData = getRewards;
+            break;
+        case "redeems":
+            fetchData = getRedeems;
             break;
         default:
             fetchData = getProfileData;

@@ -1,5 +1,5 @@
 import RewardService from "../services/RewardService";
-import {GET_REWARDS_FAIL, GET_REWARDS_SUCCESS, LOAD_REWARD, SET_MESSAGE} from "./types";
+import {GET_REDEEMS_SUCCESS, GET_REWARDS_FAIL, GET_REWARDS_SUCCESS, LOAD_REWARD, SET_MESSAGE} from "./types";
 import {onError} from "./expiration";
 import {MSG_SUCCESS} from "../config";
 
@@ -151,6 +151,86 @@ export const disableReward = (reward) => (dispatch) => {
         });
 
         dispatch(getRewards());
+
+        return Promise.resolve(data);
+    }, (error) => {
+        const message =
+            (error.data && error.data.message) ||
+            (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+        dispatch(onError(message,"rewards"));
+        return Promise.reject();
+    });
+}
+
+export const buyReward = (reward) => (dispatch) => {
+    return RewardService.buyReward(reward).then((data) => {
+
+        dispatch({
+            type: SET_MESSAGE,
+            payload: {
+                message: "Reward redeemed.",
+                type: MSG_SUCCESS
+            }
+        });
+
+        dispatch(getRewards());
+
+        return Promise.resolve(data);
+    }, (error) => {
+        const message =
+            (error.data && error.data.message) ||
+            (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+        dispatch(onError(message,"rewards"));
+        return Promise.reject();
+    });
+}
+
+export const getRedeems = () => (dispatch) => {
+    return RewardService.getRedeems().then((data) => {
+
+        dispatch({
+            type: GET_REDEEMS_SUCCESS,
+            payload: { redeems: data },
+        });
+
+        return Promise.resolve(data);
+    }, (error) => {
+        const message =
+            (error.data && error.data.message) ||
+            (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+        dispatch(onError(message,"rewards"));
+        return Promise.reject();
+    });
+}
+
+export const useRedeem = (redeemCode) => (dispatch) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    return RewardService.useRedeem(redeemCode).then((data) => {
+
+        dispatch({
+            type: SET_MESSAGE,
+            payload: {
+                message: "Redeemed successfully.",
+                type: MSG_SUCCESS
+            }
+        });
+
+        dispatch(getRedeems());
 
         return Promise.resolve(data);
     }, (error) => {

@@ -26,6 +26,7 @@ const ProductPage = Loadable(lazy(() => import("views/store/ProductPage")));
 let ResourcePage = Loadable(lazy(() => import('views/resource')));
 const StoreManagement = Loadable(lazy(() => import("views/store/management")));
 const ProductAdd = Loadable(lazy(() => import("views/store/management/reward")));
+const RedeeemHistory = Loadable(lazy(() => import("views/store/history")));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
@@ -84,24 +85,6 @@ const MainRoutes = {
         }
       ]
     },
-    // {
-    //   path: 'icons',
-    //   children: [
-    //     {
-    //       path: 'tabler-icons',
-    //       element: <UtilsTablerIcons />
-    //     }
-    //   ]
-    // },
-    // {
-    //   path: 'icons',
-    //   children: [
-    //     {
-    //       path: 'material-icons',
-    //       element: <UtilsMaterialIcons />
-    //     }
-    //   ]
-    // },
     {
       path: 'sample-page',
       element:<SamplePage />
@@ -192,6 +175,14 @@ const MainRoutes = {
                         <ProductAdd/>
                     </FetchData>
                 </RouteGuard>
+    },{
+      path: 'redeem/history',
+      element: <RouteGuard allowedRoles={[ROLE_MEMBER]}>
+                  <FetchData type="redeems">
+                    <RedeeemHistory />
+                  </FetchData>
+                </RouteGuard>
+
     }
   ]
 };

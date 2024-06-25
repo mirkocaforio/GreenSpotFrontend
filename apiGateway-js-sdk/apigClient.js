@@ -677,6 +677,78 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.apiV1RewardsRedeemUseRedeemCodePatch = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['redeemCode', 'Authorization'], ['body']);
+        
+        var apiV1RewardsRedeemUseRedeemCodePatchRequest = {
+            verb: 'patch'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/rewards/redeem/use/{redeemCode}').expand(apiGateway.core.utils.parseParametersToObject(params, ['redeemCode', ])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1RewardsRedeemUseRedeemCodePatchRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1RewardsRedeemUseRedeemCodeOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1RewardsRedeemUseRedeemCodeOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/rewards/redeem/use/{redeemCode}').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1RewardsRedeemUseRedeemCodeOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1RewardsRedeemUserEmailGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['email', 'Authorization'], ['body']);
+        
+        var apiV1RewardsRedeemUserEmailGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/rewards/redeem/user/{email}').expand(apiGateway.core.utils.parseParametersToObject(params, ['email', ])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1RewardsRedeemUserEmailGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1RewardsRedeemUserEmailOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1RewardsRedeemUserEmailOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/rewards/redeem/user/{email}').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1RewardsRedeemUserEmailOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.apiV1RewardsUpdatePatch = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         

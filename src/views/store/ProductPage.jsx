@@ -5,7 +5,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
 import {useTheme} from "@mui/material/styles";
 import AnimateButton from "../../ui-component/extended/AnimateButton";
@@ -17,9 +17,14 @@ import ProductDetailSkeleton from "../../ui-component/cards/Skeleton/ProductPage
 import ValueIncrementer from "../../ui-component/ValueIncrementer";
 import {dateBeauty} from "../../utils/date-beauty";
 import Stack from "@mui/material/Stack";
+import BuyRewardModel from "../../services/Model/BuyRewardModel";
+import {buyReward} from "../../actions/reward";
 
 const ProductPage = () => {
     const { id } = useParams();
+
+    const dispatch = useDispatch();
+
     const {rewards} = useSelector(state => state.reward);
     const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -29,9 +34,20 @@ const ProductPage = () => {
     const navigate = useNavigate();
     const [value, setValue] = useState("1");
     const [favorite, setFavorite] = useState(false);
+    const [submit, setSubmit] = useState(false);
 
     const goBack = () => {
         navigate("/store", { replace: true });
+    }
+
+    const handleOnClick = () => {
+        const redeem = new BuyRewardModel("", product.id, "", quantity);
+        setSubmit(true);
+        dispatch(buyReward(redeem.toJson())).then(
+            () => {
+                setSubmit(false);
+            }
+        );
     }
 
     const handleFavoriteClick = () => {
@@ -110,27 +126,27 @@ const ProductPage = () => {
                             </Box>
                         </Grid>
                         <Grid item xs={12} md={6}>
-                            <Grid container direction="column">
+                            <Grid container direction="column" spacing={1}>
                                 <Grid item xs={12}>
-                                    <Typography variant="body2" gutterBottom>
                                         { product?.quantity > 0
                                         ? (
                                             <Chip label="In Stock" color="success" size="small"  sx={{ cursor:"default", borderRadius: "4px"}} clickable />
                                         ) : (
                                             <Chip label="Out of Stock" color="error" size="small" sx={{ cursor:"default", borderRadius: "4px"}} clickable />
                                         ) }
-                                    </Typography>
                                 </Grid>
-                                <Grid item xs={12}>
-                                    <Typography variant="h3" gutterBottom>
-                                        {product?.name}
+                                <Grid item>
+                                    <Stack direction="column" spacing={-0.1}>
+                                        <Typography variant="h3" gutterBottom>
+                                            {product?.name}
+                                        </Typography>
                                         <Typography variant="subtitle1" color="textSecondary" gutterBottom>
                                             {product?.subcategory}
                                         </Typography>
-                                    </Typography>
+                                    </Stack>
                                 </Grid>
                                 <Grid item>
-                                    <Box display="flex" alignItems="center" mb={2}/>
+                                    <Box display="flex" alignItems="center" mb={1}/>
                                 </Grid>
                                 <Grid item container alignItems="center" justifyContent="flex-start">
                                     <Grid item>
@@ -175,7 +191,13 @@ const ProductPage = () => {
                                 <Grid item container justifyContent="flex-start" xs={12}>
                                     <Grid item xs={12}>
                                         <AnimateButton>
-                                            <Button fullWidth disabled={product?.quantity === 0} size="large" variant="contained" color="secondary" startIcon={ <ShoppingCartOutlined/>}>
+                                            <Button fullWidth
+                                                    onClick={handleOnClick}
+                                                    disabled={product?.quantity === 0 || submit}
+                                                    size="large"
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    startIcon={ <ShoppingCartOutlined/>}>
                                                 Redeem Now
                                             </Button>
                                         </AnimateButton>
@@ -207,13 +229,15 @@ const ProductPage = () => {
                                             </Typography>
                                         </TabPanel>
                                         <TabPanel value={"2"}>
-                                            <Typography variant="body1">
-                                                Reward added on:
+                                            <Stack direction="column" spacing={0}>
+                                                <Typography variant="body1">
+                                                    Reward added on:
+                                                </Typography>
                                                 <Typography variant="body1"
                                                             fontWeight="600"
                                                 >{dateBeauty(product?.addDate)}
                                                 </Typography>
-                                            </Typography>
+                                            </Stack>
                                         </TabPanel>
                                     </TabContext>
                                 </Grid>

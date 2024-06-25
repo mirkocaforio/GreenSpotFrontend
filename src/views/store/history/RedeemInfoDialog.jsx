@@ -1,40 +1,33 @@
+
+
 import {Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {useTheme} from "@mui/material/styles";
-import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import RewardViewForm from "./RewardViewForm";
+import RedeemInfo from "./RedeemInfo";
 
 
-const RewardView = ({ id, open, onClose }) => {
+
+const RedeemInfoDialog = ({ data, open, onClose }) => {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-    const {rewards} = useSelector(state => state.reward);
-    const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        if(rewards) {
-            setProduct(rewards?.rewards.find(reward => reward.id === id));
+        if(data) {
             setIsLoading(false);
         } else{
             setIsLoading(true);
         }
-
-        if(product){
-            setIsLoading(false);
-        }else {
-            setIsLoading(true);
-        }
-    }, [id, product, rewards]);
+    }, [data]);
 
     return (
         <Dialog open={open} onClose={onClose} aria-labelledby="task-dialog-title" maxWidth="lg" fullWidth fullScreen={fullScreen} scroll="paper">
-            <DialogTitle id="task-dialog-title" fontSize="medium">{product?.name}</DialogTitle>
+            <DialogTitle id="task-dialog-title" fontSize="medium">{data?.redeemId}</DialogTitle>
             <DialogContent dividers>
-                <RewardViewForm isLoading={isLoading} reward={product} />
+                <RedeemInfo isLoading={isLoading} redeem={data}/>
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose} color="primary">Close</Button>
@@ -43,10 +36,11 @@ const RewardView = ({ id, open, onClose }) => {
     );
 }
 
-RewardView.propTypes = {
-    id: PropTypes.string.isRequired,
+RedeemInfoDialog.propTypes = {
+    data: PropTypes.object.isRequired,
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
 };
 
-export default RewardView;
+export default RedeemInfoDialog;
+

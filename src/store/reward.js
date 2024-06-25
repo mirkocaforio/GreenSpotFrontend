@@ -1,8 +1,16 @@
-import {GET_REWARDS_FAIL, GET_REWARDS_SUCCESS, LOAD_REWARD, LOGOUT} from "../actions/types";
+import {
+    GET_REDEEMS_FAIL,
+    GET_REDEEMS_SUCCESS,
+    GET_REWARDS_FAIL,
+    GET_REWARDS_SUCCESS,
+    LOAD_REWARD,
+    LOGOUT
+} from "../actions/types";
 
 const initialState = {
     rewards: null,
     currReward: null,
+    redeems: null,
 };
 
 export default function (state = initialState, action) {
@@ -23,6 +31,16 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 currReward: payload.currReward,
+            };
+        case GET_REDEEMS_SUCCESS:
+            return {
+                ...state,
+                redeems: payload.redeems,
+            };
+            case GET_REDEEMS_FAIL:
+        return {
+                ...state,
+                redeems: state.redeems ? state.redeems : null,
             };
         case LOGOUT:
             return {

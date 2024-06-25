@@ -1,6 +1,7 @@
 //apiV1RewardsGet
 
-import {AuthHeader, ApiClient} from "./AuthUtils";
+import {AuthHeader, ApiClient, CurrentUser} from "./AuthUtils";
+import BuyRewardModel from "./Model/BuyRewardModel";
 
 export const getRewards = () => {
     let params = AuthHeader();
@@ -99,11 +100,69 @@ export const disableReward = (id) => {
         });
 }
 
+export const buyReward = (data) => {
+    let params = AuthHeader();
+
+    let dataObj = BuyRewardModel.fromJson(data);
+    dataObj.userEmail = CurrentUser()?.email;
+
+    const body = dataObj.toJson();
+
+
+    const additionalParams = {};
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1RewardsRedeemPost(params, body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+}
+
+
+export const getRedeems = () => {
+    let params = AuthHeader();
+    params["email"] = CurrentUser()?.email;
+    const body = {};
+    const additionalParams = {};
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1RewardsRedeemUserEmailGet(params, body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+}
+
+export const useRedeem = (redeemCode) => {
+    let params = AuthHeader();
+    params["redeemCode"] = redeemCode;
+
+    const body = {};
+    const additionalParams = {};
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1RewardsRedeemUseRedeemCodePatch(params, body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+}
+
 export default {
     getRewards,
     getRewardById,
     createReward,
     updateReward,
     enableReward,
-   disableReward
+   disableReward,
+    buyReward,
+    getRedeems,
+    useRedeem,
 }

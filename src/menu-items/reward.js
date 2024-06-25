@@ -1,8 +1,9 @@
 // assets
 import { IconAward } from '@tabler/icons-react';
+import { ShoppingBasketOutlined } from "@mui/icons-material";
 
 // constant
-const icons = { IconAward };
+const icons = { IconAward, ShoppingBasketOutlined};
 
 const reward = {
     id: 'rewards',
@@ -15,6 +16,13 @@ const reward = {
             type: 'item',
             url: '/store',
             icon: icons.IconAward,
+            breadcrumbs: true
+        },{
+            id: 'redeems',
+            title: 'Redeem History',
+            type: 'item',
+            url: '/redeem/history',
+            icon: icons.ShoppingBasketOutlined,
             breadcrumbs: true
         }
     ]
