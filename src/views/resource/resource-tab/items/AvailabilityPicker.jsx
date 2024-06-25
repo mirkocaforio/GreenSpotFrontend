@@ -138,6 +138,7 @@ const AvailabilityPicker = ({fullWidth, value, onBlur, onChange, name, label, he
                 <AccordionSummary
                     aria-controls="panel1a-content"
                     id="panel1a-header"
+                    sx={{padding:0}}
                 >
                     <TextField
                         fullWidth={fullWidth}
@@ -166,7 +167,7 @@ const AvailabilityPicker = ({fullWidth, value, onBlur, onChange, name, label, he
                         }}
                     />
                 </AccordionSummary>
-                <AccordionDetails>
+                <AccordionDetails sx={{padding:0}}>
                     {renderSummary()}
                 </AccordionDetails>
             </Accordion>

@@ -303,8 +303,8 @@ const ResourceForm = ({cpuNameList, gpuNameList}) => {
                                     <SubCard title={"Availability information"}>
                                         <Grid container spacing={gridSpacing}>
                                             {/*TODO: VEDERE COME SI PUO' SISTEMARE l'onBlur e gli errori*/}
-                                            <Grid item xs={12} sm={12}>
-                                                <FormControl fullWidth>
+                                            <Grid item xs={12} sm={12} md={12} lg={12}>
+                                                <FormControl fullWidth sx={{ padding: 0, minWidth: "100%"}}>
                                                     <AvailabilityPicker
                                                         fullWidth
                                                         name="availability"
@@ -317,7 +317,7 @@ const ResourceForm = ({cpuNameList, gpuNameList}) => {
                                                     />
                                                 </FormControl>
                                             </Grid>
-                                            <Grid item xs={12} sm={12}>
+                                            <Grid item xs={12} sm={12} lg={12} md={12}>
                                                 <FormControl fullWidth>
                                                     <TextField
                                                         fullWidth
@@ -333,6 +333,7 @@ const ResourceForm = ({cpuNameList, gpuNameList}) => {
                                                         InputLabelProps={{
                                                             shrink: true,
                                                         }}
+                                                        sx={{maxWidth: "100%"}}
                                                     >
                                                         <MenuItem value={"true"}>Available</MenuItem>
                                                         <MenuItem value={"false"}>Not Available</MenuItem>
