@@ -27,13 +27,9 @@ const AddResource = () => {
         return (
             <>
                 {isLoading ? (
-                    <MainCard>
-                        <ResourceFormSkeleton/>
-                    </MainCard>
+                    <ResourceFormSkeleton/>
                 ) : (
-                    <MainCard title="Add a new resource">
-                        <ResourceForm cpuNameList={cpuNameList} gpuNameList={gpuNameList}/>
-                    </MainCard>
+                    <ResourceForm cpuNameList={cpuNameList} gpuNameList={gpuNameList}/>
                 )}
             </>
         );

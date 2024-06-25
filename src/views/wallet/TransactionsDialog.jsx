@@ -10,7 +10,7 @@ import {
     Dialog,
     DialogTitle,
     DialogContent,
-    TableSortLabel
+    TableSortLabel, DialogActions
 } from '@mui/material';
 import React, {useState} from "react";
 import PropTypes from "prop-types";
@@ -22,13 +22,15 @@ import CardActions from "@mui/material/CardActions";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import Paging from "../../ui-component/table/Paging";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
 const TransactionsDialog = ({ open, onClose, transactions, owner }) => {
 
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('creationDate');
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(30);
+    const [rowsPerPage, setRowsPerPage] = useState(25);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -145,9 +147,6 @@ const TransactionsDialog = ({ open, onClose, transactions, owner }) => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <CardActions sx={{ p: 1.25, pt: 2, justifyContent: 'right' }}>
-                    <Paging setPage={setPage} totalRows={transactions.length} maxRows={rowsPerPage} />
-                </CardActions>
 {/*                <TablePagination
                     rowsPerPageOptions={[30, 50, 100]}
                     component="div"
@@ -157,14 +156,25 @@ const TransactionsDialog = ({ open, onClose, transactions, owner }) => {
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />*/}
-                <Divider sx={{border: 0, height: 20}} />
-                <CardActions sx={{ p: 1.25, pt: 0, justifyContent: 'center' }}>
-                    <Button size="medium" onClick={onClose} disableElevation>
-                        Close
-                        <ChevronRightOutlinedIcon />
-                    </Button>
-                </CardActions>
             </DialogContent>
+            <DialogActions>
+                <Grid container>
+                    <Grid item container justifyContent={"flex-end"} alignItems={"center"}>
+                        <CardActions sx={{ p: 1.25, pt: 2, justifyContent: 'right' }}>
+                            <Paging setPage={setPage} totalRows={transactions?.length} maxRows={rowsPerPage} setMaxRows={setRowsPerPage} />
+                        </CardActions>
+                    </Grid>
+                    <Grid item container justifyContent={"center"} alignItems={"center"}>
+                        <Box sx={{ paddingBottom: 2, justifyContent: 'center' }}>
+                            <Button size="medium" onClick={onClose} disableElevation>
+                                Close
+                                <ChevronRightOutlinedIcon />
+                            </Button>
+                        </Box>
+                    </Grid>
+                </Grid>
+
+            </DialogActions>
         </Dialog>
     );
 }

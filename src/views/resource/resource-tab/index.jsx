@@ -15,7 +15,7 @@ const TabList = ({content, value, handleChange}) => {
                             sx={{minHeight: 0}}
                 />
             case "content":
-                return <TabPanel key={"Panel"+item.value} value={item.value}>
+                return <TabPanel key={"Panel"+item.value} value={item.value} sx={{padding: 0, paddingTop: 3}}>
                     {item.tab}
                 </TabPanel>;
         }

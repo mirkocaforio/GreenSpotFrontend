@@ -23,8 +23,6 @@ const SharedResource = () => {
 
     useEffect(() => {
         if (resources) {
-            console.log("resources", resources)
-            console.log("resources length", resources.length)
             setResourcesList(resources.resourcesList);
             setLoading(false);
         } else {
@@ -46,9 +44,8 @@ const SharedResource = () => {
                     <SkeletonResourceCard/>
                 )
                 : filteredResources.length !== 0 ? (
-                    <MainCard title="Shared resources">
                         <Grid container spacing={gridSpacing}>
-                            <Grid item xs={12} sm={12} md={12}>
+                            <Grid item container justifyContent={"flex-start"} xs={12} sm={12} md={6} lg={4}>
                                 <TextField
                                     variant="outlined"
                                     margin="normal"
@@ -75,12 +72,10 @@ const SharedResource = () => {
                                 </Grid>
                             ))}
                         </Grid>
-                    </MainCard>
                 ) :
                 (
-                    <MainCard title="Shared resources">
                         <Grid container spacing={gridSpacing}>
-                            <Grid item xs={12} sm={12} md={12}>
+                            <Grid item container justifyContent={"flex-start"} xs={12} sm={12} md={6} lg={4}>
                                 <TextField
                                     variant="outlined"
                                     margin="normal"
@@ -109,7 +104,6 @@ const SharedResource = () => {
                                 </Box>
                             </Grid>
                         </Grid>
-                    </MainCard>
                 )
             }
         </>

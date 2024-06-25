@@ -1,5 +1,5 @@
 import Pagination from "@mui/material/Pagination";
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -7,10 +7,15 @@ import {Select} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 
 
-const Paging = ({ page, setPage, totalRows, maxRows, setMaxRows, color = "primary" }) => {
+const Paging = ({ setPage, totalRows, maxRows, setMaxRows, color = "primary" }) => {
+
+    const [currPage, setCurrPage] = useState(0);
 
     const handleChangePage = (event, newPage) => {
-        setPage(newPage - 1);
+        let page = newPage - 1;
+
+        setPage(page); //Parent state
+        setCurrPage(newPage); //Internal state
     };
 
     const pageCount = () =>{
@@ -31,7 +36,7 @@ const Paging = ({ page, setPage, totalRows, maxRows, setMaxRows, color = "primar
             <Grid item>
                 <Select value={maxRows}
                         onChange={(e) => {
-                            setPage(0);
+                            handleChangePage(null, 1);
                             setMaxRows(e.target.value);
                         }}>
                     <MenuItem value={5}>5</MenuItem>
@@ -41,7 +46,7 @@ const Paging = ({ page, setPage, totalRows, maxRows, setMaxRows, color = "primar
             </Grid>
                 </>)}
             <Grid item>
-                <Pagination count={pageCount()} color={color} onChange={handleChangePage} />
+                <Pagination page={currPage} count={pageCount()} color={color} onChange={handleChangePage} />
             </Grid>
         </Grid>
     );
