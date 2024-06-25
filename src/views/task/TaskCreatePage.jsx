@@ -4,7 +4,7 @@ import {createTask} from "../../actions/task";
 
 const AssignTask = () => {
 
-    return (<MainCard title="Task Creation">
+    return (<MainCard>
                 <TaskForm handleAssign={createTask} action="Create"/>
             </MainCard>)
 }

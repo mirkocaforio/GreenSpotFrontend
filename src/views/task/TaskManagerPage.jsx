@@ -3,7 +3,7 @@ import TaskTable from "./TaskTable";
 
 const TaskManagerPage = () => {
     return (
-        <MainCard title="Task Manager">
+        <MainCard>
             <TaskTable maxRows={20}/>
         </MainCard>
     )

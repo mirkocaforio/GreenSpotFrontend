@@ -28,22 +28,19 @@ const task = {
                     id: 'assignTask',
                     title: 'Assign Task',
                     type: 'item',
-                    url: '/sample-page',
-                    icon: icons.AddTaskOutlinedIcon
-                },
-                {
-                    id: 'taskList',
-                    title: 'Task List',
-                    type: 'item',
-                    url: '/sample-page',
-                    icon: icons.FormatListBulletedOutlinedIcon
+                    url: '/task',
+                    icon: icons.AddTaskOutlinedIcon,
+                    breadcrumb: true,
+                    target: false
                 },
                 {
                     id: 'manageTask',
-                    title: 'Manage Task',
+                    title: 'Manage Tasks',
                     type: 'item',
-                    url: '/sample-page',
-                    icon: icons.AssignmentOutlinedIcon
+                    url: '/task/list',
+                    icon: icons.AssignmentOutlinedIcon,
+                    breadcrumb: true,
+                    target: false
                 }
             ]
         }
