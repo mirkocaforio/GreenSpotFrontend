@@ -11,6 +11,7 @@ import {RedeemTwoTone} from "@mui/icons-material";
 import React from "react";
 import RedeemCodeCard from "../../../ui-component/RedeemCodeCard";
 import Divider from "@mui/material/Divider";
+import {dateBeauty} from "../../../utils/date-beauty";
 
 const RedeemInfo = ({redeem, isLoading}) => {
 
@@ -35,6 +36,14 @@ const RedeemInfo = ({redeem, isLoading}) => {
                 </Grid>
                 <Grid item >
                     <RedeemCodeCard propIcon={<RedeemTwoTone/>} text={redeem?.redeemCode}/>
+                </Grid>
+                <Grid item xs={12} sm={12} lg={12} md={12}>
+                    <Divider sx={{border: `0px`, paddingBottom: 2}}/>
+                </Grid>
+                <Grid item>
+                    <Typography variant="subtitle2">
+                        {dateBeauty(redeem?.redeemDate)}
+                    </Typography>
                 </Grid>
             </Grid>
         </SubCard>

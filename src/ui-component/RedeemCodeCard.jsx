@@ -7,13 +7,15 @@ import IconButton from "@mui/material/IconButton";
 import {useDispatch} from "react-redux";
 import {setMessage} from "../actions/message";
 import {MSG_SUCCESS} from "../config";
+import {useTheme} from "@mui/material/styles";
 
 const RedeemCodeCard = ({propIcon, text}) => {
 
     const [isHovered, setIsHovered] = React.useState(false);
 
-    const icon =React.cloneElement(propIcon, {style: styles.icon, color: "secondary"});
+    const icon =React.cloneElement(propIcon, {style: styles.icon, color: "primary"});
     const dispatch = useDispatch();
+    const theme = useTheme();
 
     const handleCopy = () => {
         navigator.clipboard.writeText(text);
@@ -23,7 +25,7 @@ const RedeemCodeCard = ({propIcon, text}) => {
     };
 
     return (
-        <Grid container justifyContent="center" alignItems="center" style={styles.container}
+        <Grid container justifyContent="center" alignItems="center" style={{...styles.container}}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
         >
