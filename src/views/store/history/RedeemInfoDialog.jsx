@@ -24,8 +24,7 @@ const RedeemInfoDialog = ({ data, open, onClose }) => {
     }, [data]);
 
     return (
-        <Dialog open={open} onClose={onClose} aria-labelledby="task-dialog-title" maxWidth="lg" fullWidth fullScreen={fullScreen} scroll="paper">
-            <DialogTitle id="task-dialog-title" fontSize="medium">{data?.redeemId}</DialogTitle>
+        <Dialog open={open} onClose={onClose} aria-labelledby="task-dialog-title" fullScreen={fullScreen} scroll="paper">
             <DialogContent dividers>
                 <RedeemInfo isLoading={isLoading} redeem={data}/>
             </DialogContent>
