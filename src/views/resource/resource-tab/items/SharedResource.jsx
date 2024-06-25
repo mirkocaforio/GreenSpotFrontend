@@ -11,6 +11,7 @@ import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import SkeletonResourceCard from "../../../../ui-component/cards/Skeleton/SkeletonReourceCard";
 import ResourceCard from "./ResourceCard";
+import Typography from "@mui/material/Typography";
 
 const SharedResource = () => {
     const {resourcesList: resources} = useSelector((state) => state.resource);
@@ -41,7 +42,7 @@ const SharedResource = () => {
             {isLoading ? (
                     <SkeletonResourceCard/>
                 )
-                : (
+                : filteredResources.length !== 0 ? (
                     <MainCard title="Shared resources">
                         <Grid container spacing={gridSpacing}>
                             <Grid item xs={12} sm={12} md={12}>
@@ -72,7 +73,40 @@ const SharedResource = () => {
                             ))}
                         </Grid>
                     </MainCard>
-                )}
+                ) :
+                (
+                    <MainCard title="Shared resources">
+                        <Grid container spacing={gridSpacing}>
+                            <Grid item xs={12} sm={12} md={12}>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    fullWidth
+                                    id="search"
+                                    label="Search a resource by name"
+                                    name="search"
+                                    autoComplete="search"
+                                    autoFocus
+                                    value={search}
+                                    onChange={handleSearchChange}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <SearchIcon/>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={12}>
+                                <Typography variant="caption">
+                                    No resources have been shared yet
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </MainCard>
+                )
+            }
         </>
     );
 }
