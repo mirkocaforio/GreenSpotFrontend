@@ -1,5 +1,4 @@
 import {useEffect, useRef, useState} from 'react';
-import {Link} from 'react-router-dom';
 
 // material-ui
 import {useTheme} from '@mui/material/styles';
@@ -29,6 +28,16 @@ import NotificationList from './NotificationList';
 
 // assets
 import {IconBell} from '@tabler/icons-react';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import {useDispatch, useSelector} from "react-redux";
+import AnimateButton from "../../../../ui-component/extended/AnimateButton";
+import Tooltip from "@mui/material/Tooltip";
+import {
+    getPopupNotificationByEmail,
+    readAllPopupNotifications
+} from "../../../../actions/notification";
+import NotificationListSkeleton from "../../../../ui-component/cards/Skeleton/NotificationListSkeleton";
 
 // notification status options
 const status = [
@@ -52,8 +61,23 @@ const NotificationSection = () => {
     const theme = useTheme();
     const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
 
+    const dispatch = useDispatch();
+    const {popupNotifications} = useSelector((state) => state.notification);
+
+    const [popupList, setPopupList] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
+
+    useEffect(() => {
+        if (popupNotifications) {
+            setPopupList(popupNotifications.notificationsList);
+            setIsLoading(false);
+        } else {
+            setIsLoading(true);
+        }
+    }, [popupNotifications]);
+
     /**
      * anchorRef is used on different componets and specifying one type leads to other components throwing an error
      * */
@@ -71,6 +95,7 @@ const NotificationSection = () => {
     };
 
     const prevOpen = useRef(open);
+
     useEffect(() => {
         if (prevOpen.current === true && open === false) {
             anchorRef.current.focus();
@@ -79,20 +104,45 @@ const NotificationSection = () => {
     }, [open]);
 
     const handleChange = (event) => {
-        if (event?.target.value) setValue(event?.target.value);
+        if (event?.target.value) {
+            setValue(event?.target.value);
+            switch (event?.target.value) {
+                case 'all':
+                    setPopupList(popupNotifications.notificationsList);
+                    break;
+                case 'read':
+                    setPopupList(popupNotifications.notificationsList.filter(notification => notification.read));
+                    break;
+                case 'unread':
+                    setPopupList(popupNotifications.notificationsList.filter(notification => !notification.read));
+                    break;
+                default:
+                    setPopupList(popupNotifications.notificationsList);
+            }
+        }
     };
+
+    const handleRefresh = () => {
+        return dispatch(getPopupNotificationByEmail(false)
+        ).then(() => {
+            return Promise.resolve();
+        }).catch(() => {
+            return Promise.reject();
+        });
+    }
+
+    const handleMarkAllRead = () => {
+        return dispatch(readAllPopupNotifications(true))
+            .then(() => {
+                return Promise.resolve();
+            }).catch(() => {
+                return Promise.reject();
+            });
+    }
 
     return (
         <>
-            <Box
-                sx={{
-                    ml: 2,
-                    mr: 3,
-                    [theme.breakpoints.down('md')]: {
-                        mr: 2
-                    }
-                }}
-            >
+            <Box sx={{ml: 2, mr: 3, [theme.breakpoints.down('md')]: {mr: 2}}}>
                 <ButtonBase sx={{borderRadius: '12px'}}>
                     <Avatar
                         variant="rounded"
@@ -147,10 +197,10 @@ const NotificationSection = () => {
                                                   sx={{pt: 2, px: 2}}>
                                                 <Grid item>
                                                     <Stack direction="row" spacing={2}>
-                                                        <Typography variant="subtitle1">All Notification</Typography>
+                                                        <Typography variant="subtitle1">Notifications</Typography>
                                                         <Chip
                                                             size="small"
-                                                            label="01"
+                                                            label={popupList.length}
                                                             sx={{
                                                                 color: theme.palette.background.default,
                                                                 bgcolor: theme.palette.warning.dark
@@ -159,10 +209,36 @@ const NotificationSection = () => {
                                                     </Stack>
                                                 </Grid>
                                                 <Grid item>
-                                                    <Typography component={Link} to="#" variant="subtitle2"
-                                                                color="primary">
-                                                        Mark as all read
-                                                    </Typography>
+                                                    <AnimateButton>
+                                                        <Button onClick={() => {
+                                                            handleMarkAllRead()
+                                                                .then(() => {
+                                                                    setValue('all')
+                                                                }).catch(() => {
+                                                                setValue('all')
+                                                            });
+                                                        }}>
+                                                            <Tooltip title={"Mark all as read"}>
+                                                                <DoneAllIcon/>
+                                                            </Tooltip>
+                                                        </Button>
+                                                    </AnimateButton>
+                                                </Grid>
+                                                <Grid item>
+                                                    <AnimateButton>
+                                                        <Button onClick={() => {
+                                                            handleRefresh()
+                                                                .then(() => {
+                                                                    setValue('all')
+                                                                }).catch(() => {
+                                                                setValue('all')
+                                                            });
+                                                        }}>
+                                                            <Tooltip title={"Refresh"}>
+                                                                <RefreshIcon/>
+                                                            </Tooltip>
+                                                        </Button>
+                                                    </AnimateButton>
                                                 </Grid>
                                             </Grid>
                                         </Grid>
@@ -197,7 +273,19 @@ const NotificationSection = () => {
                                                         <Divider sx={{my: 0}}/>
                                                     </Grid>
                                                 </Grid>
-                                                <NotificationList/>
+                                                {
+                                                    isLoading ? (
+                                                        <NotificationListSkeleton/>
+                                                    ) : popupList.length === 0 ? (
+                                                        <Box display="flex" justifyContent="center" sx={{p: 2}}>
+                                                            <Typography variant="caption" align="center">
+                                                                There are no notifications
+                                                            </Typography>
+                                                        </Box>
+                                                    ) : (
+                                                        <NotificationList notificationList={popupList}/>
+                                                    )
+                                                }
                                             </PerfectScrollbar>
                                         </Grid>
                                     </Grid>

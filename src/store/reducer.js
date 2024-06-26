@@ -12,6 +12,7 @@ import analytics from "./analytics";
 import reward from "./reward";
 import score from "./score";
 import resource from "./resource";
+import notification from "./notification";
 
 // ==============================|| COMBINE REDUCER ||============================== //
 
@@ -27,6 +28,7 @@ const reducer = combineReducers({
   tasks,
   analytics,
   reward,
+  notification
 });
 
 export default reducer;

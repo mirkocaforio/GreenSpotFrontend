@@ -227,6 +227,348 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.apiV1NotificationOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1NotificationOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationEmailOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1NotificationEmailOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/email').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationEmailOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationEmailFindGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'email', 'from', 'subject', 'to'], ['body']);
+        
+        var apiV1NotificationEmailFindGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/email/find').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['email', 'from', 'subject', 'to']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationEmailFindGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationEmailFindOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1NotificationEmailFindOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/email/find').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationEmailFindOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationEmailFindAllGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization'], ['body']);
+        
+        var apiV1NotificationEmailFindAllGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/email/find/all').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationEmailFindAllGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationEmailFindAllOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1NotificationEmailFindAllOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/email/find/all').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationEmailFindAllOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationPopupOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1NotificationPopupOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/popup').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationPopupOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationPopupFindGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'email', 'read', 'from', 'subject', 'to'], ['body']);
+        
+        var apiV1NotificationPopupFindGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/popup/find').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['email', 'read', 'from', 'subject', 'to']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationPopupFindGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationPopupFindOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1NotificationPopupFindOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/popup/find').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationPopupFindOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationPopupFindAllGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization'], ['body']);
+        
+        var apiV1NotificationPopupFindAllGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/popup/find/all').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationPopupFindAllGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationPopupFindAllOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1NotificationPopupFindAllOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/popup/find/all').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationPopupFindAllOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationUpdateOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1NotificationUpdateOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/update').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationUpdateOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationUpdateReadOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1NotificationUpdateReadOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/update/read').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationUpdateReadOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationUpdateReadAllOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1NotificationUpdateReadAllOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/update/read/all').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationUpdateReadAllOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationUpdateReadAllReadStatusPut = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['readStatus', 'Authorization'], ['body']);
+        
+        var apiV1NotificationUpdateReadAllReadStatusPutRequest = {
+            verb: 'put'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/update/read/all/{readStatus}').expand(apiGateway.core.utils.parseParametersToObject(params, ['readStatus', ])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationUpdateReadAllReadStatusPutRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationUpdateReadAllReadStatusOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1NotificationUpdateReadAllReadStatusOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/update/read/all/{readStatus}').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationUpdateReadAllReadStatusOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationUpdateReadNotificationIdOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1NotificationUpdateReadNotificationIdOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/update/read/{notificationId}').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationUpdateReadNotificationIdOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationUpdateReadNotificationIdReadStatusPut = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['notificationId', 'readStatus', 'Authorization'], ['body']);
+        
+        var apiV1NotificationUpdateReadNotificationIdReadStatusPutRequest = {
+            verb: 'put'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/update/read/{notificationId}/{readStatus}').expand(apiGateway.core.utils.parseParametersToObject(params, ['notificationId', 'readStatus', ])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationUpdateReadNotificationIdReadStatusPutRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1NotificationUpdateReadNotificationIdReadStatusOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1NotificationUpdateReadNotificationIdReadStatusOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/notification/update/read/{notificationId}/{readStatus}').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1NotificationUpdateReadNotificationIdReadStatusOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.apiV1ResourceOptions = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         

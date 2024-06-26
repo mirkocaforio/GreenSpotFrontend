@@ -9,9 +9,10 @@ import {getRewards} from "../actions/reward";
 import {getCpuNames, getGpuNames} from "../actions/score";
 import {getResourceByEmail} from "../actions/resource";
 import {getRedeems} from "../actions/reward";
+import {getPopupNotificationByEmail} from "../actions/notification";
 
 
-const FetchData = ({ children, type}) => {
+const FetchData = ({children, type}) => {
     const dispatch = useDispatch();
     let fetchData;
     switch (type) {
@@ -44,6 +45,9 @@ const FetchData = ({ children, type}) => {
             break;
         case "redeems":
             fetchData = getRedeems;
+            break;
+        case "notification":
+            fetchData = getPopupNotificationByEmail;
             break;
         default:
             fetchData = getProfileData;

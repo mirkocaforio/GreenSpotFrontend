@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
+import {useTheme} from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -21,276 +21,189 @@ import Divider from '@mui/material/Divider';
 import Chip from 'ui-component/extended/Chip';
 
 // assets
-import { IconBrandTelegram, IconBuildingStore, IconMailbox, IconPhoto } from '@tabler/icons-react';
-import User1 from 'assets/images/users/user-round.svg';
-import AvatarPic from "../../../../ui-component/AvatarPic";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import InfoIcon from '@mui/icons-material/Info';
+import DoneIcon from '@mui/icons-material/Done';
 
-const ListItemWrapper = ({ children }) => {
-  return (
-    <Box
-      sx={{
-        p: 2,
-        borderBottom: '1px solid',
-        borderColor: 'divider',
-        cursor: 'pointer',
-        '&:hover': {
-          bgcolor: 'primary.light'
-        }
-      }}
-    >
-      {children}
-    </Box>
-  );
+import {format} from 'date-fns';
+import {readPopupNotification} from "../../../../actions/notification";
+import {useDispatch} from "react-redux";
+import {dateBeauty} from "../../../../utils/date-beauty";
+
+const ListItemWrapper = ({children}) => {
+    return (
+        <Box
+            sx={{
+                p: 1,
+                borderBottom: '1px solid',
+                borderColor: 'divider',
+                cursor: 'pointer',
+                '&:hover': {
+                    bgcolor: 'primary.light'
+                }
+            }}
+        >
+            {children}
+        </Box>
+    );
 };
 
 ListItemWrapper.propTypes = {
-  children: PropTypes.node
+    children: PropTypes.node
 };
 
 // ==============================|| NOTIFICATION LIST ITEM ||============================== //
 
-const NotificationList = () => {
-  const theme = useTheme();
+const NotificationList = ({notificationList}) => {
+    const dispatch = useDispatch();
+    const sortedNotificationList = [...notificationList].sort((a, b) => new Date(b.sendAt) - new Date(a.sendAt));
+    const theme = useTheme();
 
-  const chipSX = {
-    height: 24,
-    padding: '0 6px'
-  };
-  const chipErrorSX = {
-    ...chipSX,
-    color: theme.palette.orange.dark,
-    backgroundColor: theme.palette.orange.light,
-    marginRight: '5px'
-  };
+    const chipSX = {
+        height: 24,
+        padding: '0 6px'
+    };
 
-  const chipWarningSX = {
-    ...chipSX,
-    color: theme.palette.warning.dark,
-    backgroundColor: theme.palette.warning.light
-  };
-
-  const chipSuccessSX = {
-    ...chipSX,
-    color: theme.palette.success.dark,
-    backgroundColor: theme.palette.success.light,
-    height: 28
-  };
-
-  return (
-    <List
-      sx={{
-        width: '100%',
-        maxWidth: 330,
-        py: 0,
-        borderRadius: '10px',
-        [theme.breakpoints.down('md')]: {
-          maxWidth: 300
+    const chipErrorSX = {
+        ...chipSX,
+        color: theme.palette.orange.dark,
+        backgroundColor: theme.palette.orange.light,
+        marginRight: '5px',
+        '&:hover': {
+            backgroundColor: theme.palette.orange.dark
         },
-        '& .MuiListItemSecondaryAction-root': {
-          top: 22
+    };
+
+    const chipWarningSX = {
+        ...chipSX,
+        color: theme.palette.warning.dark,
+        backgroundColor: theme.palette.warning.light,
+        '&:hover': {
+            backgroundColor: theme.palette.warning.dark
         },
-        '& .MuiDivider-root': {
-          my: 0
+    };
+
+    const chipSuccessSX = {
+        ...chipSX,
+        color: theme.palette.success.dark,
+        backgroundColor: theme.palette.success.light,
+        '&:hover': {
+            backgroundColor: theme.palette.success.dark
         },
-        '& .list-container': {
-          pl: 7
-        }
-      }}
-    >
-      <ListItemWrapper>
-        <ListItem alignItems="center">
-          <ListItemAvatar>
-            <AvatarPic/>
-          </ListItemAvatar>
-          <ListItemText primary="John Doe" />
-          <ListItemSecondaryAction>
-            <Grid container justifyContent="flex-end">
-              <Grid item xs={12}>
-                <Typography variant="caption" display="block" gutterBottom>
-                  2 min ago
-                </Typography>
-              </Grid>
-            </Grid>
-          </ListItemSecondaryAction>
-        </ListItem>
-        <Grid container direction="column" className="list-container">
-          <Grid item xs={12} sx={{ pb: 2 }}>
-            <Typography variant="subtitle2">It is a long established fact that a reader will be distracted</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container>
-              <Grid item>
-                <Chip label="Unread" sx={chipErrorSX} />
-              </Grid>
-              <Grid item>
-                <Chip label="New" sx={chipWarningSX} />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </ListItemWrapper>
-      <Divider />
-      <ListItemWrapper>
-        <ListItem alignItems="center">
-          <ListItemAvatar>
-            <Avatar
-              sx={{
-                color: theme.palette.success.dark,
-                backgroundColor: theme.palette.success.light,
-                border: 'none',
-                borderColor: theme.palette.success.main
-              }}
-            >
-              <IconBuildingStore stroke={1.5} size="1.3rem" />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary={<Typography variant="subtitle1">Store Verification Done</Typography>} />
-          <ListItemSecondaryAction>
-            <Grid container justifyContent="flex-end">
-              <Grid item xs={12}>
-                <Typography variant="caption" display="block" gutterBottom>
-                  2 min ago
-                </Typography>
-              </Grid>
-            </Grid>
-          </ListItemSecondaryAction>
-        </ListItem>
-        <Grid container direction="column" className="list-container">
-          <Grid item xs={12} sx={{ pb: 2 }}>
-            <Typography variant="subtitle2">We have successfully received your request.</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container>
-              <Grid item>
-                <Chip label="Unread" sx={chipErrorSX} />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </ListItemWrapper>
-      <Divider />
-      <ListItemWrapper>
-        <ListItem alignItems="center">
-          <ListItemAvatar>
-            <Avatar
-              sx={{
-                color: theme.palette.primary.dark,
-                backgroundColor: theme.palette.primary.light,
-                border: 'none',
-                borderColor: theme.palette.primary.main
-              }}
-            >
-              <IconMailbox stroke={1.5} size="1.3rem" />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary={<Typography variant="subtitle1">Check Your Mail.</Typography>} />
-          <ListItemSecondaryAction>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Typography variant="caption" display="block" gutterBottom>
-                  2 min ago
-                </Typography>
-              </Grid>
-            </Grid>
-          </ListItemSecondaryAction>
-        </ListItem>
-        <Grid container direction="column" className="list-container">
-          <Grid item xs={12} sx={{ pb: 2 }}>
-            <Typography variant="subtitle2">All done! Now check your inbox as you&apos;re in for a sweet treat!</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container>
-              <Grid item>
-                <Button variant="contained" disableElevation endIcon={<IconBrandTelegram stroke={1.5} size="1.3rem" />}>
-                  Mail
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </ListItemWrapper>
-      <Divider />
-      <ListItemWrapper>
-        <ListItem alignItems="center">
-          <ListItemAvatar>
-            <Avatar alt="John Doe" src={User1} />
-          </ListItemAvatar>
-          <ListItemText primary={<Typography variant="subtitle1">John Doe</Typography>} />
-          <ListItemSecondaryAction>
-            <Grid container justifyContent="flex-end">
-              <Grid item xs={12}>
-                <Typography variant="caption" display="block" gutterBottom>
-                  2 min ago
-                </Typography>
-              </Grid>
-            </Grid>
-          </ListItemSecondaryAction>
-        </ListItem>
-        <Grid container direction="column" className="list-container">
-          <Grid item xs={12} sx={{ pb: 2 }}>
-            <Typography component="span" variant="subtitle2">
-              Uploaded two file on &nbsp;
-              <Typography component="span" variant="h6">
-                21 Jan 2020
-              </Typography>
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container>
-              <Grid item xs={12}>
-                <Card
-                  sx={{
-                    backgroundColor: theme.palette.secondary.light
-                  }}
-                >
-                  <CardContent>
-                    <Grid container direction="column">
-                      <Grid item xs={12}>
-                        <Stack direction="row" spacing={2}>
-                          <IconPhoto stroke={1.5} size="1.3rem" />
-                          <Typography variant="subtitle1">demo.jpg</Typography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </ListItemWrapper>
-      <Divider />
-      <ListItemWrapper>
-        <ListItem alignItems="center">
-          <ListItemAvatar>
-            <Avatar alt="John Doe" src={User1} />
-          </ListItemAvatar>
-          <ListItemText primary={<Typography variant="subtitle1">John Doe</Typography>} />
-          <ListItemSecondaryAction>
-            <Grid container justifyContent="flex-end">
-              <Grid item xs={12}>
-                <Typography variant="caption" display="block" gutterBottom>
-                  2 min ago
-                </Typography>
-              </Grid>
-            </Grid>
-          </ListItemSecondaryAction>
-        </ListItem>
-        <Grid container direction="column" className="list-container">
-          <Grid item xs={12} sx={{ pb: 2 }}>
-            <Typography variant="subtitle2">It is a long established fact that a reader will be distracted</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container>
-              <Grid item>
-                <Chip label="Confirmation of Account." sx={chipSuccessSX} />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </ListItemWrapper>
-    </List>
-  );
+    };
+
+    const handleMarkAsRead = (id) => {
+        return dispatch(readPopupNotification(id, true))
+            .then(() => {
+                return Promise.resolve();
+            }).catch(() => {
+                return Promise.reject();
+            });
+    }
+
+    return (
+        <List
+            sx={{
+                width: '100%',
+                maxWidth: 330,
+                py: 0,
+                borderRadius: '10px',
+                [theme.breakpoints.down('md')]: {
+                    maxWidth: 300
+                },
+                '& .MuiListItemSecondaryAction-root': {
+                    top: 22
+                },
+                '& .MuiDivider-root': {
+                    my: 0
+                },
+                '& .list-container': {
+                    pl: 7
+                }
+            }}
+        >
+            {
+                sortedNotificationList.map((notification, index) => (
+                    <ListItemWrapper key={index}>
+                        <ListItem alignItems="center">
+                            <ListItemAvatar>
+                                {notification.type === 'SUCCESS' ? (
+                                    <Avatar
+                                        sx={{
+                                            color: theme.palette.success.dark,
+                                            backgroundColor: theme.palette.success.light,
+                                            border: 'none',
+                                            borderColor: theme.palette.success.main
+                                        }}
+                                    >
+                                        <CheckCircleOutlineIcon stroke={1.5} size="1.3rem"/>
+                                    </Avatar>
+                                ) : null
+                                }
+                                {notification.type === 'INFO' ? (
+                                    <Avatar
+                                        sx={{
+                                            color: theme.palette.primary.dark,
+                                            backgroundColor: theme.palette.primary.light,
+                                            border: 'none',
+                                            borderColor: theme.palette.primary.main
+                                        }}
+                                    >
+                                        <InfoIcon stroke={1.5} size="1.3rem"/>
+                                    </Avatar>
+                                ) : null
+                                }
+                            </ListItemAvatar>
+                            <ListItemText
+                                primary={<Typography variant="subtitle1">{notification.subject}</Typography>}
+                                secondary={format(new Date(notification.sendAt), 'HH:mm - EEEE, d MMMM yyyy')}
+                            />
+                        </ListItem>
+                        <Grid container direction="column" className="list-container">
+                            <Grid item xs={12} sx={{pb: 2}}>
+                                <Typography variant="caption">{notification.message}</Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Grid container>
+                                    {
+                                        notification.read ? (
+                                            <Grid item>
+                                                <Chip
+                                                    label="Read"
+                                                    sx={chipSuccessSX}
+                                                />
+                                            </Grid>
+                                        ) : (
+                                            <>
+                                                <Grid item>
+                                                    <Chip
+                                                        label="Unread"
+                                                        sx={chipErrorSX}
+                                                    />
+                                                </Grid>
+                                                <Grid item>
+                                                    <Chip
+                                                        label="Mark as read"
+                                                        sx={chipSuccessSX}
+                                                        onDelete={() => handleMarkAsRead(notification.id)}
+                                                        deleteIcon={<DoneIcon/>}
+                                                    />
+                                                </Grid>
+                                            </>
+                                        )
+                                    }
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </ListItemWrapper>
+                ))
+            }
+        </List>
+    );
+};
+
+NotificationList.propTypes = {
+    notificationList: PropTypes.array.isRequired
 };
 
 export default NotificationList;

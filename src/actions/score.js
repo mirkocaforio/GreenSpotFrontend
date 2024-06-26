@@ -7,11 +7,8 @@ import {
 } from "./types";
 
 import ScoreService from "../services/ScoreService";
-import {isTokenExpired} from "../services/AuthUtils";
-import {logout} from "./auth";
-import {MSG_ERROR, MSG_SUCCESS, MSG_WARNING} from "../config";
+import {onError} from "./expiration";
 
-//TODO: VEDERE SE IL NOME DELLA LISTA E' CORRETTO
 export const getCpuNames = () => (dispatch) => {
     return ScoreService.getCpuNames().then(
         (data) => {
@@ -35,26 +32,7 @@ export const getCpuNames = () => (dispatch) => {
                 type: GET_CPU_NAMES_FAIL,
             });
 
-            if (isTokenExpired(message)){
-
-                dispatch({
-                    type: SET_MESSAGE,
-                    payload: {
-                        message: "Session expired. Please login again.",
-                        type: MSG_WARNING
-                    },
-                });
-
-                dispatch(logout());
-            } else {
-                dispatch({
-                    type: SET_MESSAGE,
-                    payload: {
-                        message: message,
-                        type: MSG_ERROR,
-                    },
-                });
-            }
+            dispatch(onError(message, "score"));
 
             return Promise.reject(message);
         }
@@ -84,26 +62,7 @@ export const getGpuNames = () => (dispatch) => {
                 type: GET_GPU_NAMES_FAIL,
             });
 
-            if (isTokenExpired(message)){
-
-                dispatch({
-                    type: SET_MESSAGE,
-                    payload: {
-                        message: "Session expired. Please login again.",
-                        type: MSG_WARNING
-                    },
-                });
-
-                dispatch(logout());
-            } else {
-                dispatch({
-                    type: SET_MESSAGE,
-                    payload: {
-                        message: message,
-                        type: MSG_ERROR,
-                    },
-                });
-            }
+            dispatch(onError(message, "score"));
 
             return Promise.reject(message);
         }

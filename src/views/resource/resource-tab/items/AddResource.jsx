@@ -2,7 +2,6 @@
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 
-import MainCard from "../../../../ui-component/cards/MainCard";
 import ResourceForm from "./ResourceForm";
 import ResourceFormSkeleton from "../../../../ui-component/cards/Skeleton/SkeletonResourceForm";
 

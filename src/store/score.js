@@ -6,7 +6,6 @@ import {
     LOGOUT
 } from "../actions/types";
 
-//TODO: VEDERE BENE I NOMI DELLE LISTE
 const initialState = {
     cpusList: null,
     gpusList: null
@@ -24,7 +23,7 @@ export default function (state = initialState, action) {
         case GET_CPU_NAMES_FAIL:
             return {
                 ...state,
-                cpusList: null,
+                cpusList: state.cpusList ? state.cpusList : null,
             };
         case GET_GPU_NAMES_SUCCESS:
             return {
@@ -34,7 +33,7 @@ export default function (state = initialState, action) {
         case GET_GPU_NAMES_FAIL:
             return {
                 ...state,
-                gpusList: null,
+                gpusList: state.gpusList ? state.gpusList : null,
             };
         case LOGOUT:
             return {
