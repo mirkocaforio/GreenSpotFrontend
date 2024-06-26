@@ -3,11 +3,12 @@ import {
     REGISTER_FAIL,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
-    LOGOUT,
+    LOGOUT, MEMBER_JOIN,
 } from "../actions/types";
 
 //const wallet = localStorage.getItem("token");
 const user = JSON.parse(localStorage.getItem("user"));
+
 
 const initialState = user
     ? { isLoggedIn: true,hasRegistered: false, user }
@@ -28,6 +29,10 @@ export default function (state = initialState, action) {
                 ...state,
                 hasRegistered: false,
                 isLoggedIn: false,
+            };
+        case MEMBER_JOIN:
+            return {
+                ...state,
             };
         case LOGIN_SUCCESS:
             return {

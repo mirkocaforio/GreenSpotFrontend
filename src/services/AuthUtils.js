@@ -1,3 +1,4 @@
+import {ROLE_MEMBER, ROLE_UTENTE} from "../config";
 
 
 export function ApiClient() {
@@ -9,6 +10,10 @@ export function ApiClient() {
         return null;
     }
 
+}
+
+export function getRole(isUser) {
+    return isUser ? ROLE_UTENTE : ROLE_MEMBER;
 }
 
 export function isTokenExpired(message) {

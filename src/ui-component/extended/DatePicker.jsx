@@ -26,7 +26,7 @@ const FormDatePicker = ({ label,handleBlur, handleChange, valueName, value, setV
                     }}
                     label={label}
                     inputFormat={format}
-                    value={value}
+                    value={value ? value : ""}
                     renderInput={(params) => <TextField {...params} variant="outlined" />}/>
             </LocalizationProvider>
         </>

@@ -4,7 +4,7 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT,
-    SET_MESSAGE,
+    SET_MESSAGE, MEMBER_JOIN,
 } from "./types";
 
 import AuthService from "../services/AuthService";
@@ -58,12 +58,16 @@ export const login = (email, password, persist) => (dispatch) => {
     );
 };
 
-export const register = (name,surname,date,city,address,tel,email, password) => (dispatch) => {
-    return AuthService.register(name,surname,date,city,address,tel,email, password).then(
+export const register = (name,surname,date,city,address,tel,email, password, isJoining) => (dispatch) => {
+    return AuthService.register(name,surname,date,city,address,tel,email, password, isJoining).then(
         () => {
             dispatch({
                 type: REGISTER_SUCCESS,
             });
+
+            isJoining && dispatch({
+                type: MEMBER_JOIN,
+            })
 
             dispatch({
                 type: SET_MESSAGE,

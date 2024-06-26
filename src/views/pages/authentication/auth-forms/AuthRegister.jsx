@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
+import {useTheme} from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -21,23 +21,21 @@ import Typography from '@mui/material/Typography';
 
 // third party
 import * as Yup from 'yup';
-import { Formik } from 'formik';
+import {Formik} from 'formik';
 
 // project imports
 import AnimateButton from 'ui-component/extended/AnimateButton';
-import { strengthColor, strengthIndicator } from 'utils/password-strength';
+import {strengthColor, strengthIndicator} from 'utils/password-strength';
 import {register} from "../../../../actions/auth";
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import {DatePicker} from "@mui/x-date-pickers/DatePicker";
-import TextField from "@mui/material/TextField";
-import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import {LocalizationProvider} from "@mui/x-date-pickers";
-import dayjs from "dayjs";
 import {LOGIN_PATH} from "../../../../config";
 import AlertBoxMsg from "../../../../ui-component/form/AlertBoxMsg";
+import FormDatePicker from "../../../../ui-component/extended/DatePicker";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import SubCard from "../../../../ui-component/cards/SubCard";
 
 
 // ===========================|| FIREBASE - REGISTER ||=========================== //
@@ -52,8 +50,9 @@ const AuthRegister = ({ ...others }) => {
 
   const [strength, setStrength] = useState(0);
   const [level, setLevel] = useState();
-  const [date, setDate] = useState(null);
   const navigate = useNavigate();
+
+  const [isJoinUs, setIsJoinUs] = useState(false);
 
   const handleSuccess = () => {
         setTimeout(() => {
@@ -61,6 +60,9 @@ const AuthRegister = ({ ...others }) => {
         }, 1500);
     }
 
+    const handleJoinUs = () => {
+      setIsJoinUs(!isJoinUs);
+    }
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -72,6 +74,7 @@ const AuthRegister = ({ ...others }) => {
 
   //name,surname,date,city,address,tel,email, password
   const handleRegister = (values) => {
+
     return dispatch(register(
         values.name,
         values.surname,
@@ -80,9 +83,11 @@ const AuthRegister = ({ ...others }) => {
         values.address,
         values.phone,
         values.email,
-        values.password)).then(
+        values.password,
+        isJoinUs //If true it will become a User and not a Member
+    )).then(
       () => {
-          //window.location.reload();
+          handleSuccess();
           return Promise.resolve();
       }).catch((error) => {
           return Promise.reject(error);
@@ -95,6 +100,48 @@ const AuthRegister = ({ ...others }) => {
     setStrength(temp);
     setLevel(strengthColor(temp));
   };
+
+  const initialValues  = {
+      email: '',
+      password: '',
+      birthDate: '',
+      name: '',
+      surname: '',
+      phone: '',
+      city: '',
+      address: '',
+
+      creditCard: '',
+      cvv: '',
+      expirationDate: '',
+
+      submit: null
+  }
+
+  const validationSchema = () => {
+
+      let schema = {
+            email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+            password: Yup.string().max(255).required('Password is required'),
+            birthDate: Yup.string().max(255).required('Date is required'),
+            name: Yup.string().max(255).required('Last Name is required'),
+            surname: Yup.string().max(255).required('First Name is required'),
+            phone: Yup.string().matches(/^[0-9]+$/, 'Must be only digits').min(10, 'Must be exactly 10 digits').max(10, 'Must be exactly 10 digits').required('Phone is required'),
+      };
+
+      if(isJoinUs){
+        schema = {
+            ...schema,
+            creditCard: Yup.string().matches(/^[0-9]+$/, 'Must be only digits').min(16, 'Must be exactly 16 digits').max(16, 'Must be exactly 16 digits').required('Credit Card is required'),
+            cvv: Yup.string().matches(/^[0-9]+$/, 'Must be only digits').min(3, 'Must be exactly 3 digits').max(3, 'Must be exactly 3 digits').required('CVV is required'),
+            expirationDate: Yup.string().max(255).required('Expiration Date is required')
+        };
+      }
+
+
+      return Yup.object().shape(schema);
+  }
+
 
   return (
     <>
@@ -130,30 +177,12 @@ const AuthRegister = ({ ...others }) => {
       </Grid>
 
       <Formik
-        initialValues={{
-          email: '',
-          password: '',
-          birthDate: '',
-          name: '',
-          surname: '',
-          phone: '',
-          city: '',
-          address: '',
-          submit: null
-        }}
-        validationSchema={Yup.object().shape({
-          email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-          password: Yup.string().max(255).required('Password is required'),
-            birthDate: Yup.string().max(255).required('Date is required'),
-            name: Yup.string().max(255).required('Last Name is required'),
-            surname: Yup.string().max(255).required('First Name is required'),
-            phone: Yup.string().matches(/^[0-9]+$/, 'Must be only digits').min(10, 'Must be exactly 10 digits').max(10, 'Must be exactly 10 digits')
-        })}
+        initialValues={initialValues}
+        validationSchema={validationSchema()}
        onSubmit={(values,{setSubmitting }) => {
            setSubmitting(true);
            handleRegister(values).then(() => {
                setSubmitting(false);
-               handleSuccess();
             }).catch(() => {
                 setSubmitting(false);
             });
@@ -206,9 +235,9 @@ const AuthRegister = ({ ...others }) => {
                 </FormControl>
               </Grid>
             </Grid>
-
             <FormControl fullWidth error={Boolean(touched.birthDate && errors.birthDate)} sx={{ ...theme.typography.dateInput }}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <FormDatePicker label={"Birthdate"} valueName="birthDate" value={values.birthDate} handleChange={handleChange} handleBlur={handleBlur} />
+                {/*<LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                             id={"outlined-adornment-date-register"}
                             name="birthDate"
@@ -222,7 +251,7 @@ const AuthRegister = ({ ...others }) => {
                             inputFormat="DD/MM/YYYY"
                             value={date}
                             renderInput={(params) => <TextField {...params} variant="outlined" />}/>
-                </LocalizationProvider>
+                </LocalizationProvider>*/}
                 {/*<OutlinedInput id={"outlined-adornment-date-register"}
                                type="date"
                                value={values.birthDate}
@@ -347,7 +376,6 @@ const AuthRegister = ({ ...others }) => {
                 </FormHelperText>
               )}
             </FormControl>
-
             {strength !== 0 && (
               <FormControl fullWidth>
                 <Box sx={{ mb: 2 }}>
@@ -365,8 +393,91 @@ const AuthRegister = ({ ...others }) => {
               </FormControl>
             )}
 
-            <Grid container alignItems="center" justifyContent="space-between">
-              <Grid item>
+              {isJoinUs && (
+                  <Grid container spacing={matchDownSM ? 0 : 2}>
+                      <Grid item xs={12}>
+                          <Box sx={{ alignItems: 'center', display: 'flex' }}>
+                              <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
+                              <Button
+                                  variant="outlined"
+                                  sx={{
+                                      cursor: 'unset',
+                                      m: 2,
+                                      py: 0.5,
+                                      px: 7,
+                                      borderColor: `${theme.palette.grey[100]} !important`,
+                                      color: `${theme.palette.grey[900]}!important`,
+                                      fontWeight: 500,
+                                      borderRadius: `${customization.borderRadius}px`
+                                  }}
+                                  disableRipple
+                                  disabled
+                              >
+                                  Payment Information
+                              </Button>
+                              <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
+                          </Box>
+                      </Grid>
+                      <Grid item xs={12} sm={12} md={12} lg={12}>
+                              <Grid container direction="column" spacing={1}>
+                                    <Grid item>
+                                        <FormControl fullWidth error={Boolean(touched.creditCard && errors.creditCard)} sx={{ ...theme.typography.customInput }}>
+                                            <InputLabel htmlFor="outlined-adornment-creditCard-register">Credit Card</InputLabel>
+                                            <OutlinedInput
+                                                id="outlined-adornment-creditCard-register"
+                                                type="text"
+                                                value={values.creditCard}
+                                                name="creditCard"
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                inputProps={{}}
+                                            />
+                                            {touched.creditCard && errors.creditCard && (
+                                                <FormHelperText error id="standard-weight-helper-text--register">
+                                                    {errors.creditCard}
+                                                </FormHelperText>
+                                            )}
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item>
+                                        <FormControl fullWidth error={Boolean(touched.cvv && errors.cvv)} sx={{ ...theme.typography.customInput }}>
+                                            <InputLabel htmlFor="outlined-adornment-cvv-register">CVV</InputLabel>
+                                            <OutlinedInput
+                                                id="outlined-adornment-cvv-register"
+                                                type="text"
+                                                value={values.cvv}
+                                                name="cvv"
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                inputProps={{}}
+                                            />
+                                            {touched.cvv && errors.cvv && (
+                                                <FormHelperText error id="standard-weight-helper-text--register">
+                                                    {errors.cvv}
+                                                </FormHelperText>
+                                            )}
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item>
+                                        <FormControl fullWidth error={Boolean(touched.expirationDate && errors.expirationDate)} sx={{ ...theme.typography.dateInput }}>
+                                            <FormDatePicker label={"Expiration Date"} valueName="expirationDate" value={values.expirationDate} handleChange={handleChange} handleBlur={handleBlur} />
+                                            {touched.expirationDate && errors.expirationDate && (
+                                                <FormHelperText error id="standard-weight-helper-text--register">
+                                                    {errors.expirationDate}
+                                                </FormHelperText>
+                                            )}
+                                        </FormControl>
+                                    </Grid>
+                              </Grid>
+                      </Grid>
+                  </Grid>
+              )}
+
+            <Grid container direction="column" justifyContent="flex-start">
+                <Grid item xs={12} sm={12} lg={12} md={12}>
+                    <AlertBoxMsg location="register"/>
+                </Grid>
+              <Grid item xs={12} sm={12} lg={12} md={12}>
                 <FormControlLabel
                   control={
                     <Checkbox checked={checked} onChange={(event) => setChecked(event.target.checked)} name="checked" color="primary" />
@@ -382,15 +493,51 @@ const AuthRegister = ({ ...others }) => {
                 />
               </Grid>
             </Grid>
-                <AlertBoxMsg location="register"/>
 
-            <Box sx={{ mt: 2 }}>
-              <AnimateButton>
-                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
-                  Sign up
-                </Button>
-              </AnimateButton>
-            </Box>
+
+              {!isJoinUs ? (
+              <Grid container alignItems={"center"} justifyContent={"space-between"} spacing={1}>
+                  <Grid item xs={12} sm={5} lg={5} md={5}>
+                      <AnimateButton>
+                        <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
+                          Sign up
+                        </Button>
+                      </AnimateButton>
+                  </Grid>
+                  <Grid item xs={12} sm={1} lg={1} md={1}>
+                      <Typography variant="subtitle1">
+                          OR
+                      </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={5} lg={5} md={5}>
+                      <AnimateButton>
+                          <Button disableElevation disabled={isSubmitting} onClick={handleJoinUs} fullWidth size="large"  variant="contained" color="primary">
+                              Join Us!
+                          </Button>
+                      </AnimateButton>
+                  </Grid>
+              </Grid>) :
+                  (
+                      <Grid container direction="column" spacing={2}>
+                          <Grid item xs={12} sm={12} md={12} lg={12}>
+                              <AnimateButton>
+                                  <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
+                                      Complete Registration
+                                  </Button>
+                              </AnimateButton>
+                          </Grid>
+                          <Grid container item xs={12} sm={12} md={12} lg={12} justifyContent={"flex-end"}>
+                              <Button disableElevation={true}
+                                      disabled={isSubmitting}
+                                      size="small"
+                                      onClick={handleJoinUs} variant="text" color="primary"
+                              >
+                                 <ChevronLeftIcon/> Back
+                              </Button>
+                          </Grid>
+                      </Grid>
+                  )
+              }
           </form>
         )}
       </Formik>

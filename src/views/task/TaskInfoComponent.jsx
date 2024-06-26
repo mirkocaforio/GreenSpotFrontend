@@ -6,6 +6,7 @@ import {EnergySavingsLeafTwoTone, MemoryTwoTone} from "@mui/icons-material";
 import {getTaskAnalytics} from "../../utils/analytics-range";
 import {useTheme} from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
+import {dateFormatBeauty} from "../../utils/date-beauty";
 
 
 const TaskInfoComponent = ({ values, analytics }) => {
@@ -154,11 +155,11 @@ const TaskInfoComponent = ({ values, analytics }) => {
                             </Grid>
                             <Grid item xs={6}>
                                 <Typography variant="h6" >Start Time</Typography>
-                                <Typography variant="body1">{values?.startTime}</Typography>
+                                <Typography variant="body1">{dateFormatBeauty(values?.startTime, 'HH:mm - EEEE, d MMMM yyyy')}</Typography>
                             </Grid>
                             <Grid item xs={6}>
                                 <Typography variant="h6" >End Time</Typography>
-                                <Typography variant="body1">{values?.endTime}</Typography>
+                                <Typography variant="body1">{dateFormatBeauty(values?.endTime, 'HH:mm - EEEE, d MMMM yyyy')}</Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Divider/>
