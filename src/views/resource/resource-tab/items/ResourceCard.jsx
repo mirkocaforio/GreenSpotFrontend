@@ -258,13 +258,28 @@ const ResourceCard = ({resource}) => {
                         <Grid container spacing={gridSpacing} alignItems="center">
                             <Grid item xs={3} sm={4} md={4}>
                                 <Tooltip title={"Green Energy Supply"}>
-                                    <EnergySavingsLeafIcon fontSize="small"/>
+                                    <EnergySavingsLeafIcon fontSize="small" sx={{ color: 'green' }}/>
                                 </Tooltip>
                             </Grid>
                             <Grid item xs={9} sm={8} md={8}>
                                 <Typography variant="body1">
                                     {resource.greenEnergyType}
                                 </Typography>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Divider/>
+                    </Grid>
+                    <Grid item xs={12} md={12}>
+                        <Grid container spacing={gridSpacing} alignItems="center">
+                            <Grid item xs={3} sm={4} md={4}>
+                                <Tooltip title={"Energy consumption"}>
+                                    <BoltIcon fontSize="small" sx={{ color: 'gold' }}/>
+                                </Tooltip>
+                            </Grid>
+                            <Grid item xs={9} sm={8} md={8}>
+                                <Typography variant="body1">{resource.kwh} kWh</Typography>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -345,21 +360,6 @@ const ResourceCard = ({resource}) => {
                                         </SubCard>
                                     </AccordionDetails>
                                 </Accordion>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Divider/>
-                    </Grid>
-                    <Grid item xs={12} md={12}>
-                        <Grid container spacing={gridSpacing} alignItems="center">
-                            <Grid item xs={3} sm={4} md={4}>
-                                <Tooltip title={"Energy consumption"}>
-                                    <BoltIcon fontSize="small"/>
-                                </Tooltip>
-                            </Grid>
-                            <Grid item xs={9} sm={8} md={8}>
-                                <Typography variant="body1">{resource.kwh} kWh</Typography>
                             </Grid>
                         </Grid>
                     </Grid>
