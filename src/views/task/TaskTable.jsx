@@ -60,7 +60,7 @@ const TaskTable = ({maxRows = 2}) => {
     const [selectedTask, setSelectedTask] = useState(null);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [modifyDialogOpen, setModifyDialogOpen] = useState(false);
-    const [rowsPerPage] = useState(maxRows);
+    const [rowsPerPage,setMaxRows] = useState(maxRows);
     const [page, setPage] = useState(0);
 
     useEffect(() => {
@@ -301,7 +301,7 @@ const TaskTable = ({maxRows = 2}) => {
                 </Table>
             </TableContainer>
             <CardActions sx={{ p: 1.25, pt: 2, justifyContent: 'right' }}>
-                <Paging setPage={setPage} totalRows={tasks.length} maxRows={rowsPerPage}/>
+                <Paging setPage={setPage} totalRows={tasks.length} maxRows={rowsPerPage} setMaxRows={setMaxRows}/>
             </CardActions>
             {selectedTask && (
                 <>
