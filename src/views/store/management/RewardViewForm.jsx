@@ -77,14 +77,12 @@ const RewardViewForm = ({ isLoading, reward }) => {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Stack direction={"row"} spacing={1}>
-                                        <Typography variant="body2" gutterBottom>
-                                            { reward?.quantity > 0
-                                                ? (
-                                                    <Chip label="In Stock" color="success" size="small"  sx={{ cursor:"default", borderRadius: "4px"}} clickable />
-                                                ) : (
-                                                    <Chip label="Out of Stock" color="error" size="small" sx={{ cursor:"default", borderRadius: "4px"}} clickable />
-                                                ) }
-                                        </Typography>
+                                    { reward?.quantity > 0
+                                    ? (
+                                        <Chip label="In Stock" color="success" size="small"  sx={{ cursor:"default", borderRadius: "4px"}} clickable />
+                                    ) : (
+                                        <Chip label="Out of Stock" color="error" size="small" sx={{ cursor:"default", borderRadius: "4px"}} clickable />
+                                    ) }
                                         <Chip label={"Sold: " + reward?.sold} color="secondary" size="small"
                                               sx={{ cursor:"default",
                                                   borderRadius: "4px"}}
@@ -118,13 +116,15 @@ const RewardViewForm = ({ isLoading, reward }) => {
                                             </Typography>
                                         </TabPanel>
                                         <TabPanel value={"2"}>
-                                            <Typography variant="body1">
-                                                Reward added on:
+                                            <Stack direction="column" spacing={0}>
+                                                <Typography variant="body1">
+                                                    Reward added on:
+                                                </Typography>
                                                 <Typography variant="body1"
                                                             fontWeight="600"
                                                 >{dateBeauty(reward?.addDate)}
                                                 </Typography>
-                                            </Typography>
+                                            </Stack>
                                         </TabPanel>
                                     </TabContext>
                                 </Grid>
