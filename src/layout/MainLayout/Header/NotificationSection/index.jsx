@@ -38,6 +38,7 @@ import {
     readAllPopupNotifications
 } from "../../../../actions/notification";
 import NotificationListSkeleton from "../../../../ui-component/cards/Skeleton/NotificationListSkeleton";
+import {Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 
 // notification status options
 const status = [
@@ -68,6 +69,15 @@ const NotificationSection = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
+    const [dialogOpen, setDialogOpen] = useState(false);
+
+    const handleDialogOpen = () => {
+        setDialogOpen(true);
+    };
+
+    const handleDialogClose = () => {
+        setDialogOpen(false);
+    };
 
     useEffect(() => {
         if (popupNotifications) {
@@ -283,7 +293,7 @@ const NotificationSection = () => {
                                                             </Typography>
                                                         </Box>
                                                     ) : (
-                                                        <NotificationList notificationList={popupList}/>
+                                                        <NotificationList notificationList={popupList} limit={3}/>
                                                     )
                                                 }
                                             </PerfectScrollbar>
@@ -291,10 +301,35 @@ const NotificationSection = () => {
                                     </Grid>
                                     <Divider/>
                                     <CardActions sx={{p: 1.25, justifyContent: 'center'}}>
-                                        <Button size="small" disableElevation>
+                                        <Button size="small" disableElevation onClick={handleDialogOpen}>
                                             View All
                                         </Button>
                                     </CardActions>
+                                    <Dialog open={dialogOpen} onClose={handleDialogClose} fullWith>
+                                            <DialogTitle>
+                                                <Typography variant="h4">All Notifications</Typography>
+                                            </DialogTitle>
+                                        <DialogContent>
+                                            {
+                                                isLoading ? (
+                                                    <NotificationListSkeleton/>
+                                                ) : popupList.length === 0 ? (
+                                                    <Box display="flex" justifyContent="center" sx={{p: 2}}>
+                                                        <Typography variant="caption" align="center">
+                                                            There are no notifications
+                                                        </Typography>
+                                                    </Box>
+                                                ) : (
+                                                    <NotificationList notificationList={popupList} dialogSize={true}/>
+                                                )
+                                            }
+                                        </DialogContent>
+                                        <DialogActions>
+                                            <AnimateButton>
+                                                <Button onClick={handleDialogClose}>Close</Button>
+                                            </AnimateButton>
+                                        </DialogActions>
+                                    </Dialog>
                                 </MainCard>
                             </ClickAwayListener>
                         </Paper>

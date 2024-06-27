@@ -54,7 +54,7 @@ ListItemWrapper.propTypes = {
 
 // ==============================|| NOTIFICATION LIST ITEM ||============================== //
 
-const NotificationList = ({notificationList}) => {
+const NotificationList = ({notificationList, limit, dialogSize}) => {
     const dispatch = useDispatch();
     const sortedNotificationList = [...notificationList].sort((a, b) => new Date(b.sendAt) - new Date(a.sendAt));
     const theme = useTheme();
@@ -105,12 +105,13 @@ const NotificationList = ({notificationList}) => {
         <List
             sx={{
                 width: '100%',
-                maxWidth: 330,
+                maxWidth: dialogSize ? ('100%') : ('330px'),
+                //maxWidth: {(xs: '100%', sm: '330px', md: '500px')},
                 py: 0,
                 borderRadius: '10px',
-                [theme.breakpoints.down('md')]: {
+                /*[theme.breakpoints.down('md')]: {
                     maxWidth: 300
-                },
+                },*/
                 '& .MuiListItemSecondaryAction-root': {
                     top: 22
                 },
@@ -123,7 +124,7 @@ const NotificationList = ({notificationList}) => {
             }}
         >
             {
-                sortedNotificationList.map((notification, index) => (
+                sortedNotificationList.slice(0, limit).map((notification, index) => (
                     <ListItemWrapper key={index}>
                         <ListItem alignItems="center">
                             <ListItemAvatar>
@@ -203,7 +204,9 @@ const NotificationList = ({notificationList}) => {
 };
 
 NotificationList.propTypes = {
-    notificationList: PropTypes.array.isRequired
+    notificationList: PropTypes.array.isRequired,
+    limit: PropTypes.number,
+    dialogSize: PropTypes.bool
 };
 
 export default NotificationList;

@@ -15,6 +15,7 @@ import PropTypes from "prop-types";
 import {useDispatch, useSelector} from "react-redux";
 import * as Yup from "yup";
 import {updateResource} from "../../../../actions/resource";
+import Typography from "@mui/material/Typography";
 
 const ResourceDialog = ({openState, handleClose, resource, cpuNameList, gpuNameList}) => {
     const dispatch = useDispatch();
@@ -146,7 +147,9 @@ const ResourceDialog = ({openState, handleClose, resource, cpuNameList, gpuNameL
                           touched
                       }) => (
                         <Dialog open={open} onClose={handleClose}>
-                            <DialogTitle>Edit Resource</DialogTitle>
+                            <DialogTitle>
+                                <Typography variant="h4">Edit Resource</Typography>
+                            </DialogTitle>
                             <DialogContent>
                                 <Form noValidate>
                                     <Grid container spacing={gridSpacing}>
