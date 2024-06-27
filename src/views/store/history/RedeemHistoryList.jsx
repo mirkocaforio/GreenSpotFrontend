@@ -21,10 +21,8 @@ import Tooltip from "@mui/material/Tooltip";
 import Chip from "@mui/material/Chip";
 import Paging from "../../../ui-component/table/Paging";
 import CardActions from "@mui/material/CardActions";
-import {useNavigate} from "react-router-dom";
 import {getComparator, stableSort} from "../../../utils/table-utils";
 import {RedeemTwoTone, VisibilityTwoTone} from "@mui/icons-material";
-import RedeemModel from "../../../services/Model/RedeemModel";
 import RedeemInfoDialog from "./RedeemInfoDialog";
 import {useRedeem} from "../../../actions/reward";
 
@@ -49,15 +47,14 @@ const RedeemHistoryList = () => {
     const [filteredData, setFilteredData] = useState([]);
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('name');
-    
-    const navigate = useNavigate();
+
     const dispatch = useDispatch();
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedElement, setSelectedElement] = useState(null);
 
     const getDataLenght = () => {
-        return data?.redeems?.length;
+        return searchQuery ?  filteredData?.length : data?.redeems?.length;
     }
 
     const getDataList = () => {
@@ -70,6 +67,7 @@ const RedeemHistoryList = () => {
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
+        setPage(0);
     };
 
     const handleRequestSort = (event, property) => {
@@ -240,7 +238,7 @@ const RedeemHistoryList = () => {
                                 </TableBody>
                             </Table>
                             <CardActions sx={{ p: 1.25, pt: 2, justifyContent: 'right' }}>
-                                <Paging setPage={setPage} totalRows={getDataLenght()} maxRows={rowsPerPage} setMaxRows={setRowsPerPage}/>
+                                <Paging page={page} setPage={setPage} totalRows={getDataLenght()} maxRows={rowsPerPage} setMaxRows={setRowsPerPage}/>
                             </CardActions>
                             {selectedElement &&
                                 (<RedeemInfoDialog onClose={handleDialogClose} data={selectedElement} open={dialogOpen}/>)

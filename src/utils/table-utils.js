@@ -1,5 +1,11 @@
 
 function descendingComparator(a, b, orderBy) {
+    if(a === null || a === undefined) return 0;
+    if(b === null || b === undefined) return 0;
+
+    if(b[orderBy] === null || b[orderBy] === undefined) return 0;
+    if(a[orderBy] === null || a[orderBy] === undefined) return 0;
+
     if (b[orderBy] < a[orderBy]) {
         return -1;
     }

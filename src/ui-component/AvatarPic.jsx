@@ -12,9 +12,11 @@ import {useEffect, useState} from "react";
 import {stringToColor} from "../utils/random-color";
 
 
-export default function AvatarPic({anchorRef,open,size,type}) {
+export default function AvatarPic({anchorRef,open,size,type,staticProfile}) {
     const theme = useTheme();
-    const {profile} = useSelector((state) => state.profile);
+    const {profile: currProfile} = useSelector((state) => state.profile);
+    const [profile, setProfile] = useState({})
+
     const [loading, setLoading] = useState(true);
     let sizeSX = {};
     let marginSX = {};
@@ -58,13 +60,19 @@ export default function AvatarPic({anchorRef,open,size,type}) {
     }
 
     useEffect(() => {
-        if (profile === null) {
-            setLoading(true);
+        if(!staticProfile) {
+            if (currProfile === null) {
+                setLoading(true);
+            } else {
+                setProfile(currProfile);
+                setLoading(false);
+            }
         } else {
+            setProfile(staticProfile);
             setLoading(false);
         }
 
-    }, [profile]);
+    }, [currProfile, staticProfile]);
 
     const stringAvatar = (name) => {
         return {
@@ -98,5 +106,6 @@ AvatarPic.propTypes = {
     anchorRef: PropTypes.object,
     open: PropTypes.bool,
     size: PropTypes.string,
-    type: PropTypes.string
+    type: PropTypes.string,
+    staticProfile: PropTypes.object
 }

@@ -83,6 +83,7 @@ const RewardList = () => {
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
+        setPage(0);
     };
 
     const [order, setOrder] = useState('asc');
@@ -297,7 +298,7 @@ const RewardList = () => {
                                 </TableBody>
                             </Table>
                             <CardActions sx={{ p: 1.25, pt: 2, justifyContent: 'right' }}>
-                                <Paging setPage={setPage} totalRows={rewards?.rewards?.length} maxRows={rowsPerPage} setMaxRows={setRowsPerPage}/>
+                                <Paging page={page} setPage={setPage} totalRows={searchQuery ? filteredProducts?.length : rewards?.rewards?.length} maxRows={rowsPerPage} setMaxRows={setRowsPerPage}/>
                             </CardActions>
                             {selectedReward &&
                                 <RewardView onClose={handleDialogClose} id={selectedReward} open={dialogOpen}/>

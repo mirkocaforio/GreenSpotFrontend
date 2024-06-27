@@ -26,7 +26,8 @@ const ProductPage = Loadable(lazy(() => import("views/store/ProductPage")));
 let ResourcePage = Loadable(lazy(() => import('views/resource')));
 const StoreManagement = Loadable(lazy(() => import("views/store/management")));
 const ProductAdd = Loadable(lazy(() => import("views/store/management/reward")));
-const RedeeemHistory = Loadable(lazy(() => import("views/store/history")));
+const RedeemHistory = Loadable(lazy(() => import("views/store/history")));
+const UsersManagement = Loadable(lazy(() => import("views/users-management")));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
@@ -181,10 +182,17 @@ const MainRoutes = {
             path: 'redeem/history',
             element: <RouteGuard allowedRoles={[ROLE_MEMBER]}>
                 <FetchData type="redeems">
-                    <RedeeemHistory/>
+                    <RedeemHistory/>
                 </FetchData>
             </RouteGuard>
 
+        },{
+            path: 'users',
+            element: <RouteGuard allowedRoles={[ROLE_ADMIN]}>
+                        <FetchData type="allProfiles">
+                            <UsersManagement/>
+                        </FetchData>
+                     </RouteGuard>
         }
     ]
 };

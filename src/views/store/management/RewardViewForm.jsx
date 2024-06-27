@@ -4,7 +4,7 @@ import {Avatar, Box, Divider, Grid, IconButton, Tab, Tabs, Typography} from "@mu
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Chip from "@mui/material/Chip";
-import {HelpTwoTone} from "@mui/icons-material";
+import {HelpTwoTone, MonetizationOnTwoTone} from "@mui/icons-material";
 import DescriptionTwoToneIcon from "@mui/icons-material/DescriptionTwoTone";
 import {TabContext, TabPanel} from "@mui/lab";
 import PropTypes from "prop-types";
@@ -61,14 +61,19 @@ const RewardViewForm = ({ isLoading, reward }) => {
                                 </Grid>
                                 <Grid item container alignItems="center" justifyContent="flex-start">
                                     <Grid item>
-                                        <Typography variant="h2" color="primary" gutterBottom>
-                                            ${reward?.cost}
-                                        </Typography>
+                                        <Stack direction="row" spacing={1}>
+                                            <Box sx={{ paddingTop: 0.2 }}>
+                                                <MonetizationOnTwoTone color="primary" fontSize="large"/>
+                                            </Box>
+                                            <Typography variant="h1" color="primary" >
+                                                {reward?.cost}
+                                            </Typography>
+                                        </Stack>
                                     </Grid>
                                     {reward?.oldCost > 0 &&
                                         (<Grid item>
                                             <Typography variant="body2" component="span" color="textSecondary" sx={{ textDecoration: 'line-through', ml: 1 }}>
-                                                ${reward?.oldCost}
+                                                {reward?.oldCost}
                                             </Typography>
                                         </Grid>)}
                                 </Grid>
@@ -83,7 +88,16 @@ const RewardViewForm = ({ isLoading, reward }) => {
                                     ) : (
                                         <Chip label="Out of Stock" color="error" size="small" sx={{ cursor:"default", borderRadius: "4px"}} clickable />
                                     ) }
-                                        <Chip label={"Sold: " + reward?.sold} color="secondary" size="small"
+                                        <Chip label={"Quantity: " + reward?.quantity}
+                                              color="primary"
+                                              size="small"
+                                              sx={{ cursor:"default",
+                                                  borderRadius: "4px"}}
+                                              clickable
+                                        />
+                                        <Chip label={"Sold: " + reward?.sold}
+                                              color="secondary"
+                                              size="small"
                                               sx={{ cursor:"default",
                                                   borderRadius: "4px"}}
                                               clickable />

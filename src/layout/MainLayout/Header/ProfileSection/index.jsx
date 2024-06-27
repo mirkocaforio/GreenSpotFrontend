@@ -129,7 +129,7 @@ const ProfileSection = () => {
   useEffect(() => {
         const allItems = [
             accountSettingsItem({}),
-            socialProfileItem({onClick: null, chipValue: '69'}),
+            //socialProfileItem({onClick: null, chipValue: '69'}),
             logoutItem({onClick: handleLogout})
         ];
 
@@ -247,22 +247,6 @@ const ProfileSection = () => {
                       >
                         <CardContent>
                           <Grid container spacing={3} direction="column">
-                            <Grid item>
-                              <Grid item container alignItems="center" justifyContent="space-between">
-                                <Grid item>
-                                  <Typography variant="subtitle1">Gay?</Typography>
-                                </Grid>
-                                <Grid item>
-                                  <Switch
-                                    color="primary"
-                                    checked={sdm}
-                                    onChange={(e) => setSdm(e.target.checked)}
-                                    name="sdm"
-                                    size="small"
-                                  />
-                                </Grid>
-                              </Grid>
-                            </Grid>
                             <Grid item>
                               <Grid item container alignItems="center" justifyContent="space-between">
                                 <Grid item>

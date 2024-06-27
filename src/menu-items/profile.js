@@ -7,10 +7,18 @@ const icons = {IconUserHeart, IconUserCancel}
 
 const profile = {
     id: 'profile',
-    title: 'Profile Management',
+    title: 'Users Management',
     type: 'group',
     children: [
         {
+            id: 'users',
+            title: 'Users Control Panel',
+            type: 'item',
+            url: '/users',
+            icon: icons.IconUserHeart,
+            breadcrumbs: true
+        },
+        /*{
             id: 'enable',
             title: 'Enable Profile',
             type: 'item',
@@ -25,7 +33,7 @@ const profile = {
             url: '/wallet',
             icon: icons.IconUserCancel,
             breadcrumbs: false
-        }
+        }*/
     ]
 };
 

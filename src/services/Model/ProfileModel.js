@@ -8,12 +8,13 @@ export const ProfileModel = {
         residenceAddress: "",
         phoneNumber: "",
         fiscalCode: "",
-        role: ""
+        role: "",
+        registrationDate: "",
     },
     setProfileAll(profile) {
         this.profile = profile;
     },
-    setProfile(email,name, surname, date, city, address, tel,fiscalCode, role) {
+    setProfile(email,name, surname, date, city, address, tel,fiscalCode, role, registrationDate) {
         this.profile.email = email ? email : this.profile.email;
         this.profile.name = name ? name : this.profile.name;
         this.profile.surname = surname ? surname : this.profile.surname;
@@ -23,6 +24,7 @@ export const ProfileModel = {
         this.profile.phoneNumber = tel ? tel : this.profile.phoneNumber;
         this.profile.fiscalCode = fiscalCode ? fiscalCode : this.profile.fiscalCode;
         this.profile.role = role ? role : this.profile.role;
+        this.profile.registrationDate = registrationDate ? registrationDate : this.profile.registrationDate;
         return this.profile;
     },
     getProfile() {

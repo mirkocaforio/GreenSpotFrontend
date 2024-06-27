@@ -7,5 +7,6 @@ export const dateBeauty = (date) => {
 }
 
 export const dateFormatBeauty = (date,formatString) => {
+    if(!date) return "";
     return format(new Date(date), formatString);
 }
