@@ -1,16 +1,14 @@
 import {useDispatch} from "react-redux";
-import {getProfileData} from "../actions/profile";
+import {getProfileData, getAllProfiles} from "../actions/profile";
 import {useEffect} from "react";
 import {getWallet} from "../actions/wallet";
 import {getProfileTransactions} from "../actions/transaction";
 import {getTasks} from "../actions/task";
 import {getTasksAnalytics} from "../actions/analytics";
-import {getRewards} from "../actions/reward";
+import {getRewards, getRedeems} from "../actions/reward";
 import {getCpuNames, getGpuNames} from "../actions/score";
 import {getResourceByEmail} from "../actions/resource";
-import {getRedeems} from "../actions/reward";
 import {getPopupNotificationByEmail} from "../actions/notification";
-import {getAllProfiles} from "../actions/profile";
 
 
 const FetchData = ({children, type}) => {

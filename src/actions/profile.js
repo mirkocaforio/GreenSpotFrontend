@@ -10,8 +10,8 @@ import ProfileService from '../services/ProfileService';
 import {MSG_SUCCESS, MSG_WARNING} from "../config";
 import {onError} from "./expiration";
 
-export const updateProfile = (name,surname,date,city,address,tel,fiscalCode,email) => (dispatch) => {
-    return ProfileService.updateProfile(name,surname,date,city,address,tel,fiscalCode,email).then(
+export const updateProfile = (name,surname,date,city,address,tel,fiscalCode, cardNumber, cardExpiryDate, cardCvv) => (dispatch) => {
+    return ProfileService.updateProfile(name,surname,date,city,address,tel,fiscalCode, cardNumber, cardExpiryDate, cardCvv).then(
         (data) => {
             dispatch({
                 type: GET_PROFILE_SUCCESS,

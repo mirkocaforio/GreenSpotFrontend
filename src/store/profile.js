@@ -24,7 +24,7 @@ export default function (state = initialState, action) {
         case GET_PROFILE_FAIL:
             return {
                 ...state,
-                profile: profile ? profile : null,
+                profile: profile || null,
             };
         case GET_ENABLED_PROFILES_SUCCESS:
             return {
