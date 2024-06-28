@@ -9,6 +9,10 @@ import {useState} from "react";
 function generateViews(formatString) {
     let views = [];
 
+    if (formatString.includes("DD") && formatString.includes("MM") && formatString.includes("YYYY")) {
+        return null; // Se il formato include sia giorno, mese che anno, ritorna un array vuoto
+    }
+
     if (formatString.includes("DD")) {
         views.push("day");
     }
