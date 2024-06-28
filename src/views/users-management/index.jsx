@@ -12,7 +12,6 @@ import {useDispatch, useSelector} from "react-redux";
 import Tooltip from "@mui/material/Tooltip";
 import {BlockTwoTone} from "@mui/icons-material";
 import {disableProfile} from "../../actions/profile";
-import FilterButton from "../../ui-component/extended/FilterButton";
 
 export const UsersBadge = ({picSize, user}) => {
     return (
@@ -131,7 +130,7 @@ const UsersManagement = () => {
 
         if(profiles?.enabled.includes(element)){
             actions.push(
-                <Tooltip title={"Disable"} key={"disable_"+element?.email}>
+                <Tooltip title={"Disable"} key={"disable_"+element?.email} disableInteractive >
                     <IconButton  aria-label="stop" onClick={() => {
                         handleDisable(element);
                     }}>
@@ -183,6 +182,7 @@ const UsersManagement = () => {
             disablePadding: false,
             label: 'Enabled',
             align: 'left',
+            disableOrdering: true,
             content: (element) => {
                 return (
                     getStatusChip(element)

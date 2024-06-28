@@ -4,6 +4,25 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import TextField from "@mui/material/TextField";
 import dayjs from "dayjs";
+import {useState} from "react";
+
+function generateViews(formatString) {
+    let views = [];
+
+    if (formatString.includes("DD")) {
+        views.push("day");
+    }
+
+    if (formatString.includes("MM")) {
+        views.push("month");
+    }
+
+    if (formatString.includes("YYYY")) {
+        views.push("year");
+    }
+
+    return views;
+}
 
 // ===========================|| FORM PICKER - DATE PICKER ||=========================== //
 
@@ -12,6 +31,10 @@ const FormDatePicker = ({ label,handleBlur, handleChange, valueName, value, setV
     let format = dataFormat ? dataFormat : 'YYYY-MM-DD';
     let output = outputFormat ? outputFormat : 'YYYY-MM-DDTHH:mm:ss';
 
+    const [date, setDate] = useState(null);
+
+    const views = generateViews(format);
+
     return (
         <>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -19,14 +42,18 @@ const FormDatePicker = ({ label,handleBlur, handleChange, valueName, value, setV
                     id={"outlined-adornment-date-register"}
                     name={valueName}
                     onBlur={handleBlur}
+                    views={views}
                     onChange={(data) => {
                         const formattedDate = dayjs(data).isValid() ? dayjs(data).format(output) : '';
-                        setValue && setValue(data);
+
+                        setValue && setValue(dayjs(formattedDate,output));
+                        setDate(dayjs(data,output));
+
                         handleChange && handleChange({target: {name: valueName, value: formattedDate}});
                     }}
                     label={label}
                     inputFormat={format}
-                    value={value ? value : ""}
+                    value={value ? value : date}
                     renderInput={(params) => <TextField {...params} variant="outlined" />}/>
             </LocalizationProvider>
         </>
