@@ -5,7 +5,7 @@
 import {ApiClient, AuthHeader, getRole} from "./AuthUtils";
 import {UserModel} from "./Model/UserModel";
 import localStorage from "redux-persist/es/storage";
-import {updateProfile} from "./ProfileService";
+import {getProfile, updateProfile} from "./ProfileService";
 
 const login = (email, password, persist) => {
     const params = {};
@@ -55,12 +55,15 @@ const register = (name,surname,date,city,address,tel,email, password, isJoining)
             setTimeout(() => {
                 //First login and then update profile
                 return login(email, password, true).then( function(){
-                    return updateProfile(name, surname, date, city, address, tel, email).then(
-                        function(){
-                        }).catch( function(result){
-                            console.error("Error: " + result);
-                    }
-                    );
+                    return getProfile().then( function(){ //TODO: Eliminare e aggiungere ad argomenti updateProfile
+                        return updateProfile(name, surname, date, city, address, tel).then(
+                            function(){
+                            }).catch( function(result){
+                                console.error("Error: " + result);
+                            }
+                        );
+                    })
+
                 }).catch( function(result){
                     console.error("Error: " + result);
                 });

@@ -89,9 +89,30 @@ export const disableProfile = (email) => {
     });
 }
 
+export const enableProfile = (email) => {
+    let params = AuthHeader();
+    params = {...params,
+        profileEmail: email};
+
+    const additionalParams = {};
+
+    const body = {};
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1UsersProfileEnableProfileEmailPut(params, body,additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+    });
+
+}
+
 export default {
     updateProfile,
     getProfile,
     getProfiles,
-    disableProfile
+    disableProfile,
+    enableProfile
 }

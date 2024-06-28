@@ -149,3 +149,32 @@ export const disableProfile = (email) => (dispatch) => {
         }
     );
 }
+
+export const enableProfile = (email) => (dispatch) => {
+    return ProfileService.enableProfile(email).then(
+        () => {
+            dispatch({
+                type: SET_MESSAGE,
+                payload: {message: "Profile enabled successfully.",
+                    type: MSG_SUCCESS},
+            });
+
+            dispatch(getAllProfiles());
+
+            return Promise.resolve();
+        },
+        (error) => {
+
+            const message =
+                (error.data && error.data.message) ||
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            dispatch(onError(message,"profile"));
+            return Promise.reject();
+        }
+    );
+}

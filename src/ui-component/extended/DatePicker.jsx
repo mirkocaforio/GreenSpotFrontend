@@ -51,7 +51,7 @@ const FormDatePicker = ({ label,handleBlur, handleChange, handleFocus, valueName
                     const formattedDate = dayjs(data).isValid() ? dayjs(data).format(output) : '';
 
                     setValue && setValue(dayjs(formattedDate, output));
-                    setDate(dayjs(data, output));
+                    !value && setDate(dayjs(data, output));
 
                     handleChange && handleChange({target: {name: valueName, value: formattedDate}});
                 }}

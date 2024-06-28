@@ -3,15 +3,17 @@ import ClassicTable from "../../ui-component/table/ClassicTable";
 import React, {useEffect, useState} from "react";
 import AvatarPic from "../../ui-component/AvatarPic";
 import Grid from "@mui/material/Grid";
-import {Badge, IconButton, Typography} from "@mui/material";
+import {Badge, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography} from "@mui/material";
 import PropTypes from "prop-types";
 import {ROLE_ADMIN, ROLE_MEMBER, ROLE_UTENTE} from "../../config";
 import Chip from "@mui/material/Chip";
 import {dateFormatBeauty} from "../../utils/date-beauty";
 import {useDispatch, useSelector} from "react-redux";
 import Tooltip from "@mui/material/Tooltip";
-import {BlockTwoTone} from "@mui/icons-material";
-import {disableProfile} from "../../actions/profile";
+import {BlockTwoTone, CheckCircleOutlineTwoTone} from "@mui/icons-material";
+import {disableProfile, enableProfile} from "../../actions/profile";
+import Button from "@mui/material/Button";
+import DialogContentText from "@mui/material/DialogContentText";
 
 export const UsersBadge = ({picSize, user}) => {
     return (
@@ -34,10 +36,49 @@ export const UsersBadge = ({picSize, user}) => {
         </Badge>
     )
 }
-
 UsersBadge.propTypes = {
     picSize: PropTypes.string,
     user: PropTypes.object
+}
+
+export const AlertDialog = ({open, handleClose, handleConfirm, action}) => {
+
+    return (
+        <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            fullWidth>
+            <DialogTitle id="alert-dialog-title">
+                <Typography variant="h3">
+                    {action} User
+                </Typography>
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to {action} this user?
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleClose} color="error">
+                    Cancel
+                </Button>
+                <Button onClick={handleConfirm} color="primary" variant="contained" autoFocus>
+                    Confirm
+                </Button>
+            </DialogActions>
+        </Dialog>
+    )
+
+}
+AlertDialog.propTypes = {
+    open: PropTypes.bool,
+    handleClose: PropTypes.func,
+    handleConfirm: PropTypes.func,
+    content: PropTypes.string,
+    object: PropTypes.object,
+    action: PropTypes.string
 }
 
 
@@ -45,6 +86,10 @@ const UsersManagement = () => {
 
     const { profiles } = useSelector(state => state.profile);
     const [data, setData] = useState(null);
+
+    const [open, setOpen] = useState(false);
+    const [action, setAction] = useState(null);
+    const [handleAction, setHandleAction] = useState(() => () => {});
 
     const dispatch = useDispatch();
 
@@ -62,6 +107,24 @@ const UsersManagement = () => {
 
     const handleDisable = (element) => {
         dispatch(disableProfile(element?.email));
+        handleClose();
+    }
+
+    const handleEnable = (element) => {
+        dispatch(enableProfile(element?.email));
+        handleClose();
+    }
+
+    const handleOpen = (element,handleAction,action) => {
+        setAction(action);
+        setHandleAction(handleAction);
+        setOpen(true);
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+        setAction(null);
+        setHandleAction(null);
     }
 
     const getRoleChip = (role) => {
@@ -132,9 +195,18 @@ const UsersManagement = () => {
             actions.push(
                 <Tooltip title={"Disable"} key={"disable_"+element?.email} disableInteractive >
                     <IconButton  aria-label="stop" onClick={() => {
-                        handleDisable(element);
+                        handleOpen(element,() => () => handleDisable(element) ,"Disable")
                     }}>
                         <BlockTwoTone color="error"/>
+                    </IconButton>
+                </Tooltip>);
+        }else if(profiles?.disabled.includes(element)){
+            actions.push(
+                <Tooltip title={"Enable"} key={"enable_"+element?.email} disableInteractive >
+                    <IconButton  aria-label="play" onClick={() => {
+                        handleOpen(element,() => () => handleEnable(element) ,"Enable")
+                    }}>
+                        <CheckCircleOutlineTwoTone color="success"/>
                     </IconButton>
                 </Tooltip>);
         }
@@ -203,10 +275,17 @@ const UsersManagement = () => {
         }
     ];
 
-
     return(
         <MainCard>
             <ClassicTable searchLabel={"Search by email"} data={data} columns={columns} />
+            {open && (
+                <AlertDialog
+                    open={open}
+                    action={action}
+                    handleClose={handleClose}
+                    handleConfirm={handleAction}
+                />
+            )}
         </MainCard>
     )
 }
