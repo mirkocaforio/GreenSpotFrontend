@@ -4,7 +4,7 @@ import Divider from "@mui/material/Divider";
 import React, {useEffect, useState} from "react";
 import SearchField from "../../ui-component/extended/SearchField";
 import VerticalDivider from "../../ui-component/extended/VerticalDivider";
-import FilterButton from "../../ui-component/extended/FilterButton";
+import SorterButton from "../../ui-component/extended/SorterButton";
 import {useSelector} from "react-redux";
 
 
@@ -51,7 +51,7 @@ const RewardStore = () => {
                         </Grid>
                         <Grid item>
                             {/* <Filter /> */}
-                            <FilterButton title={"Sort by price"} sortDirection={sortDirection} onClick={handleSortByPrice}/>
+                            <SorterButton title={"Sort by price"} sortDirection={sortDirection} onClick={handleSortByPrice}/>
                         </Grid>
                     </Grid>
                 </Grid>

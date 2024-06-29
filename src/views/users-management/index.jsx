@@ -1,20 +1,45 @@
+// react
+import React, {useEffect, useRef, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import PropTypes from "prop-types";
+
+// project
 import MainCard from "../../ui-component/cards/MainCard";
 import ClassicTable from "../../ui-component/table/ClassicTable";
-import React, {useEffect, useState} from "react";
 import AvatarPic from "../../ui-component/AvatarPic";
+import FilterButton from "../../ui-component/extended/FilterButton";
+
+// utils
+import {dateFormatBeauty} from "../../utils/date-beauty";
+import {disableProfile, enableProfile} from "../../actions/profile";
+import {ROLE_ADMIN, ROLE_MEMBER, ROLE_UTENTE} from "../../config";
+
+
+// material-ui
 import Grid from "@mui/material/Grid";
 import {Badge, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography} from "@mui/material";
-import PropTypes from "prop-types";
-import {ROLE_ADMIN, ROLE_MEMBER, ROLE_UTENTE} from "../../config";
 import Chip from "@mui/material/Chip";
-import {dateFormatBeauty} from "../../utils/date-beauty";
-import {useDispatch, useSelector} from "react-redux";
 import Tooltip from "@mui/material/Tooltip";
 import {BlockTwoTone, CheckCircleOutlineTwoTone} from "@mui/icons-material";
-import {disableProfile, enableProfile} from "../../actions/profile";
 import Button from "@mui/material/Button";
 import DialogContentText from "@mui/material/DialogContentText";
+import Transitions from "../../ui-component/extended/Transitions";
+import Paper from "@mui/material/Paper";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Popper from "@mui/material/Popper";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import {useTheme} from "@mui/material/styles";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Stack from "@mui/material/Stack";
 
+/**
+ * UsersBadge
+ * @param picSize
+ * @param user
+ * @returns {Element}
+ * @constructor
+ */
 export const UsersBadge = ({picSize, user}) => {
     return (
         <Badge
@@ -41,6 +66,16 @@ UsersBadge.propTypes = {
     user: PropTypes.object
 }
 
+
+/**
+ * AlertDialog
+ * @param open
+ * @param handleClose
+ * @param handleConfirm
+ * @param action
+ * @returns {Element}
+ * @constructor
+ */
 export const AlertDialog = ({open, handleClose, handleConfirm, action}) => {
 
     return (
@@ -84,27 +119,117 @@ AlertDialog.propTypes = {
 
 const UsersManagement = () => {
 
+    const theme = useTheme();
+    const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
+
     const { profiles } = useSelector(state => state.profile);
     const [data, setData] = useState(null);
+    const [filteredData, setFilteredData] = useState(null);
 
     const [open, setOpen] = useState(false);
     const [action, setAction] = useState(null);
     const [handleAction, setHandleAction] = useState(() => () => {});
 
+    const anchorRef = useRef(null);
+    const [filterOpen, setFilterOpen] = useState(false);
+    const [filter, setFilter] = useState({
+        enabled: false,
+        disabled: false,
+        roles: {
+            admin: false,
+            member: false,
+            user: false,
+            all: true
+        },
+        all: true
+    });
+
     const dispatch = useDispatch();
 
+
+    // DATA SET and STATUS FILTER
     useEffect(() => {
+
         if (profiles) {
-            if(profiles?.enabled && profiles?.disabled){
+            if(profiles?.enabled && profiles?.disabled && filter?.all){
                 setData(profiles?.enabled?.concat(profiles?.disabled));
-            }else if(profiles?.enabled){
+            }else if(profiles?.enabled && filter?.enabled){
                 setData(profiles?.enabled);
-            }else {
+            }else if(profiles?.disabled && filter?.disabled){
                 setData(profiles?.disabled);
             }
         }
-    }, [profiles]);
 
+    }, [ filter, profiles]);
+
+    // ROLE FILTER
+    useEffect(() => {
+
+        const roleConstants = {
+            admin: ROLE_ADMIN,
+            member: ROLE_MEMBER,
+            user: ROLE_UTENTE
+        };
+
+        //Filter by roles
+        if(data){
+
+            const roles = filter?.roles;
+
+            if(filter?.roles?.all) {
+                setFilteredData(data);
+            } else{
+
+                setFilteredData(data.filter(element =>
+                    Object.keys(roleConstants).some(role => roles[role] && element.role === roleConstants[role])
+                ));
+            }
+
+        }
+    }, [data, filter?.roles]);
+
+    // ###### FILTER ######
+    const handleFilterToggle = () => {
+        setFilterOpen(!filterOpen);
+    }
+
+    const handleFilterClose = (event) => {
+        if (anchorRef.current && anchorRef.current.contains(event.target)) {
+            return;
+        }
+        setFilterOpen(false);
+    }
+
+    const handleCheckboxChange = (event) => {
+        const { name, checked } = event.target;
+
+        setFilter(prevFilter => {
+            if (name) {
+                const newFilter = { ...prevFilter, [name]: checked, all: false };
+
+                newFilter.all = !!((newFilter?.enabled && newFilter?.disabled) || (!newFilter?.enabled && !newFilter?.disabled));
+
+                return newFilter;
+            }
+        });
+
+    };
+
+    const handleRoleCheckboxChange = (event) => {
+        const { name, checked } = event.target;
+
+        setFilter(prevFilter => {
+            if (name) {
+                const newFilter = { ...prevFilter, roles: {...prevFilter.roles, [name]: checked, all: false}};
+
+                newFilter.roles.all = !!((newFilter.roles?.admin && newFilter.roles?.member && newFilter.roles?.user) || (!newFilter.roles?.admin && !newFilter.roles?.member && !newFilter.roles?.user));
+
+                return newFilter;
+            }
+        });
+    }
+
+    // ###### ACTIONS ######
     const handleDisable = (element) => {
         dispatch(disableProfile(element?.email));
         handleClose();
@@ -127,6 +252,7 @@ const UsersManagement = () => {
         setHandleAction(null);
     }
 
+    // ###### TABLE ######
     const getRoleChip = (role) => {
         switch (role) {
             case ROLE_ADMIN:
@@ -277,15 +403,129 @@ const UsersManagement = () => {
 
     return(
         <MainCard>
-            <ClassicTable searchLabel={"Search by email"} data={data} columns={columns} />
+            <ClassicTable 
+                searchLabel={"Search by email"} 
+                data={filteredData}
+                columns={columns}
+                header={<FilterButton
+                    title={"Filter"}
+                    clicked={filterOpen}
+                    onClick={handleFilterToggle}
+                    ref={anchorRef}
+                />}
+            />
             {open && (
-                <AlertDialog
-                    open={open}
-                    action={action}
-                    handleClose={handleClose}
-                    handleConfirm={handleAction}
-                />
+                <AlertDialog open={open} action={action} handleClose={handleClose} handleConfirm={handleAction}/>
             )}
+            <Popper
+                placement={matchesXs ? 'bottom' : 'bottom-end'}
+                open={filterOpen}
+                anchorEl={anchorRef.current}
+                role={undefined}
+                transition
+                disablePortal
+                popperOptions={{
+                    modifiers: [
+                        {
+                            name: 'offset',
+                            options: {
+                                offset: [matchesXs ? 5 : 0, 20]
+                            }
+                        }
+                    ]
+                }}
+            >
+                {({TransitionProps}) => (
+                    <Transitions position={matchesXs ? 'top' : 'top-right'} in={filterOpen} {...TransitionProps}>
+                        <Paper>
+                            <ClickAwayListener onClickAway={handleFilterClose}>
+                                <MainCard border={false} elevation={16} content={false} boxShadow
+                                          shadow={theme.shadows[16]}>
+                                    <Grid container direction="column" spacing={2} sx={{padding: 2, paddingRight:3}}>
+                                        <Grid item container direction="column" spacing={2}>
+                                            <Grid item>
+                                                <Typography variant="h5" gutterBottom>
+                                                    Status
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item>
+                                                <Stack direction={matchesXs ? 'column' : 'row'} spacing={2}>
+                                                    <FormControlLabel
+                                                        control={
+                                                            <Checkbox
+                                                                checked={filter?.enabled}
+                                                                onChange={handleCheckboxChange}
+                                                                name="enabled"
+                                                                color="success"
+                                                                //disabled={filter?.all}
+                                                            />
+                                                        }
+                                                        label="Enabled"
+                                                    />
+                                                    <FormControlLabel
+                                                        control={
+                                                            <Checkbox
+                                                                checked={filter?.disabled}
+                                                                onChange={handleCheckboxChange}
+                                                                name="disabled"
+                                                                color="error"
+                                                                //disabled={filter?.all}
+                                                            />
+                                                        }
+                                                        label="Disabled"
+                                                    />
+                                                </Stack>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography variant="h5" gutterBottom>
+                                                Role
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item>
+                                            <Stack direction={matchesXs ? 'column' : 'row'} spacing={2}>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            checked={filter?.roles?.admin}
+                                                            onChange={handleRoleCheckboxChange}
+                                                            name="admin"
+                                                            color="primary"
+                                                        />
+                                                    }
+                                                    label="Admin"
+                                                />
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            checked={filter?.roles?.member}
+                                                            onChange={handleRoleCheckboxChange}
+                                                            name="member"
+                                                            color="default"
+                                                        />
+                                                    }
+                                                    label="Member"
+                                                />
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            checked={filter?.roles?.user}
+                                                            onChange={handleRoleCheckboxChange}
+                                                            name="user"
+                                                            color="secondary"
+                                                        />
+                                                    }
+                                                    label="User"
+                                                />
+                                            </Stack>
+                                        </Grid>
+                                    </Grid>
+                                </MainCard>
+                            </ClickAwayListener>
+                        </Paper>
+                    </Transitions>
+                )}
+            </Popper>
         </MainCard>
     )
 }

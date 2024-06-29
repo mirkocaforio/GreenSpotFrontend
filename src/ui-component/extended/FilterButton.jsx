@@ -1,30 +1,29 @@
 import {FilterList} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
-import React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import PropTypes from "prop-types";
+import {forwardRef} from "react";
 
-const FilterButton = ({ title, sortDirection = "asc", onClick }) => {
-
+const FilterButton = forwardRef(({ title, clicked, onClick }, ref) => {
     return (
-        <Tooltip title={title + " " + sortDirection} arrow disableInteractive>
-            <IconButton onClick={onClick}>
-                <FilterList color={"secondary"}
+        <Tooltip title={title} placement="top" arrow disableInteractive>
+            <IconButton onClick={onClick} ref={ref}>
+                <FilterList color="secondary"
                             sx={{
-                                transform: sortDirection === 'asc' ? 'rotate(0deg)' : 'rotate(180deg)',
+                                transform: clicked ? 'rotate(180deg)' : 'rotate(0deg)',
                                 transition: 'transform 0.3s',
                             }}
                 />
             </IconButton>
         </Tooltip>
     );
-
-}
+});
 
 FilterButton.propTypes = {
+    clicked: PropTypes.bool,
     title: PropTypes.string.isRequired,
     sortDirection: PropTypes.string,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
 };
 
 export default FilterButton;

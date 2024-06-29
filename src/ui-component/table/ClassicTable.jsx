@@ -10,6 +10,8 @@ import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import Paging from "./Paging";
 import PropTypes from "prop-types";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import {useTheme} from "@mui/material/styles";
 
 
 /**
@@ -39,6 +41,9 @@ import PropTypes from "prop-types";
 
 
 const ClassicTable = ({ columns = [{}], data, searchLabel = "Search element", header }) => {
+
+    const theme = useTheme();
+    const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -138,18 +143,22 @@ const ClassicTable = ({ columns = [{}], data, searchLabel = "Search element", he
 
     return (<>
         <Paper>
-            <Grid container justifyContent={"space-between"} alignItems={"center"} spacing={12}>
-                <Grid item>
-                    <SearchField placeHolder={searchLabel}
-                                 value={searchQuery}
-                                 sx={{
-                                     padding: 0
-                                 }}
-                                 onChange={handleSearchChange} />
+            <Grid container justifyContent={"space-between"} alignItems={"center"} spacing={matchesXs ? 12 : 0}>
+                <Grid container item justifyContent={"flex-start"} xs={8} sm={8} md={11.5} lg={11.5}>
+                    <Grid item>
+                        <SearchField placeHolder={searchLabel}
+                                     value={searchQuery}
+                                     sx={{
+                                         padding: 0
+                                     }}
+                                     onChange={handleSearchChange} />
+                    </Grid>
                 </Grid>
             {header && (
-                <Grid item>
-                    {header}
+                <Grid container item justifyContent="flex-end" xs={4} sm={2} md={0.5} lg={0.5}>
+                    <Grid item>
+                        {header}
+                    </Grid>
                 </Grid>
                 )}
             </Grid>
