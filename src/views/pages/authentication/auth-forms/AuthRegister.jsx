@@ -35,7 +35,6 @@ import {LOGIN_PATH} from "../../../../config";
 import AlertBoxMsg from "../../../../ui-component/form/AlertBoxMsg";
 import FormDatePicker from "../../../../ui-component/extended/DatePicker";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import SubCard from "../../../../ui-component/cards/SubCard";
 
 
 // ===========================|| FIREBASE - REGISTER ||=========================== //
@@ -74,16 +73,20 @@ const AuthRegister = ({ ...others }) => {
 
   //name,surname,date,city,address,tel,email, password
   const handleRegister = (values) => {
-
     return dispatch(register(
-        values.name,
-        values.surname,
-        values.birthDate,
-        values.city,
-        values.address,
-        values.phone,
-        values.email,
-        values.password,
+        {
+            name: values.name,
+            surname: values.surname,
+            birthDate: values.birthDate,
+            city: values.city,
+            address: values.address,
+            tel: values.tel,
+            email: values.email,
+            password: values.password,
+            cardNumber: values.cardNumber,
+            cardCvv: values.cardCvv,
+            cardExpiryDate: values.cardExpiryDate
+        },
         isJoinUs //If true it will become a User and not a Member
     )).then(
       () => {
@@ -107,13 +110,13 @@ const AuthRegister = ({ ...others }) => {
       birthDate: '',
       name: '',
       surname: '',
-      phone: '',
+      tel: '',
       city: '',
       address: '',
 
-      creditCard: '',
-      cvv: '',
-      expirationDate: '',
+      cardNumber: '',
+      cardCvv: '',
+      cardExpiryDate: '',
 
       submit: null
   }
@@ -126,15 +129,15 @@ const AuthRegister = ({ ...others }) => {
             birthDate: Yup.string().max(255).required('Date is required'),
             name: Yup.string().max(255).required('Last Name is required'),
             surname: Yup.string().max(255).required('First Name is required'),
-            phone: Yup.string().matches(/^[0-9]+$/, 'Must be only digits').min(10, 'Must be exactly 10 digits').max(10, 'Must be exactly 10 digits').required('Phone is required'),
+            tel: Yup.string().matches(/^[0-9]+$/, 'Must be only digits').min(10, 'Must be exactly 10 digits').max(10, 'Must be exactly 10 digits').required('Cell number is required'),
       };
 
       if(isJoinUs){
         schema = {
             ...schema,
-            creditCard: Yup.string().matches(/^[0-9]+$/, 'Must be only digits').min(16, 'Must be exactly 16 digits').max(16, 'Must be exactly 16 digits').required('Credit Card is required'),
-            cvv: Yup.string().matches(/^[0-9]+$/, 'Must be only digits').min(3, 'Must be exactly 3 digits').max(3, 'Must be exactly 3 digits').required('CVV is required'),
-            expirationDate: Yup.string().max(255).required('Expiration Date is required')
+            cardNumber: Yup.string().matches(/^[0-9]+$/, 'Must be only digits').min(16, 'Must be exactly 16 digits').max(16, 'Must be exactly 16 digits').required('Credit Card is required'),
+            cardCvv: Yup.string().matches(/^[0-9]+$/, 'Must be only digits').min(3, 'Must be exactly 3 digits').max(3, 'Must be exactly 3 digits').required('CVV is required'),
+            cardExpiryDate: Yup.string().max(255).required('Expiration Date is required')
         };
       }
 
@@ -307,20 +310,20 @@ const AuthRegister = ({ ...others }) => {
                       </FormControl>
                   </Grid>
               </Grid>
-                <FormControl fullWidth error={Boolean(touched.phone && errors.phone)} sx={{ ...theme.typography.customInput }}>
-                    <InputLabel htmlFor="outlined-adornment-phone-register">Phone Number</InputLabel>
+                <FormControl fullWidth error={Boolean(touched.tel && errors.tel)} sx={{ ...theme.typography.customInput }}>
+                    <InputLabel htmlFor="outlined-adornment-tel-register">Cell Number</InputLabel>
                     <OutlinedInput
-                        id="outlined-adornment-phone-register"
+                        id="outlined-adornment-tel-register"
                         type="text"
-                        value={values.phone}
-                        name="phone"
+                        value={values.tel}
+                        name="tel"
                         onBlur={handleBlur}
                         onChange={handleChange}
                         inputProps={{}}
                     />
-                    {touched.phone && errors.phone && (
+                    {touched.tel && errors.tel && (
                         <FormHelperText error id="standard-weight-helper-text--register">
-                            {errors.phone}
+                            {errors.tel}
                         </FormHelperText>
                     )}
                 </FormControl>
@@ -421,49 +424,56 @@ const AuthRegister = ({ ...others }) => {
                       <Grid item xs={12} sm={12} md={12} lg={12}>
                               <Grid container direction="column" spacing={1}>
                                     <Grid item>
-                                        <FormControl fullWidth error={Boolean(touched.creditCard && errors.creditCard)} sx={{ ...theme.typography.customInput }}>
-                                            <InputLabel htmlFor="outlined-adornment-creditCard-register">Credit Card</InputLabel>
+                                        <FormControl fullWidth error={Boolean(touched.cardNumber && errors.cardNumber)} sx={{ ...theme.typography.customInput }}>
+                                            <InputLabel htmlFor="outlined-adornment-cardNumber-register">Credit Card</InputLabel>
                                             <OutlinedInput
-                                                id="outlined-adornment-creditCard-register"
+                                                id="outlined-adornment-cardNumber-register"
                                                 type="text"
-                                                value={values.creditCard}
-                                                name="creditCard"
+                                                value={values.cardNumber}
+                                                name="cardNumber"
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
-                                                inputProps={{}}
+                                                inputProps={{maxLength: 16}}
                                             />
-                                            {touched.creditCard && errors.creditCard && (
+                                            {touched.cardNumber && errors.cardNumber && (
                                                 <FormHelperText error id="standard-weight-helper-text--register">
-                                                    {errors.creditCard}
+                                                    {errors.cardNumber}
                                                 </FormHelperText>
                                             )}
                                         </FormControl>
                                     </Grid>
                                     <Grid item>
-                                        <FormControl fullWidth error={Boolean(touched.cvv && errors.cvv)} sx={{ ...theme.typography.customInput }}>
-                                            <InputLabel htmlFor="outlined-adornment-cvv-register">CVV</InputLabel>
+                                        <FormControl fullWidth error={Boolean(touched.cardCvv && errors.cardCvv)} sx={{ ...theme.typography.customInput }}>
+                                            <InputLabel htmlFor="outlined-adornment-cardCvv-register">CVV</InputLabel>
                                             <OutlinedInput
-                                                id="outlined-adornment-cvv-register"
+                                                id="outlined-adornment-cardCvv-register"
                                                 type="text"
-                                                value={values.cvv}
-                                                name="cvv"
+                                                value={values.cardCvv}
+                                                name="cardCvv"
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                                 inputProps={{}}
                                             />
-                                            {touched.cvv && errors.cvv && (
+                                            {touched.cardCvv && errors.cardCvv && (
                                                 <FormHelperText error id="standard-weight-helper-text--register">
-                                                    {errors.cvv}
+                                                    {errors.cardCvv}
                                                 </FormHelperText>
                                             )}
                                         </FormControl>
                                     </Grid>
                                     <Grid item>
-                                        <FormControl fullWidth error={Boolean(touched.expirationDate && errors.expirationDate)} sx={{ ...theme.typography.dateInput }}>
-                                            <FormDatePicker label={"Expiration Date"} valueName="expirationDate" value={values.expirationDate} handleChange={handleChange} handleBlur={handleBlur} />
-                                            {touched.expirationDate && errors.expirationDate && (
+                                        <FormControl fullWidth error={Boolean(touched.cardExpiryDate && errors.cardExpiryDate)} sx={{ ...theme.typography.dateInput }}>
+                                            <FormDatePicker label={"Expiration Date"}
+                                                            valueName="cardExpiryDate"
+                                                            value={values.cardExpiryDate}
+                                                            handleChange={handleChange}
+                                                            handleBlur={handleBlur}
+                                                            dataFormat={"MM/YYYY"}
+                                                            outputFormat={"MM/YY"}
+                                            />
+                                            {touched.cardExpiryDate && errors.cardExpiryDate && (
                                                 <FormHelperText error id="standard-weight-helper-text--register">
-                                                    {errors.expirationDate}
+                                                    {errors.cardExpiryDate}
                                                 </FormHelperText>
                                             )}
                                         </FormControl>
@@ -496,7 +506,7 @@ const AuthRegister = ({ ...others }) => {
 
 
               {!isJoinUs ? (
-              <Grid container alignItems={"center"} justifyContent={"space-between"} spacing={1}>
+              <Grid container direction={matchDownSM ? "column" : "row"} alignItems={"center"} justifyContent={"space-between"} spacing={1}>
                   <Grid item xs={12} sm={5} lg={5} md={5}>
                       <AnimateButton>
                         <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">

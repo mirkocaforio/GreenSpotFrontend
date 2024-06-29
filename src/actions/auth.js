@@ -58,8 +58,8 @@ export const login = (email, password, persist) => (dispatch) => {
     );
 };
 
-export const register = (name,surname,date,city,address,tel,email, password, isJoining) => (dispatch) => {
-    return AuthService.register(name,surname,date,city,address,tel,email, password, isJoining).then(
+export const register = (data, isJoining) => (dispatch) => {
+    return AuthService.register(data, isJoining).then(
         () => {
             dispatch({
                 type: REGISTER_SUCCESS,

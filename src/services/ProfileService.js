@@ -3,12 +3,12 @@
 import {AuthHeader, ApiClient, CurrentUser, CurrentProfile} from "./AuthUtils";
 import {ProfileModel} from "./Model/ProfileModel";
 
-export const updateProfile = (name,surname,date,city,address,tel,fiscalCode, cardNumber, cardExpiryDate, cardCvv) => {
+export const updateProfile = (data) => {
     let email = CurrentUser().email;
     let role = CurrentProfile().role;
     let registrationDate = CurrentProfile().registrationDate;
     const params = AuthHeader();
-    const body = ProfileModel.setProfile(email,name,surname,date,city,address,tel,fiscalCode,role, registrationDate, cardNumber, cardExpiryDate, cardCvv);
+    const body = ProfileModel.setProfile(email,data?.name,data?.surname,data?.birthDate,data?.city,data?.address,data?.tel,data?.fiscalCode,role, registrationDate, data?.cardNumber, data?.cardExpiryDate, data?.cardCvv);
     const additionalParams = {};
 
     console.log(body)

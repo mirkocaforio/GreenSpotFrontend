@@ -20,6 +20,10 @@ export function isTokenExpired(message) {
     return (message && message.startsWith('Invalid token: JWT expired'));
 }
 
+export function isUserNotAuthorized(message) {
+    return (message && message.startsWith('User not authorized'));
+}
+
 export function isUserEnabled() {
     //TODO: implementare il controllo per verificare se l'utente è abilitato in base a un messaggio
     return true;

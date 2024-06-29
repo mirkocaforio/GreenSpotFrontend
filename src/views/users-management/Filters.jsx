@@ -1,7 +1,7 @@
 import {ROLE_ADMIN, ROLE_MEMBER, ROLE_UTENTE} from "../../config";
 
 export const usersFilters = {
-    enabled: false,
+    enabled: true,
     disabled: false,
     roles: {
         admin: {
@@ -27,5 +27,5 @@ export const usersFilters = {
             show: false
         }
     },
-    all: true
+    all: false
 }

@@ -36,13 +36,13 @@ const login = (email, password, persist) => {
 
 }
 
-const register = (name,surname,date,city,address,tel,email, password, isJoining) => {
+const register = (data, isJoining) => {
     const params = {};
     const body = {
-        email: email,
-        password: password,
-        name: name,
-        surname: surname,
+        email: data?.email,
+        password: data?.password,
+        name: data?.name,
+        surname: data?.surname,
         role: getRole(isJoining),
     };
     const additionalParams = {};
@@ -54,9 +54,9 @@ const register = (name,surname,date,city,address,tel,email, password, isJoining)
             // Schedule login and updateProfile to run asynchronously
             setTimeout(() => {
                 //First login and then update profile
-                return login(email, password, true).then( function(){
+                return login(data?.email, data?.password, true).then( function(){
                     return getProfile().then( function(){ //TODO: Eliminare e aggiungere ad argomenti updateProfile
-                        return updateProfile(name, surname, date, city, address, tel).then(
+                        return updateProfile(data).then(
                             function(){
                             }).catch( function(result){
                                 console.error("Error: " + result);
