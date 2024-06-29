@@ -1,12 +1,10 @@
 // react
 import React, {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import PropTypes from "prop-types";
 
 // project
 import MainCard from "../../ui-component/cards/MainCard";
 import ClassicTable from "../../ui-component/table/ClassicTable";
-import AvatarPic from "../../ui-component/AvatarPic";
 import FilterButton from "../../ui-component/extended/FilterButton";
 
 // utils
@@ -17,12 +15,10 @@ import {ROLE_ADMIN, ROLE_MEMBER, ROLE_UTENTE} from "../../config";
 
 // material-ui
 import Grid from "@mui/material/Grid";
-import {Badge, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography} from "@mui/material";
+import { IconButton, Typography} from "@mui/material";
 import Chip from "@mui/material/Chip";
 import Tooltip from "@mui/material/Tooltip";
 import {BlockTwoTone, CheckCircleOutlineTwoTone} from "@mui/icons-material";
-import Button from "@mui/material/Button";
-import DialogContentText from "@mui/material/DialogContentText";
 import Transitions from "../../ui-component/extended/Transitions";
 import Paper from "@mui/material/Paper";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
@@ -32,89 +28,10 @@ import {useTheme} from "@mui/material/styles";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Stack from "@mui/material/Stack";
-
-/**
- * UsersBadge
- * @param picSize
- * @param user
- * @returns {Element}
- * @constructor
- */
-export const UsersBadge = ({picSize, user}) => {
-    return (
-        <Badge
-            overlap="circular"
-            anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}>
-            <Grid container spacing={2}>
-                <Grid item>
-                    <AvatarPic size={picSize} type="badge" staticProfile={user}/>
-                </Grid>
-                <Grid item>
-                    <Typography variant="h5" gutterBottom>
-                        {user?.email}
-                    </Typography>
-                    <Typography variant="subtitle2" gutterBottom>
-                        {user?.name} {user?.surname}
-                    </Typography>
-                </Grid>
-            </Grid>
-        </Badge>
-    )
-}
-UsersBadge.propTypes = {
-    picSize: PropTypes.string,
-    user: PropTypes.object
-}
+import {UsersBadge} from "./UsersBadge";
+import {AlertDialog} from "./AlertDialog";
 
 
-/**
- * AlertDialog
- * @param open
- * @param handleClose
- * @param handleConfirm
- * @param action
- * @returns {Element}
- * @constructor
- */
-export const AlertDialog = ({open, handleClose, handleConfirm, action}) => {
-
-    return (
-        <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-            fullWidth>
-            <DialogTitle id="alert-dialog-title">
-                <Typography variant="h3">
-                    {action} User
-                </Typography>
-            </DialogTitle>
-            <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    Are you sure you want to {action} this user?
-                </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose} color="error">
-                    Cancel
-                </Button>
-                <Button onClick={handleConfirm} color="primary" variant="contained" autoFocus>
-                    Confirm
-                </Button>
-            </DialogActions>
-        </Dialog>
-    )
-
-}
-AlertDialog.propTypes = {
-    open: PropTypes.bool,
-    handleClose: PropTypes.func,
-    handleConfirm: PropTypes.func,
-    content: PropTypes.string,
-    object: PropTypes.object,
-    action: PropTypes.string
-}
 
 
 const UsersManagement = () => {
@@ -299,6 +216,7 @@ const UsersManagement = () => {
                         label="Enabled"
                         color="success"
                         size="small"
+                        sx={{ cursor:"default", borderRadius: "4px"}}
                     />
                 )
             }else if(profiles?.disabled.includes(element)){
@@ -307,6 +225,7 @@ const UsersManagement = () => {
                         label="Disabled"
                         color="error"
                         size="small"
+                        sx={{ cursor:"default", borderRadius: "4px"}}
                     />
                 )
             }

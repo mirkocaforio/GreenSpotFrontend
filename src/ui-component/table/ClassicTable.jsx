@@ -143,7 +143,7 @@ const ClassicTable = ({ columns = [{}], data, searchLabel = "Search element", he
 
     return (<>
         <Paper>
-            <Grid container justifyContent={"space-between"} alignItems={"center"} spacing={matchesXs ? 12 : 0}>
+            <Grid container alignItems={"center"}>
                 <Grid container item justifyContent={"flex-start"} xs={8} sm={8} md={11.5} lg={11.5}>
                     <Grid item>
                         <SearchField placeHolder={searchLabel}
