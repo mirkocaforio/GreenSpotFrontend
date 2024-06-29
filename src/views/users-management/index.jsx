@@ -414,7 +414,7 @@ const UsersManagement = () => {
                                                                 checked={filter?.roles[role]?.status}
                                                                 onChange={handleRoleCheckboxChange}
                                                                 name={role}
-                                                                color="primary"
+                                                                color={usersFilters.roles[role].color}
                                                             />
                                                         }
                                                         label={role.charAt(0).toUpperCase() + role.slice(1)}

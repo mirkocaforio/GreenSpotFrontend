@@ -7,17 +7,20 @@ export const usersFilters = {
         admin: {
             status: false,
             value: ROLE_ADMIN,
-            show: true
+            show: true,
+            color: 'primary'
+        },
+        user: {
+            status: false,
+            value: ROLE_UTENTE,
+            show: true,
+            color: 'secondary'
         },
         member: {
             status: false,
             value: ROLE_MEMBER,
             show: true,
-        },
-        user: {
-            status: false,
-            value: ROLE_UTENTE,
-            show: true
+            color: 'default'
         },
         all: {
             status: true,
