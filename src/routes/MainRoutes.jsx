@@ -37,15 +37,15 @@ const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 const MainRoutes = {
     path: '/',
     element: <RouteGuard>
-        <FetchData>
-            <FetchData type="notification">
-                <SnackbarProvider maxSnack={5} autoHideDuration={NOTIFICATION_DURATION}>
-                    <MainLayout/>
-                    <NetworkCheck/>
-                </SnackbarProvider>
-            </FetchData>
-        </FetchData>
-    </RouteGuard>,
+                <FetchData>
+                    <FetchData type="notification">
+                        <SnackbarProvider maxSnack={5} autoHideDuration={NOTIFICATION_DURATION}>
+                            <MainLayout/>
+                            <NetworkCheck/>
+                        </SnackbarProvider>
+                    </FetchData>
+                </FetchData>
+            </RouteGuard>,
     children: [
         {
             path: HOME_PATH,

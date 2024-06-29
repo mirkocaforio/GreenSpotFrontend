@@ -1,16 +1,19 @@
 import {CurrentProfile} from "../services/AuthUtils";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {logout} from "../actions/auth";
 
 
 export const useAuthorization = (allowedRoles) => {
     const profile = CurrentProfile();
-
-    if (profile === undefined || profile === null) {
-        return false;
-    }
+    const dispatch = useDispatch();
 
     if (allowedRoles === undefined || allowedRoles === null) {
         return true;
+    }
+
+    if (profile === undefined || profile === null) {
+        dispatch(logout());
+        return false;
     }
 
     return allowedRoles.includes(profile.role);
