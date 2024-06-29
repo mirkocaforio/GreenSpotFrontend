@@ -6,6 +6,9 @@ import {useDispatch, useSelector} from "react-redux";
 import MainCard from "../../ui-component/cards/MainCard";
 import ClassicTable from "../../ui-component/table/ClassicTable";
 import FilterButton from "../../ui-component/extended/FilterButton";
+import {UsersBadge} from "./UsersBadge";
+import {AlertDialog} from "./AlertDialog";
+import {usersFilters} from "./Filters";
 
 // utils
 import {dateFormatBeauty} from "../../utils/date-beauty";
@@ -28,8 +31,7 @@ import {useTheme} from "@mui/material/styles";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Stack from "@mui/material/Stack";
-import {UsersBadge} from "./UsersBadge";
-import {AlertDialog} from "./AlertDialog";
+
 
 
 
@@ -49,17 +51,7 @@ const UsersManagement = () => {
 
     const anchorRef = useRef(null);
     const [filterOpen, setFilterOpen] = useState(false);
-    const [filter, setFilter] = useState({
-        enabled: false,
-        disabled: false,
-        roles: {
-            admin: false,
-            member: false,
-            user: false,
-            all: true
-        },
-        all: true
-    });
+    const [filter, setFilter] = useState(usersFilters);
 
     const dispatch = useDispatch();
 
@@ -82,23 +74,18 @@ const UsersManagement = () => {
     // ROLE FILTER
     useEffect(() => {
 
-        const roleConstants = {
-            admin: ROLE_ADMIN,
-            member: ROLE_MEMBER,
-            user: ROLE_UTENTE
-        };
-
         //Filter by roles
         if(data){
 
             const roles = filter?.roles;
 
-            if(filter?.roles?.all) {
+            if(filter?.roles?.all?.status) {
                 setFilteredData(data);
             } else{
 
                 setFilteredData(data.filter(element =>
-                    Object.keys(roleConstants).some(role => roles[role] && element.role === roleConstants[role])
+                    Object.keys(usersFilters.roles)
+                        .some(role => roles[role]?.status && element.role === usersFilters.roles[role]?.value)
                 ));
             }
 
@@ -137,9 +124,25 @@ const UsersManagement = () => {
 
         setFilter(prevFilter => {
             if (name) {
-                const newFilter = { ...prevFilter, roles: {...prevFilter.roles, [name]: checked, all: false}};
+                const newFilter = {
+                    ...prevFilter,
+                    roles: {
+                        ...prevFilter.roles,
+                        [name]: {
+                            ...prevFilter.roles[name],
+                            status: checked
+                        },
+                        all: {
+                            ...prevFilter.roles.all,
+                            status: false
+                        }
+                    }};
 
-                newFilter.roles.all = !!((newFilter.roles?.admin && newFilter.roles?.member && newFilter.roles?.user) || (!newFilter.roles?.admin && !newFilter.roles?.member && !newFilter.roles?.user));
+                newFilter.roles.all.status = !!(
+                    (newFilter.roles?.admin?.status && newFilter.roles?.member?.status && newFilter.roles?.user?.status)
+                    ||
+                    (!newFilter.roles?.admin?.status && !newFilter.roles?.member?.status && !newFilter.roles?.user?.status)
+                );
 
                 return newFilter;
             }
@@ -376,7 +379,6 @@ const UsersManagement = () => {
                                                                 onChange={handleCheckboxChange}
                                                                 name="enabled"
                                                                 color="success"
-                                                                //disabled={filter?.all}
                                                             />
                                                         }
                                                         label="Enabled"
@@ -388,7 +390,6 @@ const UsersManagement = () => {
                                                                 onChange={handleCheckboxChange}
                                                                 name="disabled"
                                                                 color="error"
-                                                                //disabled={filter?.all}
                                                             />
                                                         }
                                                         label="Disabled"
@@ -403,39 +404,23 @@ const UsersManagement = () => {
                                         </Grid>
                                         <Grid item>
                                             <Stack direction={matchesXs ? 'column' : 'row'} spacing={2}>
-                                                <FormControlLabel
-                                                    control={
-                                                        <Checkbox
-                                                            checked={filter?.roles?.admin}
-                                                            onChange={handleRoleCheckboxChange}
-                                                            name="admin"
-                                                            color="primary"
-                                                        />
-                                                    }
-                                                    label="Admin"
-                                                />
-                                                <FormControlLabel
-                                                    control={
-                                                        <Checkbox
-                                                            checked={filter?.roles?.member}
-                                                            onChange={handleRoleCheckboxChange}
-                                                            name="member"
-                                                            color="default"
-                                                        />
-                                                    }
-                                                    label="Member"
-                                                />
-                                                <FormControlLabel
-                                                    control={
-                                                        <Checkbox
-                                                            checked={filter?.roles?.user}
-                                                            onChange={handleRoleCheckboxChange}
-                                                            name="user"
-                                                            color="secondary"
-                                                        />
-                                                    }
-                                                    label="User"
-                                                />
+                                                {Object.keys(usersFilters.roles)
+                                                    .filter(role => usersFilters.roles[role].show)
+                                                    .map(role => (
+                                                    <FormControlLabel
+                                                        key={role}
+                                                        control={
+                                                            <Checkbox
+                                                                checked={filter?.roles[role]?.status}
+                                                                onChange={handleRoleCheckboxChange}
+                                                                name={role}
+                                                                color="primary"
+                                                            />
+                                                        }
+                                                        label={role.charAt(0).toUpperCase() + role.slice(1)}
+                                                    />
+                                                ))
+                                                }
                                             </Stack>
                                         </Grid>
                                     </Grid>
