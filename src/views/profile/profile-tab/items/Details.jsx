@@ -31,7 +31,15 @@ const DetailsTab = () => {
 
 
     function handleRegister(values) {
-        return dispatch(updateProfile(values.name, values.surname, values.birthDate, values.city, values.address, values.phone, values.fiscalCode)).then(() => {
+        return dispatch(updateProfile({
+            name: values.name,
+            surname: values.surname,
+            birthDate: values.birthDate,
+            city: values.city,
+            address: values.address,
+            tel: values.phone,
+            fiscalCode: values.fiscalCode,
+        })).then(() => {
             return Promise.resolve();
         }).catch(() => {
             return Promise.reject();

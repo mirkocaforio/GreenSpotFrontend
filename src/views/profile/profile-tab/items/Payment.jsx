@@ -61,17 +61,18 @@ const PaymentTab = () => {
     }
 
     function handleUpdate(values) {
-        return dispatch(updateProfile(
-            profile.name,
-            profile.surname,
-            profile.birthDate,
-            profile.residenceCity,
-            profile.residenceAddress,
-            profile.phoneNumber,
-            profile.fiscalCode,
-            values.cardNumber,
-            values.cardExpiryDate,
-            values.cardCvv)
+        return dispatch(updateProfile({
+                name: profile.name,
+                surname: profile.surname,
+                birthDate: profile.birthDate,
+                city: profile.residenceCity,
+                address: profile.residenceAddress,
+                tel: profile.phoneNumber,
+                fiscalCode: profile.fiscalCode,
+                cardNumber: values.cardNumber,
+                cardExpiryDate: values.cardExpiryDate,
+                cardCvv: values.cardCvv
+                })
         ).then(() => {
             return Promise.resolve();
         }).catch(() => {
