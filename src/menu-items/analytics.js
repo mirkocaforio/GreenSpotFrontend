@@ -1,8 +1,8 @@
 // assets
-import { IconDeviceAnalytics } from '@tabler/icons-react';
+import { IconDeviceAnalytics, IconSettings } from '@tabler/icons-react';
 
 // constant
-const icons = { IconDeviceAnalytics };
+const icons = { IconDeviceAnalytics, IconSettings };
 
 const analytics = {
     id: 'analytics',
@@ -16,6 +16,13 @@ const analytics = {
             url: '/',
             icon: icons.IconDeviceAnalytics,
             breadcrumbs: false
+        },{
+            id: 'settings',
+            title: 'REC Settings',
+            type: 'item',
+            url: '/settings',
+            icon: icons.IconSettings,
+            breadcrumbs: true
         }
     ]
 };

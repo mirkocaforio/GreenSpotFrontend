@@ -8,7 +8,6 @@ import {ROLE_MEMBER, HOME_PATH, NOTIFICATION_DURATION, ROLE_UTENTE, ROLE_ADMIN} 
 import FetchData from "./FetchData";
 import {SnackbarProvider} from "notistack";
 import NetworkCheck from "./NetworkCheck";
-import {Navigate} from "react-router-dom";
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
@@ -28,6 +27,7 @@ const StoreManagement = Loadable(lazy(() => import("views/store/management")));
 const ProductAdd = Loadable(lazy(() => import("views/store/management/reward")));
 const RedeemHistory = Loadable(lazy(() => import("views/store/history")));
 const UsersManagement = Loadable(lazy(() => import("views/users-management")));
+const Settings = Loadable(lazy(() => import("views/settings")));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
@@ -193,6 +193,13 @@ const MainRoutes = {
                             <UsersManagement/>
                         </FetchData>
                      </RouteGuard>
+        },{
+                path: 'settings',
+            element: <RouteGuard allowedRoles={[ROLE_ADMIN]}>
+                        <FetchData type="settings">
+                            <Settings/>
+                        </FetchData>
+                    </RouteGuard>
         }
     ]
 };
