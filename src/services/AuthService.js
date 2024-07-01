@@ -24,12 +24,20 @@ const login = (email, password, persist) => {
             let user = UserModel;
             user.setUser(email, jwt);
 
-            if (persist) {
-                localStorage.setItem('user', JSON.stringify(user.getUser()));
+            localStorage.setItem('user', JSON.stringify(user.getUser()));
+
+            //Dopo 10 minuti si resetta il token
+            if (!persist) {
+                setTimeout(() => {
+                    localStorage.removeItem('user');
+                }, 600000);
             }
-            //TODO: Prima di ritornare deve caricare le info del utente
-            //return Promise.resolve(result.data);
-            return Promise.resolve(user.getUser());
+
+            return getProfile().then( function(){
+                return Promise.resolve(user.getUser());
+            }).catch( function(result){
+                return Promise.reject(result);
+            })
         }).catch( function(result){
             return Promise.reject(result);
     });
@@ -55,15 +63,12 @@ const register = (data, isJoining) => {
             setTimeout(() => {
                 //First login and then update profile
                 return login(data?.email, data?.password, true).then( function(){
-                    return getProfile().then( function(){ //TODO: Eliminare e aggiungere ad argomenti updateProfile
-                        return updateProfile(data).then(
-                            function(){
-                            }).catch( function(result){
-                                console.error("Error: " + result);
-                            }
-                        );
-                    })
-
+                    return updateProfile(data).then(
+                        function(){
+                        }).catch( function(result){
+                            console.error("Error: " + result);
+                        }
+                    );
                 }).catch( function(result){
                     console.error("Error: " + result);
                 });

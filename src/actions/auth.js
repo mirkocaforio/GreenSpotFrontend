@@ -10,6 +10,7 @@ import {
 import AuthService from "../services/AuthService";
 import {MSG_ERROR, MSG_SUCCESS, MSG_WARNING} from "../config";
 import {isTokenExpired} from "../services/AuthUtils";
+import {onError} from "./expiration";
 
 export const login = (email, password, persist) => (dispatch) => {
     return AuthService.login(email, password, persist).then(
@@ -53,6 +54,7 @@ export const login = (email, password, persist) => (dispatch) => {
                 },
             });
 
+            dispatch(onError(message,"login"));
             return Promise.reject(message);
         }
     );

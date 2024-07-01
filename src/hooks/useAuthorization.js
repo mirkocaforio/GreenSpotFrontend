@@ -7,10 +7,12 @@ export const useAuthorization = (allowedRoles) => {
     const profile = CurrentProfile();
     const dispatch = useDispatch();
 
+    // If no roles are provided, then its a root route and should be accessible to all roles
     if (allowedRoles === undefined || allowedRoles === null) {
         return true;
     }
 
+    // If no profile is found, force logout
     if (profile === undefined || profile === null) {
         dispatch(logout());
         return false;
