@@ -57,8 +57,7 @@ const ResourceForm = ({cpuNameList, gpuNameList}) => {
         country: '',
         region: '',
         city: '',
-        availability: [],
-        isAvailable: ''
+        availability: []
     };
 
     const validationSchema = Yup.object().shape({
@@ -77,8 +76,7 @@ const ResourceForm = ({cpuNameList, gpuNameList}) => {
                 endTime: Yup.string().required()
             })
         ).required('Availability period is required'),
-        kwh: Yup.number().required('kWh consumed is required'),
-        isAvailable: Yup.string().required('Availability status is required')
+        kwh: Yup.number().required('kWh consumed is required')
     });
 
     const handleInsertResource = (values) => {
@@ -92,7 +90,7 @@ const ResourceForm = ({cpuNameList, gpuNameList}) => {
             values.availability,
             values.kwh,
             user?.email,
-            values.isAvailable === 'true'
+            "UNAVAILABLE",
         )).then(() => {
             return Promise.resolve();
         }).catch(() => {
@@ -315,29 +313,6 @@ const ResourceForm = ({cpuNameList, gpuNameList}) => {
                                                         onChange={handleChange}
                                                         error={touched.availability && !!errors.availability}
                                                     />
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={12} sm={12} lg={12} md={12}>
-                                                <FormControl fullWidth>
-                                                    <TextField
-                                                        fullWidth
-                                                        name="isAvailable"
-                                                        label="Resource Availability"
-                                                        select
-                                                        error={touched.isAvailable && !!errors.isAvailable}
-                                                        value={values.isAvailable}
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                        helperText="Please set the resource availability"
-                                                        margin="normal"
-                                                        InputLabelProps={{
-                                                            shrink: true,
-                                                        }}
-                                                        sx={{maxWidth: "100%"}}
-                                                    >
-                                                        <MenuItem value={"true"}>Available</MenuItem>
-                                                        <MenuItem value={"false"}>Not Available</MenuItem>
-                                                    </TextField>
                                                 </FormControl>
                                             </Grid>
                                         </Grid>

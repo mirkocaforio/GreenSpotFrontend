@@ -55,6 +55,7 @@ const ResourceCard = ({resource}) => {
 
     const [openAvailableDialog, setOpenAvailableDialog] = useState(false);
     const [openUnavailableDialog, setOpenUnavailableDialog] = useState(false);
+    const [openWarningDialog, setOpenWarningDialog] = useState(false);
 
     useEffect(() => {
         if (cpusList && gpusList) {
@@ -76,17 +77,29 @@ const ResourceCard = ({resource}) => {
     };
 
     const handleEdit = () => {
-        setOpen(true);
+        if (resource.status === "BUSY" || resource.status === "AVAILABLE") {
+            setOpenWarningDialog(true);
+        } else {
+            setOpen(true);
+        }
         handleMenuClose();
     };
 
     const handleMakeAvailable = () => {
-        setOpenAvailableDialog(true);
+        if (resource.status === "BUSY") {
+            setOpenWarningDialog(true);
+        } else {
+            setOpenAvailableDialog(true);
+        }
         handleMenuClose();
     };
 
     const handleMakeUnavailable = () => {
-        setOpenUnavailableDialog(true);
+        if (resource.status === "BUSY") {
+            setOpenWarningDialog(true);
+        } else {
+            setOpenUnavailableDialog(true);
+        }
         handleMenuClose();
     };
 
@@ -116,6 +129,19 @@ const ResourceCard = ({resource}) => {
         }).catch(() => {
             return Promise.reject();
         });
+    };
+
+    const getChipType = (resourceStatus) => {
+        switch (resourceStatus) {
+            case "AVAILABLE":
+                return <Chip label="Available" color="success"/>
+            case "UNAVAILABLE":
+                return <Chip label="Unavailable" color="error"/>
+            case "BUSY":
+                return <Chip label="Busy" color="warning"/>
+            default:
+                return <Chip label="ATTACATE AR CAZZO" color="warning"/>
+        }
     };
 
     return (
@@ -238,9 +264,9 @@ const ResourceCard = ({resource}) => {
                             onClick={() => {
                                 handleConfirmUnavailable()
                                     .then(() => {
-                                        setOpenAvailableDialog(false);
+                                        setOpenUnavailableDialog(false);
                                     }).catch(() => {
-                                    setOpenAvailableDialog(false);
+                                    setOpenUnavailableDialog(false);
                                 });
                             }}
                             color="primary"
@@ -251,6 +277,26 @@ const ResourceCard = ({resource}) => {
                 </DialogActions>
             </Dialog>
 
+            <Dialog
+                open={openWarningDialog}
+                onClose={() => setOpenWarningDialog(false)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{"Warning"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        {"You need to make the resource unavailable before making changes."}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <AnimateButton>
+                        <Button onClick={() => setOpenWarningDialog(false)}>
+                            OK
+                        </Button>
+                    </AnimateButton>
+                </DialogActions>
+            </Dialog>
 
             <Box display="flex" alignItems="center" flexDirection="column" sx={{overflow: 'auto'}}>
                 <Grid container spacing={gridSpacing}>
@@ -372,11 +418,7 @@ const ResourceCard = ({resource}) => {
                                 <Typography variant="subtitle1">Status:</Typography>
                             </Grid>
                             <Grid item xs={9} sm={8} md={8}>
-                                {resource.isAvailable ? (
-                                    <Chip label="Available" color="success"/>
-                                ) : (
-                                    <Chip label="Unavailable" color="error"/>
-                                )}
+                                {getChipType(resource.status)}
                             </Grid>
                         </Grid>
                     </Grid>

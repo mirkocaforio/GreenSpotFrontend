@@ -13,7 +13,7 @@ export const getAllResources = () => (dispatch) => {
         (data) => {
             dispatch({
                 type: GET_RESOURCES_SUCCESS,
-                payload: { resourcesList: data },
+                payload: {resourcesList: data},
             });
 
             return Promise.resolve(data);
@@ -31,7 +31,7 @@ export const getAllResources = () => (dispatch) => {
                 type: GET_RESOURCES_FAIL,
             });
 
-            dispatch(onError(message,"resource"));
+            dispatch(onError(message, "resource"));
 
             return Promise.reject(message);
         }
@@ -44,7 +44,7 @@ export const getResourceByEmail = () => (dispatch) => {
         (data) => {
             dispatch({
                 type: GET_RESOURCES_SUCCESS,
-                payload: { resourcesList: data },
+                payload: {resourcesList: data},
             });
 
             return Promise.resolve(data);
@@ -62,40 +62,41 @@ export const getResourceByEmail = () => (dispatch) => {
                 type: GET_RESOURCES_FAIL,
             });
 
-            dispatch(onError(message,"resource"));
+            dispatch(onError(message, "resource"));
 
             return Promise.reject(message);
         }
     );
 }
 
-export const insertResource = (name, type, greenEnergyType, country, region, city, availability, kwh, memberEmail, isAvailable) => (dispatch) => {
-    return ResourceService.insertResource(name, type, greenEnergyType, country, region, city, availability, kwh, memberEmail, isAvailable).then(
-        (data) => {
+export const insertResource = (name, type, greenEnergyType, country, region, city, availability, kwh, memberEmail, status) => (dispatch) => {
+    return ResourceService.insertResource(name, type, greenEnergyType, country, region, city, availability, kwh, memberEmail, status)
+        .then(
+            (data) => {
+                dispatch({
+                    type: SET_MESSAGE,
+                    payload: {
+                        message: "Resource shared successfully.",
+                        type: MSG_SUCCESS
+                    },
+                });
 
-            dispatch({
-                type: SET_MESSAGE,
-                payload: {
-                    message: "Resource shared successfully.",
-                    type: MSG_SUCCESS},
-            });
+                return Promise.resolve(data);
+            },
+            (error) => {
+                const message =
+                    (error.data && error.data.message) ||
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
 
-            return Promise.resolve(data);
-        },
-        (error) => {
-            const message =
-                (error.data && error.data.message) ||
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
-                error.toString();
+                dispatch(onError(message, "resource"));
 
-            dispatch(onError(message,"resource"));
-
-            return Promise.reject(message);
-        }
-    );
+                return Promise.reject(message);
+            }
+        );
 }
 
 export const updateResource = (id, name, type, greenEnergyType, country, region, city, availability, kwh, memberEmail) => (dispatch) => {
@@ -106,7 +107,8 @@ export const updateResource = (id, name, type, greenEnergyType, country, region,
                 type: SET_MESSAGE,
                 payload: {
                     message: "Resource updated successfully.",
-                    type: MSG_SUCCESS},
+                    type: MSG_SUCCESS
+                },
             });
 
             dispatch(getResourceByEmail());
@@ -122,7 +124,7 @@ export const updateResource = (id, name, type, greenEnergyType, country, region,
                 error.message ||
                 error.toString();
 
-            dispatch(onError(message,"resource"));
+            dispatch(onError(message, "resource"));
 
             return Promise.reject(message);
         }
@@ -137,7 +139,8 @@ export const makeResourceAvailable = (id) => (dispatch) => {
                 type: SET_MESSAGE,
                 payload: {
                     message: "Resource made available successfully.",
-                    type: MSG_SUCCESS},
+                    type: MSG_SUCCESS
+                },
             });
 
             dispatch(getResourceByEmail());
@@ -153,7 +156,7 @@ export const makeResourceAvailable = (id) => (dispatch) => {
                 error.message ||
                 error.toString();
 
-            dispatch(onError(message,"resource"));
+            dispatch(onError(message, "resource"));
 
             return Promise.reject(message);
         }
@@ -168,7 +171,8 @@ export const makeResourceUnavailable = (id) => (dispatch) => {
                 type: SET_MESSAGE,
                 payload: {
                     message: "Resource made unavailable successfully.",
-                    type: MSG_WARNING},
+                    type: MSG_WARNING
+                },
             });
 
             dispatch(getResourceByEmail());
@@ -184,7 +188,7 @@ export const makeResourceUnavailable = (id) => (dispatch) => {
                 error.message ||
                 error.toString();
 
-            dispatch(onError(message,"resource"));
+            dispatch(onError(message, "resource"));
 
             return Promise.reject(message);
         }

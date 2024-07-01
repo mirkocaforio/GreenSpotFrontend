@@ -101,7 +101,7 @@ export const readPopupNotification = (id, read) => {
         });
 }
 
-export const readAllPopupNotification = (read) => {
+export const readAllPopupNotifications = (read) => {
     let params = AuthHeader();
 
     params = {
@@ -128,5 +128,5 @@ export default {
     getEmailNotificationByEmail,
     getPopupNotificationByEmail,
     readPopupNotification,
-    readAllPopupNotification
+    readAllPopupNotifications
 }

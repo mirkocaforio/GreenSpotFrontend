@@ -19,7 +19,7 @@ export default class ResourceModel {
             ],
             kwh: 0.0,
             memberEmail: "",
-            isAvailable: false,
+            status: "",
             architecture: "",
             cores: 0,
             threads: 0,
@@ -55,7 +55,7 @@ export default class ResourceModel {
         this.resource = resource;
     }
 
-    setResource(name, type, brand, model, greenEnergyType, country, region, city, availability, kwh, memberEmail, isAvailable) {
+    setResource(name, type, brand, model, greenEnergyType, country, region, city, availability, kwh, memberEmail, status) {
         this.resource.name = name;
         this.resource.type = type;
         this.resource.brand = brand;
@@ -71,7 +71,7 @@ export default class ResourceModel {
         }));
         this.resource.kwh = kwh;
         this.resource.memberEmail = memberEmail;
-        this.resource.isAvailable = isAvailable;
+        this.resource.status = status;
     }
 
     getResource() {
@@ -91,7 +91,7 @@ export default class ResourceModel {
             availability: this.resource.availability,
             kwh: this.resource.kwh,
             memberEmail: this.resource.memberEmail,
-            isAvailable: this.resource.isAvailable
+            status: this.resource.status
         });
     }
 
@@ -110,7 +110,7 @@ export default class ResourceModel {
             data.availability,
             data.kwh,
             data.memberEmail,
-            data.isAvailable
+            data.status
         );
     }
 }

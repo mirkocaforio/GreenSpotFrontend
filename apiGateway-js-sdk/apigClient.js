@@ -587,6 +587,78 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.apiV1ResourceAssignmentGetGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'body'], ['body']);
+        
+        var apiV1ResourceAssignmentGetGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/assignment/get').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceAssignmentGetGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1ResourceAssignmentGetOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1ResourceAssignmentGetOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/assignment/get').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceAssignmentGetOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1ResourceAssignmentStartPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'body'], ['body']);
+        
+        var apiV1ResourceAssignmentStartPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/assignment/start').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceAssignmentStartPostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1ResourceAssignmentStartOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1ResourceAssignmentStartOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/resource/assignment/start').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1ResourceAssignmentStartOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.apiV1ResourceAvailableOptions = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -644,13 +716,13 @@ apigClientFactory.newClient = function (config) {
     apigClient.apiV1ResourceFindGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'memberEmail', 'greenEnergyType', 'kWh', 'name', 'region', 'type', 'city', 'from', 'to', 'country', 'isAvailable'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'memberEmail', 'greenEnergyType', 'kWh', 'name', 'region', 'type', 'city', 'status', 'from', 'to', 'country'], ['body']);
         
         var apiV1ResourceFindGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/api/v1/resource/find').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['memberEmail', 'greenEnergyType', 'kWh', 'name', 'region', 'type', 'city', 'from', 'to', 'country', 'isAvailable']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['memberEmail', 'greenEnergyType', 'kWh', 'name', 'region', 'type', 'city', 'status', 'from', 'to', 'country']),
             body: body
         };
         
@@ -1322,6 +1394,78 @@ apigClientFactory.newClient = function (config) {
         
         
         return apiGatewayClient.makeRequest(apiV1ScoresGpusNamesOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1SettingsAssignmentGetGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization'], ['body']);
+        
+        var apiV1SettingsAssignmentGetGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/settings/assignment/get').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1SettingsAssignmentGetGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1SettingsAssignmentGetOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1SettingsAssignmentGetOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/settings/assignment/get').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1SettingsAssignmentGetOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1SettingsAssignmentSetPut = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'body'], ['body']);
+        
+        var apiV1SettingsAssignmentSetPutRequest = {
+            verb: 'put'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/settings/assignment/set').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1SettingsAssignmentSetPutRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1SettingsAssignmentSetOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1SettingsAssignmentSetOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/settings/assignment/set').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1SettingsAssignmentSetOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
     

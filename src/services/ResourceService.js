@@ -30,7 +30,7 @@ export const getResourceByEmail = () => {
         city: "",
         availability: "",
         kWh: "",
-        isAvailable: "",
+        status: "",
         from: "",
         to: ""
     };
@@ -47,7 +47,7 @@ export const getResourceByEmail = () => {
         });
 }
 
-export const insertResource = (name, type, greenEnergyType, country, region, city, availability, kwh, memberEmail, isAvailable) => {
+export const insertResource = (name, type, greenEnergyType, country, region, city, availability, kwh, memberEmail) => {
     const params = AuthHeader();
     const body = {
         name: name,
@@ -59,7 +59,7 @@ export const insertResource = (name, type, greenEnergyType, country, region, cit
         availability: availability,
         kwh: kwh,
         memberEmail: memberEmail,
-        isAvailable: isAvailable
+        status: "UNAVAILABLE"
     };
 
     const additionalParams = {};
