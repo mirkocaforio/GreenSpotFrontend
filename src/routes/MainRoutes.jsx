@@ -37,15 +37,15 @@ const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 const MainRoutes = {
     path: '/',
     element: <RouteGuard>
-                <FetchData>
-                    <FetchData type="notification">
-                        <SnackbarProvider maxSnack={5} autoHideDuration={NOTIFICATION_DURATION}>
-                            <MainLayout/>
-                            <NetworkCheck/>
-                        </SnackbarProvider>
-                    </FetchData>
-                </FetchData>
-            </RouteGuard>,
+        <FetchData>
+            <FetchData type="notification">
+                <SnackbarProvider maxSnack={5} autoHideDuration={NOTIFICATION_DURATION}>
+                    <MainLayout/>
+                    <NetworkCheck/>
+                </SnackbarProvider>
+            </FetchData>
+        </FetchData>
+    </RouteGuard>,
     children: [
         {
             path: HOME_PATH,
@@ -186,20 +186,22 @@ const MainRoutes = {
                 </FetchData>
             </RouteGuard>
 
-        },{
+        }, {
             path: 'users',
             element: <RouteGuard allowedRoles={[ROLE_ADMIN]}>
-                        <FetchData type="allProfiles">
-                            <UsersManagement/>
-                        </FetchData>
-                     </RouteGuard>
-        },{
-                path: 'settings',
+                <FetchData type="allProfiles">
+                    <UsersManagement/>
+                </FetchData>
+            </RouteGuard>
+        }, {
+            path: 'settings',
             element: <RouteGuard allowedRoles={[ROLE_ADMIN]}>
-                        <FetchData type="settings">
-                            <Settings/>
-                        </FetchData>
-                    </RouteGuard>
+                <FetchData type="assignmentSettings">
+                    <FetchData type="paymentSettings">
+                        <Settings/>
+                    </FetchData>
+                </FetchData>
+            </RouteGuard>
         }
     ]
 };

@@ -1,3 +1,10 @@
+import {
+    GET_ASSIGNMENT_SETTINGS_FAIL,
+    GET_ASSIGNMENT_SETTINGS_SUCCESS,
+    GET_PAYMENT_SETTINGS_FAIL,
+    GET_PAYMENT_SETTINGS_SUCCESS,
+    LOGOUT
+} from "../actions/types";
 
 const initialState = {
     settings: null
@@ -7,17 +14,7 @@ export default function (state = initialState, action) {
     const {type, payload} = action;
 
     switch (type) {
-        case 'GET_SETTINGS_SUCCESS':
-            return {
-                ...state,
-                settings: payload.settings,
-            };
-        case 'GET_SETTINGS_FAIL':
-            return {
-                ...state,
-                settings: state.settings ? state.settings : null,
-            };
-        case 'GET_ASSIGNMENT_SETTINGS_SUCCESS':
+        case GET_ASSIGNMENT_SETTINGS_SUCCESS:
             return {
                 ...state,
                 settings: {
@@ -25,7 +22,25 @@ export default function (state = initialState, action) {
                     assignment: payload.assignment,
                 },
             };
-        case 'LOGOUT':
+        case GET_ASSIGNMENT_SETTINGS_FAIL:
+            return {
+                ...state,
+                settings: state.settings ? state.settings : null,
+            };
+        case GET_PAYMENT_SETTINGS_SUCCESS:
+            return {
+                ...state,
+                settings: {
+                    ...state.settings,
+                    payment: payload.payment,
+                },
+            };
+        case GET_PAYMENT_SETTINGS_FAIL:
+            return {
+                ...state,
+                settings: state.settings ? state.settings : null,
+            };
+        case LOGOUT:
             return {
                 ...state,
                 settings: null,

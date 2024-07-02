@@ -9,7 +9,7 @@ import {getRewards, getRedeems} from "../actions/reward";
 import {getCpuNames, getGpuNames} from "../actions/score";
 import {getResourceByEmail} from "../actions/resource";
 import {getPopupNotificationByEmail} from "../actions/notification";
-import {getSettings} from "../actions/settings";
+import {getAssignmentSettings, getPaymentSettings} from "../actions/settings";
 
 
 const FetchData = ({children, type}) => {
@@ -52,8 +52,11 @@ const FetchData = ({children, type}) => {
         case "allProfiles":
             fetchData = getAllProfiles;
             break;
-        case "settings":
-            fetchData = getSettings;
+        case "assignmentSettings":
+            fetchData = getAssignmentSettings;
+            break;
+        case "paymentSettings":
+            fetchData = getPaymentSettings;
             break;
         default:
             fetchData = getProfileData;

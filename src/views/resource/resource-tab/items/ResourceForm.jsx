@@ -226,6 +226,9 @@ const ResourceForm = ({cpuNameList, gpuNameList}) => {
                                                         helperText="Please insert the kWh consumed by the resource"
                                                         error={touched.kwh && !!errors.kwh}
                                                         margin="normal"
+                                                        inputProps={
+                                                            {step: 0.01}
+                                                        }
                                                         InputLabelProps={{
                                                             shrink: true,
                                                         }}
@@ -302,7 +305,7 @@ const ResourceForm = ({cpuNameList, gpuNameList}) => {
                                         <Grid container spacing={gridSpacing}>
                                             {/*TODO: VEDERE COME SI PUO' SISTEMARE l'onBlur e gli errori*/}
                                             <Grid item xs={12} sm={12} md={12} lg={12}>
-                                                <FormControl fullWidth sx={{ padding: 0, minWidth: "100%"}}>
+                                                <FormControl fullWidth sx={{padding: 0, minWidth: "100%"}}>
                                                     <AvailabilityPicker
                                                         fullWidth
                                                         name="availability"

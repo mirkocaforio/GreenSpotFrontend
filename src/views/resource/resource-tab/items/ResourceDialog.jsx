@@ -253,6 +253,9 @@ const ResourceDialog = ({openState, handleClose, resource, cpuNameList, gpuNameL
                                                                 helperText="Please insert the kWh consumed by the resource"
                                                                 error={touched.kwh && !!errors.kwh}
                                                                 margin="normal"
+                                                                inputProps={
+                                                                    {step: 0.01}
+                                                                }
                                                                 InputLabelProps={{
                                                                     shrink: true,
                                                                 }}
