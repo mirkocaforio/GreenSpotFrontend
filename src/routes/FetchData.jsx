@@ -10,6 +10,7 @@ import {getCpuNames, getGpuNames} from "../actions/score";
 import {getResourceByEmail} from "../actions/resource";
 import {getPopupNotificationByEmail} from "../actions/notification";
 import {getAssignmentSettings, getPaymentSettings} from "../actions/settings";
+import {getInvoicesByUserEmail} from "../actions/payment";
 
 
 const FetchData = ({children, type}) => {
@@ -57,6 +58,9 @@ const FetchData = ({children, type}) => {
             break;
         case "paymentSettings":
             fetchData = getPaymentSettings;
+            break;
+        case "invoice":
+            fetchData = getInvoicesByUserEmail;
             break;
         default:
             fetchData = getProfileData;

@@ -22,7 +22,7 @@ const billing = {
                     id: 'invoice',
                     title: 'Invoice',
                     type: 'item',
-                    url: '/sample-page',
+                    url: '/billing/invoice',
                     icon: icons.ReceiptOutlinedIcon
                 },
                 {

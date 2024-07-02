@@ -10,6 +10,7 @@ import analytics from "./analytics";
 import billing from "./billing";
 import profile from "./profile";
 import store from "./store";
+import settings from "./settings";
 
 // ==============================|| MENU ITEMS ||============================== //
 //TODO: CAMBIARE MAN MANO TUTTI I LINK NEI VARI ITEMS
@@ -17,7 +18,7 @@ import store from "./store";
 const menuItems = {
   userItems: [analytics,task, wallet, billing ],
   memberItems: [analytics,resource, reward, wallet],
-  adminItems: [analytics,profile, store, dashboard, pages, utilities, other]
+  adminItems: [analytics, settings, profile, store, dashboard, pages, utilities, other]
 };
 
 export default menuItems;

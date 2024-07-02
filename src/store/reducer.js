@@ -14,6 +14,7 @@ import score from "./score";
 import resource from "./resource";
 import notification from "./notification";
 import settings from "./settings";
+import payment from "./payment";
 
 // ==============================|| COMBINE REDUCER ||============================== //
 
@@ -30,7 +31,8 @@ const reducer = combineReducers({
   analytics,
   reward,
   notification,
-  settings
+  settings,
+  payment,
 });
 
 export default reducer;

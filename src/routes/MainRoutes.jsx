@@ -28,6 +28,7 @@ const ProductAdd = Loadable(lazy(() => import("views/store/management/reward")))
 const RedeemHistory = Loadable(lazy(() => import("views/store/history")));
 const UsersManagement = Loadable(lazy(() => import("views/users-management")));
 const Settings = Loadable(lazy(() => import("views/settings")));
+const InvoicePage = Loadable(lazy(() => import("views/invoice")));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
@@ -200,6 +201,14 @@ const MainRoutes = {
                     <FetchData type="paymentSettings">
                         <Settings/>
                     </FetchData>
+                </FetchData>
+            </RouteGuard>
+        },
+        {
+            path: 'billing/invoice',
+            element: <RouteGuard allowedRoles={[ROLE_UTENTE]}>
+                <FetchData type="invoice">
+                    <InvoicePage/>
                 </FetchData>
             </RouteGuard>
         }

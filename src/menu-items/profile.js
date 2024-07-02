@@ -17,23 +17,7 @@ const profile = {
             url: '/users',
             icon: icons.IconUserHeart,
             breadcrumbs: true
-        },
-        /*{
-            id: 'enable',
-            title: 'Enable Profile',
-            type: 'item',
-            url: '/wallet',
-            icon: icons.IconUserHeart,
-            breadcrumbs: false
-        },
-        {
-            id: 'disable',
-            title: 'Disable Profile',
-            type: 'item',
-            url: '/wallet',
-            icon: icons.IconUserCancel,
-            breadcrumbs: false
-        }*/
+        }
     ]
 };
 

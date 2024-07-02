@@ -4,20 +4,20 @@ import { IconDeviceAnalytics, IconSettings } from '@tabler/icons-react';
 // constant
 const icons = { IconDeviceAnalytics, IconSettings };
 
-const analytics = {
+const settings = {
     id: 'analytics',
-    title: 'Analytics Center',
+    title: 'Control Panel',
     type: 'group',
     children: [
         {
-            id: 'analytics',
-            title: 'Analytics',
+            id: 'settings',
+            title: 'REC Settings',
             type: 'item',
-            url: '/',
-            icon: icons.IconDeviceAnalytics,
-            breadcrumbs: false
+            url: '/settings',
+            icon: icons.IconSettings,
+            breadcrumbs: true
         }
     ]
 };
 
-export default analytics;
+export default settings;
