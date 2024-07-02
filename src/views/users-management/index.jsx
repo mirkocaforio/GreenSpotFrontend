@@ -275,7 +275,8 @@ const UsersManagement = () => {
                     <UsersBadge picSize="sm" user={element}/>
                 )
             }
-        },{
+        },
+        {
             id: 'role',
             numeric: false,
             disablePadding: false,
@@ -296,7 +297,8 @@ const UsersManagement = () => {
                     dateFormatBeauty(element?.registrationDate, "dd/MM/yyyy HH:mm")
                 )
             }
-        },{
+        },
+        {
             id: 'enabled',
             numeric: false,
             disablePadding: false,

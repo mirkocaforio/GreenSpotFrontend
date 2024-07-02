@@ -4,25 +4,26 @@ import Grid from "@mui/material/Grid";
 import React, {useEffect, useState} from "react";
 import {gridSpacing} from "../../store/constant";
 import {useSelector} from "react-redux";
+import CreditForm from "./CreditForm";
 import Divider from "@mui/material/Divider";
 import PaymentSettingsForm from "./PaymentSettingsForm";
-import CreditForm from "./CreditForm";
 
 
 const SettingsPage = () => {
+
     const [isLoading, setIsLoading] = useState(true);
     const {settings} = useSelector((state) => state.settings);
 
     useEffect(() => {
-        console.log(settings);
-        if (settings) {
+        if(settings){
             setIsLoading(false);
-        } else {
+        }else{
             setIsLoading(true);
         }
     }, [settings]);
 
     return (
+
         <MainCard>
             {isLoading ? (<Grid container justifyContent={"center"}>
                 <Grid item xs={12}>
@@ -30,10 +31,10 @@ const SettingsPage = () => {
                         <p>Settings are loading...</p>
                     </SubCard>
                 </Grid>
-            </Grid>) : (
+            </Grid> ):(
                 <Grid container spacing={gridSpacing}>
                     <Grid item xs={12}>
-                        <CreditForm data={settings?.assignment}/>
+                        <CreditForm settings={settings?.assignment}/>
                     </Grid>
                     <Grid item xs={12}>
                         <Divider/>
