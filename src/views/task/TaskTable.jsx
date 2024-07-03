@@ -54,8 +54,8 @@ const TaskTable = ({maxRows = 2}) => {
 
     const [tasks, setTasks] = useState([]);
     const [search, setSearch] = useState('');
-    const [order, setOrder] = useState('asc');
-    const [orderBy, setOrderBy] = useState('name');
+    const [order, setOrder] = useState('desc');
+    const [orderBy, setOrderBy] = useState('status');
     const [isLoading, setLoading] = useState(true);
     const [selectedTask, setSelectedTask] = useState(null);
     const [dialogOpen, setDialogOpen] = useState(false);

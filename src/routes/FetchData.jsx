@@ -11,6 +11,7 @@ import {getResourceByEmail} from "../actions/resource";
 import {getPopupNotificationByEmail} from "../actions/notification";
 import {getAssignmentSettings, getPaymentSettings} from "../actions/settings";
 import {getInvoicesByUserEmail} from "../actions/payment";
+import {getOverallAnalytics} from "../actions/analytics";
 
 
 const FetchData = ({children, type}) => {
@@ -61,6 +62,9 @@ const FetchData = ({children, type}) => {
             break;
         case "invoice":
             fetchData = getInvoicesByUserEmail;
+            break;
+        case "overallAnalytics":
+            fetchData = getOverallAnalytics;
             break;
         default:
             fetchData = getProfileData;

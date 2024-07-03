@@ -8,9 +8,7 @@ import {ROLE_MEMBER, HOME_PATH, NOTIFICATION_DURATION, ROLE_UTENTE, ROLE_ADMIN} 
 import FetchData from "./FetchData";
 import {SnackbarProvider} from "notistack";
 import NetworkCheck from "./NetworkCheck";
-
-// dashboard routing
-const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
+import RoleDashboard from "./RoleDashboard";
 
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
@@ -51,14 +49,14 @@ const MainRoutes = {
         {
             path: HOME_PATH,
             element:
-                <DashboardDefault/>
+                <RoleDashboard/>
         },
         {
             path: 'dashboard',
             children: [
                 {
                     path: 'default',
-                    element: <DashboardDefault/>
+                    element: <RoleDashboard/>
                 }
             ]
         },

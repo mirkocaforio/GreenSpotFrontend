@@ -5,7 +5,7 @@ import { IconDeviceAnalytics, IconSettings } from '@tabler/icons-react';
 const icons = { IconDeviceAnalytics, IconSettings };
 
 const analytics = {
-    id: 'analytics',
+    id: 'analyticsGroup',
     title: 'Analytics Center',
     type: 'group',
     children: [

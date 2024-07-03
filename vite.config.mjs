@@ -13,6 +13,9 @@ export default defineConfig({
   define: {
     global: 'window'
   },
+  build:{
+    sourcemap: true
+  },
   resolve: {
     // alias: [
     //   {
@@ -30,7 +33,7 @@ export default defineConfig({
     // this ensures that the browser opens upon server start
     open: false,
     // this sets a default port to 3000
-    port: 3000
+    port: 3000,
   },
   preview: {
     // this ensures that the browser opens upon preview start
