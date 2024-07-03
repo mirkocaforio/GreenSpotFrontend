@@ -24,7 +24,8 @@ const PaymentSettingsForm = ({paymentSettings}) => {
             id: paymentSettings.id,
             mediumEnergyCost: values.mediumEnergyCost,
             mediumResourceConsumption: values.mediumResourceConsumption,
-            changeConstant: values.changeConstant
+            changeConstant: values.changeConstant,
+            delayInterest: values.delayInterest
         }))
     }
 
@@ -33,12 +34,14 @@ const PaymentSettingsForm = ({paymentSettings}) => {
             initialValues={{
                 mediumEnergyCost: paymentSettings ? paymentSettings?.mediumEnergyCost : 0.1,
                 mediumResourceConsumption: paymentSettings ? paymentSettings?.mediumResourceConsumption : 0.1,
-                changeConstant: paymentSettings ? paymentSettings?.changeConstant : 0.1
+                changeConstant: paymentSettings ? paymentSettings?.changeConstant : 0.1,
+                delayInterest: paymentSettings ? paymentSettings?.delayInterest : 0.1
             }}
             validationSchema={Yup.object().shape({
                 mediumEnergyCost: Yup.number().required("This field is required").min(0.01, "This field must be greater than 0"),
                 mediumResourceConsumption: Yup.number().required("This field is required").min(0.01, "This field must be greater than 0"),
-                changeConstant: Yup.number().required("This field is required").min(0.01, "This field must be greater than 0")
+                changeConstant: Yup.number().required("This field is required").min(0.01, "This field must be greater than 0"),
+                delayInterest: Yup.number().required("This field is required").min(0.01, "This field must be greater than 0")
             })}
             onSubmit={(values, {setSubmitting}) => {
                 setSubmitting(true);
@@ -143,6 +146,34 @@ const PaymentSettingsForm = ({paymentSettings}) => {
                                         (
                                             <FormHelperText>
                                                 This is the constant that determines how much money a user pay.
+                                            </FormHelperText>
+
+                                        )}
+                                </FormControl>
+                                <FormControl fullWidth error={Boolean(touched.delayInterest && errors.delayInterest)}
+                                             sx={{...theme.typography.customInput}}>
+                                    <InputLabel htmlFor="outlined-adornment-reward-image">
+                                        Delay interest
+                                    </InputLabel>
+                                    <OutlinedInput
+                                        fullWidth
+                                        name="delayInterest"
+                                        type="number"
+                                        inputProps={{
+                                            step: 0.01
+                                        }}
+                                        value={values.delayInterest}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={Boolean(touched.delayInterest && errors.delayInterest)}
+                                    />
+                                    {touched.delayInterest && errors.delayInterest ? (
+                                            <FormHelperText error>
+                                                {errors.delayInterest}
+                                            </FormHelperText>) :
+                                        (
+                                            <FormHelperText>
+                                                This is the delay interest that determines how much money a user pay with overdue invoice.
                                             </FormHelperText>
 
                                         )}

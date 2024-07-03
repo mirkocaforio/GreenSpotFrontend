@@ -248,13 +248,13 @@ apigClientFactory.newClient = function (config) {
     apigClient.apiV1InvoiceFindGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'userEmail', 'invoiceAmount', 'invoicePaymentMethod', 'invoicePaymentDate', 'invoiceOverdueDate', 'invoiceStatus'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'userEmail', 'invoiceTotalAmount', 'invoicePaymentMethod', 'invoicePaymentDate', 'invoiceOverdueDate', 'invoiceStatus'], ['body']);
         
         var apiV1InvoiceFindGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/api/v1/invoice/find').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['userEmail', 'invoiceAmount', 'invoicePaymentMethod', 'invoicePaymentDate', 'invoiceOverdueDate', 'invoiceStatus']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['userEmail', 'invoiceTotalAmount', 'invoicePaymentMethod', 'invoicePaymentDate', 'invoiceOverdueDate', 'invoiceStatus']),
             body: body
         };
         
