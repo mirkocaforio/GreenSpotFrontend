@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
-import SkeletonEarningCard from 'ui-component/cards/Skeleton/EarningCard';
+import SkeletonCustomCard from 'ui-component/cards/Skeleton/CustomCard';
 
 // ===========================|| DASHBOARD DEFAULT - CUSTOM CARD ||=========================== //
 
@@ -18,7 +18,7 @@ const CustomCard = ({ isLoading, icon: Icon,iconSx, customSx, textSx, title, cur
     const theme = useTheme();
 
     return (
-        isLoading ? (<SkeletonEarningCard/>) : (
+        isLoading ? (<SkeletonCustomCard/>) : (
         <MainCard
             border={false}
             content={false}

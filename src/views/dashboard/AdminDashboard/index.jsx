@@ -7,13 +7,18 @@ import TotalStatBarChart from "../components/TotalStatBarChart";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {roundValue} from "../../../utils/math";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 export const AdminDashboard = () => {
     const theme = useTheme();
+    const breakMd = useMediaQuery(theme.breakpoints.down('md'));
 
     const { overallAnalytics } = useSelector(state => state.analytics);
     const [isLoading, setIsLoading] = useState(true);
+    const {user} = useSelector(state => state.auth);
+
+    console.log(user.token);
 
     useEffect(() => {
         if(overallAnalytics){
@@ -24,9 +29,12 @@ export const AdminDashboard = () => {
     }, [overallAnalytics]);
 
     return (
-        <Grid container spacing={2} >
+        <Grid container spacing={2}>
             <Grid item xs={12} md={12} sm={12} lg={8}>
-                <Grid container direction="column" justifyContent={"center"} spacing={2}>
+                <Grid container direction="column" justifyContent={"flex-end"} spacing={2}>
+                    <Grid item xs={12} md={12} sm={12} lg={12}>
+                        <TotalStatBarChart />
+                    </Grid>
                     <Grid item xs={12} md={12} sm={12} lg={12}>
                         <Grid container spacing={2} >
                             <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -67,17 +75,14 @@ export const AdminDashboard = () => {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item xs={12} md={12} sm={12} lg={12}>
-                        <TotalStatBarChart />
-                    </Grid>
                 </Grid>
             </Grid>
             <Grid item xs={12} md={12} sm={12} lg={4}>
                 <Grid item container direction="column" >
-                <Grid item xs={12}>
-                    <StatsGrid data={overallAnalytics} />
+                    <Grid item xs={12}>
+                        <StatsGrid data={overallAnalytics} />
+                    </Grid>
                 </Grid>
-            </Grid>
             </Grid>
         </Grid>
     );

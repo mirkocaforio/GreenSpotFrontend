@@ -13,7 +13,7 @@ export default defineConfig({
   define: {
     global: 'window'
   },
-  build:{
+  dev:{
     sourcemap: true
   },
   resolve: {
