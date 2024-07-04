@@ -41,6 +41,7 @@ import Paging from "../../ui-component/table/Paging";
 import {useDispatch, useSelector} from "react-redux";
 import CircularProgressBar from "../../ui-component/CircularProgress";
 import {getAnalyticsRange, getTaskAnalytics} from "../../utils/analytics-range";
+import {dateFormatBeauty} from "../../utils/date-beauty";
 
 
 const TaskTable = ({maxRows = 2}) => {
@@ -241,6 +242,15 @@ const TaskTable = ({maxRows = 2}) => {
                                     Task Name
                                 </TableSortLabel>
                             </TableCell>
+                            <TableCell>
+                                <TableSortLabel
+                                    active={orderBy === 'createdTime'}
+                                    direction={orderBy === 'createdTime' ? order : 'asc'}
+                                    onClick={() => handleRequestSort('createdTime')}
+                                >
+                                    Created At
+                                </TableSortLabel>
+                            </TableCell>
                             <TableCell align="center">
                                 <TableSortLabel
                                     align="center"
@@ -272,7 +282,14 @@ const TaskTable = ({maxRows = 2}) => {
                     <TableBody>
                         {sortedTasks.map((task) => (
                             <TableRow key={task?.id} hover>
-                                <TableCell>{task?.name}</TableCell>
+                                <TableCell>
+                                    <Typography variant="subtitle1">
+                                        {task?.name}
+                                    </Typography>
+                                </TableCell>
+                                <TableCell>
+                                    {dateFormatBeauty(task?.createdTime,"dd/MM/yyyy HH:mm")}
+                                </TableCell>
                                 <TableCell align="center">
                                     { isAnalyticsLoading ? (<CircularProgress />)
                                         :(<CircularProgressBar values={analyticsRange?.energyConsumption}

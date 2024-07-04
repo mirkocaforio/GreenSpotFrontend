@@ -10,10 +10,11 @@ import PropTypes from "prop-types";
 
 const StatsGrid = ({data}) => (
     <MainCard content={false}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', height: '210px' }}>
             <Box sx={{
                 display: 'flex',
                 width: '100%',
+                height: '100%',
                 borderBottom: '1px solid #E0E0E0' }}>
                 <Box sx={{ flex: 1, borderRight: '1px solid #E0E0E0' }}>
                     <StatCard icon={PeopleAltOutlined} title="Active Members" value={data?.activeMemberCount} />
@@ -22,7 +23,7 @@ const StatsGrid = ({data}) => (
                     <StatCard icon={SupervisedUserCircleOutlined} title="Active Users" value={data?.activeUserCount} />
                 </Box>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%',}}>
                 <Box sx={{ flex: 1, borderRight: '1px solid #E0E0E0' }}>
                     <StatCard icon={AssignmentTurnedInOutlined} title="Tasks Completed" value={data?.tasksCompleted} />
                 </Box>

@@ -1,6 +1,6 @@
 
 class TaskModel {
-    constructor(name, emailUtente, maxComputingPower, taskDuration, maxEnergyConsumption, maxCudaPower, minCudaPower, minComputingPower, minEnergyConsumption, minWorkingTime, description, script, running, enabled, startTime, endTime, assignedResources,id) {
+    constructor(name, emailUtente, maxComputingPower, taskDuration, maxEnergyConsumption, maxCudaPower, minCudaPower, minComputingPower, minEnergyConsumption, minWorkingTime, description, script, running, enabled, startTime, endTime, assignedResources,id,createdTime) {
         this.name = name;
         this.emailUtente = emailUtente;
         this.maxComputingPower = maxComputingPower;
@@ -19,6 +19,7 @@ class TaskModel {
         this.endTime = endTime;
         this.assignedResources = assignedResources;
         this.id = id;
+        this.createdTime = createdTime;
     }
 
 
@@ -29,7 +30,7 @@ class TaskModel {
 
     static fromJson(json) {
         let obj = json;
-        return new TaskModel(obj.name, obj.emailUtente, obj.maxComputingPower, obj.taskDuration, obj.maxEnergyConsumption, obj.maxCudaPower, obj.minCudaPower, obj.minComputingPower, obj.minEnergyConsumption, obj.minWorkingTime, obj.description, obj.script, obj.running, obj.enabled, obj.startTime, obj.endTime, obj.assignedResources,obj.id);
+        return new TaskModel(obj.name, obj.emailUtente, obj.maxComputingPower, obj.taskDuration, obj.maxEnergyConsumption, obj.maxCudaPower, obj.minCudaPower, obj.minComputingPower, obj.minEnergyConsumption, obj.minWorkingTime, obj.description, obj.script, obj.running, obj.enabled, obj.startTime, obj.endTime, obj.assignedResources,obj.id,obj.createdTime);
     }
 
     setId(id) {

@@ -3,7 +3,6 @@ import React from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -16,6 +15,7 @@ import SkeletonCustomCard from 'ui-component/cards/Skeleton/CustomCard';
 
 const CustomCard = ({ isLoading, icon: Icon,iconSx, customSx, textSx, title, currentValue, previousValue }) => {
     const theme = useTheme();
+    const [isHovered, setIsHovered] = React.useState(false);
 
     return (
         isLoading ? (<SkeletonCustomCard/>) : (
@@ -29,15 +29,17 @@ const CustomCard = ({ isLoading, icon: Icon,iconSx, customSx, textSx, title, cur
                 borderRadius: '12px', // Angoli arrotondati
             }}
         >
-            <Grid container alignItems="center">
+            <Grid container alignItems="center" justifyContent={"center"}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}>
                 <Grid item container justifyContent="flex-start" xs={6}>
                     <Grid item>
-                        <Box sx={{ p: 3 }}>
+                        <Box sx={{ p: 2.5 }}>
                             <Grid container direction="column" spacing={1}>
                                 <Grid item>
                                     <Grid container justifyContent="space-between">
                                         <Grid item>
-                                            <Typography variant="h4"
+                                            <Typography variant="h5"
                                                         sx={{
                                                             ...textSx,
                                                             }}>
@@ -62,18 +64,24 @@ const CustomCard = ({ isLoading, icon: Icon,iconSx, customSx, textSx, title, cur
                                     <Typography
                                         variant='body1'
                                         sx={{
-                                            color: 'secondary.200'
+                                            ...textSx,
+                                            fontWeight: '200',
                                         }}
                                     >
-                                        {previousValue} Last Month
+                                        {previousValue} {previousValue && "Last Month"}
                                     </Typography>
                                 </Grid>
                             </Grid>
                         </Box>
                     </Grid>
                 </Grid>
-                <Grid item container justifyContent="flex-end" xs={6}>
-                    <Icon style={{ width: '120', height: '120', paddingRight: "20", color: theme.palette.grey[300], ...iconSx }} />
+                <Grid item container justifyContent="flex-end" alignContent={"center"} xs={6}
+                      sx={{
+                          transform: isHovered ? 'scale(1.1)' : 'scale(1)',
+                          transition: 'transform 0.3s',}}>
+                    <Grid item>
+                        <Icon style={{ width: '150', height: '150', paddingRight: "20", color: theme.palette.grey[300], ...iconSx }} />
+                    </Grid>
                 </Grid>
             </Grid>
         </MainCard>

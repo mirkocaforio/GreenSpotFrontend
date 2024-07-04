@@ -162,6 +162,25 @@ export default function themeTypography(theme) {
       width: '44px',
       height: '44px',
       fontSize: '1.5rem'
+    },
+    chartWrapper: {
+      width: "100%",
+      height: "100%",
+      overflow: "hidden"
+    },
+    chartContent: {
+      height: "100%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    },
+    chart: {
+      flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      "& > div": {
+        width: "100%"
+      }
     }
   };
 }

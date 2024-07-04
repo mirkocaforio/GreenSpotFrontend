@@ -8,6 +8,7 @@ import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {roundValue} from "../../../utils/math";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MainCard from "../../../ui-component/cards/MainCard";
 
 
 export const AdminDashboard = () => {
@@ -32,7 +33,7 @@ export const AdminDashboard = () => {
         <Grid container spacing={2}>
             <Grid item xs={12} md={12} sm={12} lg={8}>
                 <Grid container direction="column" justifyContent={"flex-end"} spacing={2}>
-                    <Grid item xs={12} md={12} sm={12} lg={12}>
+                    <Grid item xs={12} md={12} sm={12} lg={12} sx={{ overflow: "hidden", width: "100%"}}>
                         <TotalStatBarChart />
                     </Grid>
                     <Grid item xs={12} md={12} sm={12} lg={12}>
@@ -40,13 +41,13 @@ export const AdminDashboard = () => {
                             <Grid item xs={12} sm={12} md={6} lg={6}>
                                 <CustomCard
                                     customSx={{
-                                        bgcolor: 'primary.dark',
+                                        bgcolor: 'warning.light',
                                     }}
                                     textSx={{
                                         color: 'warning.dark'
                                     }}
                                     title={"Total Energy Used"}
-                                    currentValue={overallAnalytics?.energyConsumed + " kWh"}
+                                    currentValue={roundValue(overallAnalytics?.energyConsumed,3) + " kWh"}
                                     previousValue={""}
                                     icon={OfflineBoltTwoTone}
                                     iconSx={{
@@ -78,9 +79,16 @@ export const AdminDashboard = () => {
                 </Grid>
             </Grid>
             <Grid item xs={12} md={12} sm={12} lg={4}>
-                <Grid item container direction="column" >
+                <Grid item container direction="column" spacing={2} >
                     <Grid item xs={12}>
                         <StatsGrid data={overallAnalytics} />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <MainCard>
+                            TODO
+                            TODO
+                            TODO
+                        </MainCard>
                     </Grid>
                 </Grid>
             </Grid>

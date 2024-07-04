@@ -161,10 +161,15 @@ const TotalStatBarChart = ({ isLoading }) => {
                             sx={{
                                 '& .apexcharts-menu.apexcharts-menu-open': {
                                     bgcolor: 'background.paper'
-                                }
+                                },
+                                ...theme.typography.chart
                             }}
                         >
-                            <Chart options={data.options} series={data.series} type={"bar"} height={480} />
+                            <div className={theme.typography.chartContent}>
+                                <div className={theme.typography.chartWrapper} >
+                                    <Chart options={data.options} series={data.series} type={"bar"} height={480} />
+                                </div>
+                            </div>
                         </Grid>
                     </Grid>
                 </MainCard>
