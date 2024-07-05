@@ -10,24 +10,24 @@ import PropTypes from "prop-types";
 
 const StatsGrid = ({data}) => (
     <MainCard content={false}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', height: '210px' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
             <Box sx={{
                 display: 'flex',
                 width: '100%',
                 height: '100%',
                 borderBottom: '1px solid #E0E0E0' }}>
-                <Box sx={{ flex: 1, borderRight: '1px solid #E0E0E0' }}>
+                <Box sx={{ flex: 1, borderRight: '1px solid #E0E0E0',height: '100%'  }}>
                     <StatCard icon={PeopleAltOutlined} title="Active Members" value={data?.activeMemberCount} />
                 </Box>
-                <Box sx={{ flex: 1 }}>
+                <Box sx={{ flex: 1,height: '100%'  }}>
                     <StatCard icon={SupervisedUserCircleOutlined} title="Active Users" value={data?.activeUserCount} />
                 </Box>
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%',}}>
-                <Box sx={{ flex: 1, borderRight: '1px solid #E0E0E0' }}>
+                <Box sx={{ flex: 1, borderRight: '1px solid #E0E0E0',height: '100%' }}>
                     <StatCard icon={AssignmentTurnedInOutlined} title="Tasks Completed" value={data?.tasksCompleted} />
                 </Box>
-                <Box sx={{ flex: 1 }}>
+                <Box sx={{ flex: 1,height: '100%' }}>
                     <StatCard icon={AssignmentOutlinedIcon} title="Tasks Submitted" value={data?.tasksSubmitted} />
                 </Box>
             </Box>

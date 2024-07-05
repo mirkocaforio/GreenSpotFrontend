@@ -9,12 +9,21 @@ const CustomCard = () => {
     return(
         <Card>
             <CardContent>
-                <Grid container direction="column">
-                    <Grid item>
-                        <Skeleton variant="rectangular" sx={{ my: 2 }} height={30} />
+                <Grid container direction="row" justifyContent={"center"} alignContent={"center"}>
+                    <Grid item xs={6}>
+                        <Grid container direction="column" justifyContent={"flex-start"}>
+                            <Grid item>
+                                <Skeleton variant="rectangular" sx={{ my: 2 }} height={30} />
+                            </Grid>
+                            <Grid item>
+                                <Skeleton variant="text" height={20} />
+                            </Grid>
+                        </Grid>
                     </Grid>
-                    <Grid item>
-                        <Skeleton variant="rectangular" height={30} />
+                    <Grid item xs={6}>
+                        <Grid container justifyContent={"flex-end"}>
+                            <Skeleton variant="circular" height={100} width={100} />
+                        </Grid>
                     </Grid>
                 </Grid>
             </CardContent>

@@ -1,19 +1,32 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Grid from "@mui/material/Grid";
 
+//project imports
+import SkeletonStatCard from "../../../ui-component/cards/Skeleton/StatCard";
 
 // ===========================|| DASHBOARD DEFAULT - STAT CARD ||=========================== //
 
 const StatCard = ({ icon: Icon, title, value }) => {
     const theme = useTheme();
+    const [isLoading, setIsLoading] = useState(true);
+
+
+    useEffect(() => {
+        if(value){
+            setIsLoading(false);
+        }else {
+            setIsLoading(true);
+        }
+    }, [value]);
 
     return (
-        <Grid container={true} alignItems={"center"} justifyContent="center" sx={{ p: 3 }}>
+        isLoading ? (<SkeletonStatCard/>):
+            (<Grid container={true} alignItems={"center"} justifyContent="center" sx={{ p: 3 }}>
             <Grid item xs={6}>
                 <Grid container={true} justifyContent="flex-start" >
                     <Grid item>
@@ -35,7 +48,7 @@ const StatCard = ({ icon: Icon, title, value }) => {
                     </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        </Grid>)
     );
 };
 
