@@ -82,11 +82,24 @@ const NotificationSection = () => {
     useEffect(() => {
         if (popupNotifications) {
             setPopupList(popupNotifications.notificationsList);
+            switch (value) {
+                case 'all':
+                    setPopupList(popupNotifications.notificationsList);
+                    break;
+                case 'read':
+                    setPopupList(popupNotifications.notificationsList.filter(notification => notification.read));
+                    break;
+                case 'unread':
+                    setPopupList(popupNotifications.notificationsList.filter(notification => !notification.read));
+                    break;
+                default:
+                    setPopupList(popupNotifications.notificationsList);
+            }
             setIsLoading(false);
         } else {
             setIsLoading(true);
         }
-    }, [popupNotifications]);
+    }, [popupNotifications, value]);
 
     /**
      * anchorRef is used on different componets and specifying one type leads to other components throwing an error
@@ -223,9 +236,9 @@ const NotificationSection = () => {
                                                         <Button onClick={() => {
                                                             handleMarkAllRead()
                                                                 .then(() => {
-                                                                    setValue('all')
+                                                                    setValue('unread')
                                                                 }).catch(() => {
-                                                                setValue('all')
+                                                                setValue('unread')
                                                             });
                                                         }}>
                                                             <Tooltip title={"Mark all as read"}>
@@ -239,9 +252,9 @@ const NotificationSection = () => {
                                                         <Button onClick={() => {
                                                             handleRefresh()
                                                                 .then(() => {
-                                                                    setValue('all')
+                                                                    setValue('unread')
                                                                 }).catch(() => {
-                                                                setValue('all')
+                                                                setValue('unread')
                                                             });
                                                         }}>
                                                             <Tooltip title={"Refresh"}>
