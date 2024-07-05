@@ -98,7 +98,7 @@ export const InvoiceDialog = ({open, handleClose, handleConfirm, action, element
                                     <Grid container>
                                         <Grid item xs={6} sx={{ textAlign: 'right' }}>
                                             <Typography variant="h5">Sub Total:</Typography>
-                                            <Typography variant="h5">Delay interest (10%):</Typography>
+                                            <Typography variant="h5">Delay interest:</Typography>
                                             <Divider sx={{ my: 1 }} />
                                             <Typography variant="subtitle1">Total:</Typography>
                                         </Grid>
