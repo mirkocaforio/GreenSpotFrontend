@@ -1,10 +1,9 @@
 // assets
 import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
 import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
-import {IconCreditCardRefund} from '@tabler/icons-react';
 
 // constant
-const icons = { PaymentsOutlinedIcon, ReceiptOutlinedIcon, IconCreditCardRefund };
+const icons = { PaymentsOutlinedIcon, ReceiptOutlinedIcon };
 
 const billing = {
     id: 'billing',
@@ -20,17 +19,10 @@ const billing = {
             children: [
                 {
                     id: 'invoice',
-                    title: 'Invoice',
+                    title: 'Invoices',
                     type: 'item',
                     url: '/billing/invoice',
                     icon: icons.ReceiptOutlinedIcon
-                },
-                {
-                    id: 'funds',
-                    title: 'Add funds',
-                    type: 'item',
-                    url: '/sample-page',
-                    icon: icons.IconCreditCardRefund
                 }
             ]
         }

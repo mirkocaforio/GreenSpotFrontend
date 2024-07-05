@@ -23,7 +23,7 @@ export const getInvoicesByUserEmail = () => {
         userEmail: CurrentUser()?.email,
         invoicePaymentMethod: "",
         invoicePaymentDate: "",
-        invoiceAmount: "",
+        invoiceTotalAmount: "",
         invoiceStatus: "",
         invoiceOverdueDate: ""
     }
