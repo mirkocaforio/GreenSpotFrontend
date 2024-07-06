@@ -12,7 +12,7 @@ import {getPopupNotificationByEmail} from "../actions/notification";
 import {getAssignmentSettings, getPaymentSettings} from "../actions/settings";
 import {getInvoicesByUserEmail} from "../actions/payment";
 import {getOverallAnalytics} from "../actions/analytics";
-
+import {getCurrentMonthOverallAnalytics} from "../actions/analytics";
 
 const FetchData = ({children, type}) => {
     const dispatch = useDispatch();
@@ -65,6 +65,9 @@ const FetchData = ({children, type}) => {
             break;
         case "overallAnalytics":
             fetchData = getOverallAnalytics;
+            break;
+        case "overallCurrentMonth":
+            fetchData = getCurrentMonthOverallAnalytics;
             break;
         default:
             fetchData = getProfileData;

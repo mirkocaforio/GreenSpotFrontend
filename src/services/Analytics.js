@@ -51,6 +51,27 @@ export const getOverallAnalyticsByDate = (startDate, endDate) => {
 
 }
 
+export const getOverallAnalyticsDaily = (month,year) => {
+
+    let params = AuthHeader();
+    params = {
+        ...params,
+        month: month,
+        year: year
+    }
+    const additionalParams = {};
+    const body = {  };
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1AnalyticsOverallFilterDailyGet(params,body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+}
+
 export const getTransactionUserAnalytics = (month, year, granularity) => {
     let params = AuthHeader();
     params = {
@@ -139,6 +160,7 @@ export default {
     getUserTasksAnalytics,
     getOverallAnalytics,
     getOverallAnalyticsByDate,
+    getOverallAnalyticsDaily,
     getTransactionUserAnalytics,
     getTransactionMemberAnalytics,
     getPaymentUserAnalytics,

@@ -75,13 +75,17 @@ const CustomCard = ({ isLoading, icon: Icon,iconSx, customSx, textSx, title, cur
                         </Box>
                     </Grid>
                 </Grid>
-                <Grid item container justifyContent="flex-end" alignContent={"center"} xs={6}
-                      sx={{
-                          transform: isHovered ? 'scale(1.1)' : 'scale(1)',
-                          transition: 'transform 0.3s',}}>
+                <Grid item container justifyContent="flex-end" alignContent={"center"} xs={6}>
                     <Grid item>
-                        <Icon style={{ width: '150', height: '150', paddingRight: "20", color: theme.palette.grey[300], ...iconSx }} />
+                        <Grid container justifyContent={"center"} alignItems={"center"} sx={{
+                            transform: isHovered ? 'scale(1.1)' : 'scale(1)',
+                            transition: 'transform 0.3s',}}>
+                            <Grid item>
+                                <Icon style={{ width: '150', height: '150', paddingRight: "20", color: theme.palette.grey[300], ...iconSx }} />
+                            </Grid>
+                        </Grid>
                     </Grid>
+
                 </Grid>
             </Grid>
         </MainCard>

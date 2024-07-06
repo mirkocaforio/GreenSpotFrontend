@@ -1,32 +1,50 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 
 // third-party
 import ApexCharts from 'apexcharts';
 import Chart from 'react-apexcharts';
 
 // project imports
-import SkeletonTotalGrowthBarChart from 'ui-component/cards/Skeleton/TotalGrowthBarChart';
+import SkeletonBarChart from 'ui-component/cards/Skeleton/BarChart';
 import MainCard from 'ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 
 // chart data
-import chartData from '../chart-data/total-growth-bar-chart';
+import {useSelector} from "react-redux";
+import {roundValue} from "../../../utils/math";
+import SmallInfoCard from "./SmallInfoCard";
+import {AccessTimeTwoTone, OfflineBoltTwoTone} from "@mui/icons-material";
+
+export const convertToApexChartData = (data, mapping) => {
+    const categories = data.map(item => `${item.year}-${item.month}-${item.day}`);
+    const series = mapping.map(field => ({
+        name: field.displayName,
+        data: data.map(item => roundValue(item[field?.fieldName],2))
+    }));
+
+    // Calculate total sums for fields with Total: true
+    const totals = mapping.reduce((acc, field) => {
+        if (field?.total) {
+            acc[field.fieldName] = {
+                title: "Total " + field.displayName,
+                value: roundValue(data.reduce((sum, item) => sum + item[field.fieldName], 0),2),
+            }
+        }
+        return acc;
+    }, {});
+
+    return { categories, series, totals };
+}
 
 const status = [
     {
-        value: 'today',
-        label: 'Today'
-    },
-    {
-        value: 'month',
+        value: 'daily',
         label: 'This Month'
     },
     {
@@ -35,13 +53,73 @@ const status = [
     }
 ];
 
+const initSettings = {
+    options: {
+        chart: {
+            id: 'rec-stats-barChart',
+            toolbar: {
+                show: true
+            },
+            zoom: {
+                enabled: true
+            }
+        },
+        xaxis: {
+            categories: [],
+        },
+        legend: {
+            show: true,
+            fontFamily: `'Roboto', sans-serif`,
+            position: 'bottom',
+            offsetX: 20,
+            labels: {
+                useSeriesColors: false
+            },
+            markers: {
+                width: 16,
+                height: 16,
+                radius: 5
+            },
+            itemMargin: {
+                horizontal: 15,
+                vertical: 8
+            }
+        },
+        fill: {
+            type: 'solid'
+        },
+        grid: {
+            show: true
+        },
+        responsive: [
+            {
+                options: {
+                    legend: {
+                        position: 'bottom',
+                        offsetX: -10,
+                        offsetY: 0
+                    }
+                }
+            }
+        ]
+    },
+    series: []
+}
+
 // ==============================|| DASHBOARD DEFAULT - TOTAL GROWTH BAR CHART ||============================== //
 
-const TotalStatBarChart = ({ isLoading }) => {
-    const [value, setValue] = React.useState('today');
+const TotalStatBarChart = () => {
+    const [value, setValue] = useState('daily');
+
+    const [isLoading, setIsLoading] = useState(true);
+
+    const { overallAnalytics } = useSelector(state => state.analytics);
+    const [chartSettings, setChartSettings] = useState(initSettings);
+    const [totals, setTotals] = useState({});
+
     const theme = useTheme();
-    let isCancelled = false;
-    const chartUpdated = React.useRef(false);
+    const chartRef = useRef(null);
+    const [init, setInit] = useState(false);
 
     const { primary } = theme.palette.text;
     const divider = theme.palette.divider;
@@ -52,96 +130,113 @@ const TotalStatBarChart = ({ isLoading }) => {
     const secondaryMain = theme.palette.secondary.main;
     const secondaryLight = theme.palette.secondary.light;
 
-    const data = {
-        options: {
-            chart: {
-                id: 'apexchart-example'
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const fieldMapping = [
+        { displayName: 'Energy Consumed', fieldName: 'energyConsumed',
+            total: true,
+            icon: OfflineBoltTwoTone,
+            iconSx: {
+                color: theme.palette.warning.main
             },
-            xaxis: {
-                categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+            textColor: theme.palette.warning.dark,
+            bgColor: 'warning.light',
+            initialVisibility: true },
+        { displayName: 'Computing Power Used', fieldName: 'computingPowerUsed',initialVisibility: false },
+        { displayName: 'Active Member Count', fieldName: 'activeMemberCount',initialVisibility: true },
+        { displayName: 'Active User Count', fieldName: 'activeUserCount',initialVisibility: true },
+        { displayName: 'Tasks Submitted', fieldName: 'tasksSubmitted',initialVisibility: true },
+        { displayName: 'Tasks Completed', fieldName: 'tasksCompleted',initialVisibility: true },
+        { displayName: 'Work Minutes', fieldName: 'workMinutes',
+            total: true,
+            icon: AccessTimeTwoTone,
+            iconSx: {
+                color: theme.palette.grey[300]
             },
-            responsive: [
-                {
-                    //breakpoint: 480,
-                    options: {
-                        legend: {
-                            position: 'bottom',
-                            offsetX: -10,
-                            offsetY: 0
+            textColor: theme.palette.primary.light,
+            bgColor: 'primary.dark',
+            initialVisibility: false },
+    ];
+
+    // ############################## - Chart data & Chart settings - ##############################
+    useEffect(() => {
+        let chartData = {};
+
+
+        if(overallAnalytics && overallAnalytics[value]){
+            setIsLoading(false);
+            chartData = convertToApexChartData(overallAnalytics[value].data, fieldMapping);
+            setChartSettings(chartSettings => ({
+                ...chartSettings,
+                colors: [primary200, primaryDark, secondaryMain, secondaryLight],
+                options: {
+                    ...chartSettings.options,
+                    xaxis: {
+                        categories: chartData.categories,
+                    },
+                    yaxis: {
+                        labels: {
+                            style: {
+                                colors: [primary]
+                            }
                         }
-                    }
-                }
-            ]
-        },
-        series: [{
-            name: 'series-1',
-            data: [30, 40, 35, 50, 49, 60, 70, 91, 125]
-        },{
-            name: 'series-2',
-            data: [10, 20, 15, 30, 29, 40, 50, 71, 105]
-        },{
-            name: 'series-3',
-            data: [20, 30, 25, 40, 39, 50, 60, 81, 115]
-        },{
-            name: 'series-4',
-            data: [40, 50, 45, 60, 59, 70, 80, 101, 135]
-        }
-        ]
-    }
-
-    React.useEffect(() => {
-        const newChartData = {
-            ...chartData.options,
-            colors: [primary200, primaryDark, secondaryMain, secondaryLight],
-            xaxis: {
-                labels: {
-                    style: {
-                        colors: [primary, primary, primary, primary, primary, primary, primary, primary, primary, primary, primary, primary]
-                    }
-                }
-            },
-            yaxis: {
-                labels: {
-                    style: {
-                        colors: [primary]
-                    }
-                }
-            },
-            grid: { borderColor: divider },
-            tooltip: { theme: 'light' },
-            legend: { labels: { colors: grey500 } }
-        };
-
-        // do not load chart when loading
-        if (!isLoading && !isCancelled && !chartUpdated.current) {
-            ApexCharts.exec(`bar-chart`, 'updateOptions', newChartData);
-            chartUpdated.current = true;
+                    },
+                    grid: { borderColor: divider },
+                    tooltip: { theme: 'light' },
+                    legend: { labels: { colors: grey500 } }
+                },
+                series: chartData.series
+            }));
+            setTotals(chartData.totals);
+            ApexCharts.exec(`rec-stats-barChart`, 'updateOptions', chartSettings);
+            setInit(false);
+        }else {
+            setIsLoading(true);
         }
 
-        return () => {
-            isCancelled = true;
-        };
+    }, [overallAnalytics, value]);
 
+    // ############################## - Chart visibility - ##############################
+    useEffect(() => {
+        if (chartRef.current && !init) {
+            fieldMapping.forEach((field) => {
+                if (!field.initialVisibility && chartRef.current) {
+                    chartRef.current.chart.toggleSeries(field.displayName);
+                }
+            });
+            setInit(true);
+        }
+    }, [fieldMapping, init]);
 
-    }, [primary200, primaryDark, secondaryMain, secondaryLight, primary, divider, isLoading, grey500]);
 
     return (
         <>
-            {isLoading ? (
-                <SkeletonTotalGrowthBarChart />
-            ) : (
                 <MainCard>
                     <Grid container spacing={gridSpacing}>
                         <Grid item xs={12}>
                             <Grid container alignItems="center" justifyContent="space-between">
                                 <Grid item>
-                                    <Grid container direction="column" spacing={1}>
-                                        <Grid item>
-                                            <Typography variant="subtitle2">Total Growth</Typography>
-                                        </Grid>
-                                        <Grid item>
-                                            <Typography variant="h3">$2,324.00</Typography>
-                                        </Grid>
+                                    <Grid container justifyContent="flex-start" direction="row" spacing={2}>
+                                        {Object.keys(totals).map((key) => {
+                                            const field = fieldMapping.find(field => field.fieldName === key);
+
+                                            return (
+                                                <Grid item key={key}>
+                                                    <SmallInfoCard
+                                                        customSx={{
+                                                            bgcolor: field.bgColor,
+                                                        }}
+                                                        textSx={{
+                                                            color: field.textColor
+                                                        }}
+                                                        title={field.displayName}
+                                                        currentValue={totals[key].value}
+                                                        icon={field.icon}
+                                                        iconSx={field.iconSx}
+                                                        isLoading={isLoading}
+                                                    />
+                                                </Grid>
+                                            )
+                                        })}
                                     </Grid>
                                 </Grid>
                                 <Grid item>
@@ -155,6 +250,11 @@ const TotalStatBarChart = ({ isLoading }) => {
                                 </Grid>
                             </Grid>
                         </Grid>
+                        {isLoading ? (
+                            <Grid item xs={12}>
+                                <SkeletonBarChart />
+                            </Grid>
+                        ) : (
                         <Grid
                             item
                             xs={12}
@@ -167,19 +267,18 @@ const TotalStatBarChart = ({ isLoading }) => {
                         >
                             <div className={theme.typography.chartContent}>
                                 <div className={theme.typography.chartWrapper} >
-                                    <Chart options={data.options} series={data.series} type={"bar"} height={480} />
+                                    <Chart ref={chartRef} options={chartSettings.options} series={chartSettings.series}  type={"bar"} height={480} />
                                 </div>
                             </div>
                         </Grid>
+                        )}
                     </Grid>
                 </MainCard>
-            )}
         </>
     );
 };
 
 TotalStatBarChart.propTypes = {
-    isLoading: PropTypes.bool
 };
 
 export default TotalStatBarChart;

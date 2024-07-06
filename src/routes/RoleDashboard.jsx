@@ -21,7 +21,9 @@ export const RoleDashboard = () => {
     switch (role) {
         case ROLE_ADMIN:
             return <FetchData type={"overallAnalytics"}>
-                        <AdminDashboard/>
+                        <FetchData type={"overallCurrentMonth"}>
+                            <AdminDashboard/>
+                        </FetchData>
                     </FetchData>;
         case ROLE_UTENTE:
             return <DashboardDefault/>;

@@ -17,9 +17,7 @@ export const AdminDashboard = () => {
 
     const { overallAnalytics } = useSelector(state => state.analytics);
     const [isLoading, setIsLoading] = useState(true);
-    const {user} = useSelector(state => state.auth);
 
-    console.log(user.token);
 
     useEffect(() => {
         if(overallAnalytics){
@@ -34,7 +32,7 @@ export const AdminDashboard = () => {
             <Grid item xs={12} md={12} sm={12} lg={8}>
                 <Grid container direction="column" justifyContent={"flex-end"} spacing={2}>
                     <Grid item xs={12} md={12} sm={12} lg={12} sx={{ overflow: "hidden", width: "100%"}}>
-                        <TotalStatBarChart />
+                        <TotalStatBarChart/>
                     </Grid>
                     <Grid item xs={12} md={12} sm={12} lg={12}>
                         <Grid container spacing={2} >
@@ -47,7 +45,7 @@ export const AdminDashboard = () => {
                                         color: 'warning.dark'
                                     }}
                                     title={"Total Energy Used"}
-                                    currentValue={roundValue(overallAnalytics?.energyConsumed,3) + " kWh"}
+                                    currentValue={roundValue(overallAnalytics?.all?.energyConsumed,3) + " kWh"}
                                     previousValue={""}
                                     icon={OfflineBoltTwoTone}
                                     iconSx={{
@@ -65,7 +63,7 @@ export const AdminDashboard = () => {
                                         color: 'primary.light'
                                     }}
                                     title={"Total Work Time"}
-                                    currentValue={roundValue(overallAnalytics?.workMinutes,2) + " min"}
+                                    currentValue={roundValue(overallAnalytics?.all?.workMinutes,2) + " min"}
                                     previousValue={""}
                                     icon={AccessTimeTwoTone}
                                     iconSx={{
@@ -81,7 +79,7 @@ export const AdminDashboard = () => {
             <Grid item xs={12} md={12} sm={12} lg={4}>
                 <Grid item container direction="column" spacing={2} >
                     <Grid item xs={12}>
-                        <StatsGrid data={overallAnalytics} />
+                        <StatsGrid data={overallAnalytics?.all} />
                     </Grid>
                     <Grid item xs={12}>
                         <MainCard>

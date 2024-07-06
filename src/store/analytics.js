@@ -37,7 +37,10 @@ export default function (state = initialState, action) {
         case GET_OVERALL_ANALYTICS_SUCCESS:
             return {
                 ...state,
-                overallAnalytics: payload.overallAnalytics,
+                overallAnalytics: {
+                    ...state.overallAnalytics,
+                    ...payload.overallAnalytics
+                },
             };
         case GET_TRANSACTION_USER_ANALYTICS_SUCCESS:
             return {
