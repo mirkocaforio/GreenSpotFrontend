@@ -191,6 +191,42 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.apiV1AnalyticsOverallFilterDailyGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['year', 'month', 'Authorization'], ['body']);
+        
+        var apiV1AnalyticsOverallFilterDailyGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/analytics/overall/filter/daily').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['year', 'month', ]),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1AnalyticsOverallFilterDailyGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1AnalyticsOverallFilterDailyOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1AnalyticsOverallFilterDailyOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/analytics/overall/filter/daily').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1AnalyticsOverallFilterDailyOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.apiV1AnalyticsUserGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -746,6 +782,96 @@ apigClientFactory.newClient = function (config) {
         
         
         return apiGatewayClient.makeRequest(apiV1PaymentOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1PaymentAnalyticsOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1PaymentAnalyticsOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/payment/analytics').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1PaymentAnalyticsOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1PaymentAnalyticsAdminGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'year', 'month', 'granularity'], ['body']);
+        
+        var apiV1PaymentAnalyticsAdminGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/payment/analytics/admin').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['year', 'month', 'granularity']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1PaymentAnalyticsAdminGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1PaymentAnalyticsAdminOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1PaymentAnalyticsAdminOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/payment/analytics/admin').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1PaymentAnalyticsAdminOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1PaymentAnalyticsUserGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'year', 'month', 'granularity'], ['body']);
+        
+        var apiV1PaymentAnalyticsUserGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/payment/analytics/user').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['year', 'month', 'granularity']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1PaymentAnalyticsUserGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1PaymentAnalyticsUserOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1PaymentAnalyticsUserOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/payment/analytics/user').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1PaymentAnalyticsUserOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
     
@@ -2042,6 +2168,96 @@ apigClientFactory.newClient = function (config) {
         
         
         return apiGatewayClient.makeRequest(apiV1TaskUpdateOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1TransactionsAnalyticsOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1TransactionsAnalyticsOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/transactions/analytics').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1TransactionsAnalyticsOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1TransactionsAnalyticsMemberGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'year', 'month', 'granularity'], ['body']);
+        
+        var apiV1TransactionsAnalyticsMemberGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/transactions/analytics/member').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['year', 'month', 'granularity']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1TransactionsAnalyticsMemberGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1TransactionsAnalyticsMemberOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1TransactionsAnalyticsMemberOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/transactions/analytics/member').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1TransactionsAnalyticsMemberOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1TransactionsAnalyticsUserGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'year', 'month', 'granularity'], ['body']);
+        
+        var apiV1TransactionsAnalyticsUserGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/transactions/analytics/user').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['year', 'month', 'granularity']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1TransactionsAnalyticsUserGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1TransactionsAnalyticsUserOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1TransactionsAnalyticsUserOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/transactions/analytics/user').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1TransactionsAnalyticsUserOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
     
