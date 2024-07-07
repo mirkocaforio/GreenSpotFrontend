@@ -51,8 +51,96 @@ export const getOverallAnalyticsByDate = (startDate, endDate) => {
 
 }
 
+export const getTransactionUserAnalytics = (month, year, granularity) => {
+    let params = AuthHeader();
+    params = {
+        ...params,
+        month: month,
+        year: year,
+        granularity: granularity
+    }
+    const additionalParams = {};
+    const body = {  };
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1TransactionsAnalyticsUserGet(params,body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+}
+
+export const getTransactionMemberAnalytics = (month, year, granularity) => {
+    let params = AuthHeader();
+    params = {
+        ...params,
+        month: month,
+        year: year,
+        granularity: granularity
+    }
+    const additionalParams = {};
+    const body = {  };
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1TransactionsAnalyticsMemberGet(params,body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+}
+
+export const getPaymentUserAnalytics = (month, year, granularity) => {
+    let params = AuthHeader();
+    params = {
+        ...params,
+        month: month,
+        year: year,
+        granularity: granularity
+    }
+    const additionalParams = {};
+    const body = {  };
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1PaymentAnalyticsUserGet(params,body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+}
+
+export const getPaymentAdminAnalytics = (month, year, granularity) => {
+    let params = AuthHeader();
+    params = {
+        ...params,
+        month: month,
+        year: year,
+        granularity: granularity
+    }
+    const additionalParams = {};
+    const body = {  };
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1PaymentAnalyticsAdminGet(params,body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+}
+
 export default {
     getUserTasksAnalytics,
     getOverallAnalytics,
-    getOverallAnalyticsByDate
+    getOverallAnalyticsByDate,
+    getTransactionUserAnalytics,
+    getTransactionMemberAnalytics,
+    getPaymentUserAnalytics,
+    getPaymentAdminAnalytics
 }
