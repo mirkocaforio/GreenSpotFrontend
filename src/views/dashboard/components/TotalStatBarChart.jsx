@@ -125,10 +125,6 @@ const TotalStatBarChart = () => {
     const divider = theme.palette.divider;
     const grey500 = theme.palette.grey[500];
 
-    const primary200 = theme.palette.primary[200];
-    const primaryDark = theme.palette.primary.dark;
-    const secondaryMain = theme.palette.secondary.main;
-    const secondaryLight = theme.palette.secondary.light;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const fieldMapping = [
@@ -167,7 +163,6 @@ const TotalStatBarChart = () => {
             chartData = convertToApexChartData(overallAnalytics[value].data, fieldMapping);
             setChartSettings(chartSettings => ({
                 ...chartSettings,
-                colors: [primary200, primaryDark, secondaryMain, secondaryLight],
                 options: {
                     ...chartSettings.options,
                     xaxis: {
@@ -205,7 +200,7 @@ const TotalStatBarChart = () => {
             });
             setInit(true);
         }
-    }, [fieldMapping, init]);
+    }, [fieldMapping, init, chartRef]);
 
 
     return (
