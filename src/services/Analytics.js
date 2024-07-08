@@ -1,5 +1,61 @@
 import {AuthHeader, ApiClient} from "./AuthUtils";
 
+export const getUserAnalytics = () => {
+    let params = AuthHeader();
+    const additionalParams = {};
+    const body = { };
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1AnalyticsUserGet(params,body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+}
+
+export const getUserFilterAnalytics = (startDate, endDate) => {
+    let params = AuthHeader();
+    params = {
+        ...params,
+        startDate: startDate,
+        endDate: endDate
+    }
+    const additionalParams = {};
+    const body = { };
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1AnalyticsUserFilterGet(params,body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+}
+
+export const getUserListAnalytics = (month, year, granularity) => {
+    let params = AuthHeader();
+    params = {
+        ...params,
+        month: month,
+        year: year,
+        granularity: granularity
+    }
+    const additionalParams = {};
+    const body = { };
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1AnalyticsUserListGet(params,body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+}
+
 export const getUserTasksAnalytics = () => {
     let params = AuthHeader();
     const additionalParams = {};
@@ -8,6 +64,62 @@ export const getUserTasksAnalytics = () => {
     let apigClient = ApiClient();
 
     return apigClient.apiV1AnalyticsUserTasksGet(params,body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+}
+
+export const getMemberAnalytics = () => {
+    let params = AuthHeader();
+    const additionalParams = {};
+    const body = { };
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1AnalyticsMemberGet(params,body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+}
+
+export const getMemberFilterAnalytics = (startDate, endDate) => {
+    let params = AuthHeader();
+    params = {
+        ...params,
+        startDate: startDate,
+        endDate: endDate
+    }
+    const additionalParams = {};
+    const body = { };
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1AnalyticsMemberFilterGet(params,body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+}
+
+export const getMemberListAnalytics = (month, year, granularity) => {
+    let params = AuthHeader();
+    params = {
+        ...params,
+        month: month,
+        year: year,
+        granularity: granularity
+    }
+    const additionalParams = {};
+    const body = { };
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1AnalyticsMemberListGet(params,body, additionalParams)
         .then(function(result){
             return Promise.resolve(result.data);
         }).catch( function(result){
@@ -51,13 +163,14 @@ export const getOverallAnalyticsByDate = (startDate, endDate) => {
 
 }
 
-export const getOverallAnalyticsDaily = (month,year) => {
+export const getOverallAnalyticsDaily = (month, year, granularity) => {
 
     let params = AuthHeader();
     params = {
         ...params,
         month: month,
-        year: year
+        year: year,
+        granularity: granularity
     }
     const additionalParams = {};
     const body = {  };
@@ -157,7 +270,13 @@ export const getPaymentAdminAnalytics = (month, year, granularity) => {
 }
 
 export default {
+    getUserAnalytics,
+    getUserFilterAnalytics,
+    getUserListAnalytics,
     getUserTasksAnalytics,
+    getMemberAnalytics,
+    getMemberFilterAnalytics,
+    getMemberListAnalytics,
     getOverallAnalytics,
     getOverallAnalyticsByDate,
     getOverallAnalyticsDaily,

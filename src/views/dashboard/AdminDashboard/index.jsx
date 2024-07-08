@@ -39,17 +39,17 @@ export const AdminDashboard = () => {
                             <Grid item xs={12} sm={12} md={6} lg={6}>
                                 <CustomCard
                                     customSx={{
-                                        bgcolor: 'warning.light',
+                                        bgcolor: 'warning.dark',
                                     }}
                                     textSx={{
-                                        color: 'warning.dark'
+                                        color: 'warning.light'
                                     }}
                                     title={"Total Energy Used"}
                                     currentValue={roundValue(overallAnalytics?.all?.energyConsumed,3) + " kWh"}
                                     previousValue={""}
                                     icon={OfflineBoltTwoTone}
                                     iconSx={{
-                                        color: theme.palette.warning.main
+                                        color: theme.palette.warning.light
                                     }}
                                     isLoading={isLoading}
                                 />

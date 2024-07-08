@@ -1,7 +1,7 @@
 import {onError} from "./expiration";
 import {
     GET_ANALYTICS_FAIL,
-    GET_ANALYTICS_SUCCESS,
+    GET_ANALYTICS_SUCCESS, GET_MEMBER_ANALYTICS_FAIL, GET_MEMBER_ANALYTICS_SUCCESS, GET_OVERALL_ANALYTICS_FAIL,
     GET_OVERALL_ANALYTICS_SUCCESS, GET_PAYMENT_ADMIN_ANALYTICS_FAIL,
     GET_PAYMENT_ADMIN_ANALYTICS_SUCCESS,
     GET_PAYMENT_USER_ANALYTICS_FAIL,
@@ -9,9 +9,96 @@ import {
     GET_TRANSACTION_MEMBER_ANALYTICS_FAIL,
     GET_TRANSACTION_MEMBER_ANALYTICS_SUCCESS,
     GET_TRANSACTION_USER_ANALYTICS_FAIL,
-    GET_TRANSACTION_USER_ANALYTICS_SUCCESS
+    GET_TRANSACTION_USER_ANALYTICS_SUCCESS, GET_USER_ANALYTICS_FAIL, GET_USER_ANALYTICS_SUCCESS
 } from "./types";
 import Analytics from "../services/Analytics";
+
+export const getUserAnalytics = () => (dispatch) => {
+    return Analytics.getUserAnalytics().then((data) => {
+
+        dispatch({
+            type: GET_USER_ANALYTICS_SUCCESS,
+            payload: {
+                userAnalytics: data
+            }
+        });
+
+        return Promise.resolve(data);
+    }, (error) => {
+        const message =
+            (error.data && error.data.message) ||
+            (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+        dispatch({
+            type: GET_USER_ANALYTICS_FAIL
+        })
+
+        dispatch(onError(message,"analytics"));
+        return Promise.reject();
+    });
+}
+
+export const getUserFilterAnalytics = (startDate, endDate) => (dispatch) => {
+    return Analytics.getUserFilterAnalytics(startDate, endDate).then((data) => {
+
+        dispatch({
+            type: GET_USER_ANALYTICS_SUCCESS,
+            payload: {
+                userAnalytics: data
+            }
+        });
+
+        return Promise.resolve(data);
+    }, (error) => {
+        const message =
+            (error.data && error.data.message) ||
+            (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+        dispatch({
+            type: GET_USER_ANALYTICS_FAIL
+        })
+
+        dispatch(onError(message,"analytics"));
+        return Promise.reject();
+    });
+}
+
+export const getUserListAnalytics = (month, year, granularity) => (dispatch) => {
+    return Analytics.getUserListAnalytics(month, year, granularity).then((data) => {
+
+        dispatch({
+            type: GET_USER_ANALYTICS_SUCCESS,
+            payload: {
+                userAnalytics: data
+            }
+        });
+
+        return Promise.resolve(data);
+    }, (error) => {
+        const message =
+            (error.data && error.data.message) ||
+            (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+        dispatch({
+            type: GET_USER_ANALYTICS_FAIL
+        })
+
+        dispatch(onError(message,"analytics"));
+        return Promise.reject();
+    });
+}
 
 export const getTasksAnalytics = () => (dispatch) => {
     return Analytics.getUserTasksAnalytics().then((data) => {
@@ -42,6 +129,94 @@ export const getTasksAnalytics = () => (dispatch) => {
     });
 }
 
+export const getMemberAnalytics = () => (dispatch) => {
+    return Analytics.getMemberAnalytics().then((data) => {
+
+        dispatch({
+            type: GET_MEMBER_ANALYTICS_SUCCESS,
+            payload: {
+                memberAnalytics: data
+            }
+        });
+
+        return Promise.resolve(data);
+    }, (error) => {
+        const message =
+            (error.data && error.data.message) ||
+            (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+        dispatch({
+            type: GET_MEMBER_ANALYTICS_FAIL
+        })
+
+        dispatch(onError(message,"analytics"));
+        return Promise.reject();
+    });
+}
+
+export const getMemberFilterAnalytics = (startDate, endDate) => (dispatch) => {
+    return Analytics.getMemberFilterAnalytics(startDate, endDate).then((data) => {
+
+        dispatch({
+            type: GET_MEMBER_ANALYTICS_SUCCESS,
+            payload: {
+                memberAnalytics: data
+            }
+        });
+
+        return Promise.resolve(data);
+    }, (error) => {
+        const message =
+            (error.data && error.data.message) ||
+            (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+        dispatch({
+            type: GET_MEMBER_ANALYTICS_FAIL
+        })
+
+        dispatch(onError(message,"analytics"));
+        return Promise.reject();
+    });
+}
+
+export const getMemberListAnalytics = (month, year, granularity) => (dispatch) => {
+    return Analytics.getMemberListAnalytics(month, year, granularity).then((data) => {
+
+        dispatch({
+            type: GET_MEMBER_ANALYTICS_SUCCESS,
+            payload: {
+                memberAnalytics: data
+            }
+        });
+
+        return Promise.resolve(data);
+    }, (error) => {
+        const message =
+            (error.data && error.data.message) ||
+            (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+        dispatch({
+            type: GET_MEMBER_ANALYTICS_FAIL
+        })
+
+        dispatch(onError(message,"analytics"));
+        return Promise.reject();
+    });
+
+}
+
 export const getOverallAnalytics = () => (dispatch) => {
     return Analytics.getOverallAnalytics().then((data) => {
 
@@ -65,7 +240,7 @@ export const getOverallAnalytics = () => (dispatch) => {
             error.toString();
 
         dispatch({
-            type: GET_ANALYTICS_FAIL
+            type: GET_OVERALL_ANALYTICS_FAIL
         })
 
         dispatch(onError(message,"analytics"));
@@ -73,8 +248,40 @@ export const getOverallAnalytics = () => (dispatch) => {
     });
 }
 
-export const getOverallAnalyticsDaily = (month, year) => (dispatch) => {
-    return Analytics.getOverallAnalyticsDaily(month, year).then((data) => {
+export const getOverallFilterAnalytics = (startDate, endDate) => (dispatch) => {
+    return Analytics.getOverallAnalyticsByDate(startDate, endDate).then((data) => {
+
+        dispatch({
+            type: GET_OVERALL_ANALYTICS_SUCCESS,
+            payload: {
+                overallAnalytics: {
+                    all:data
+                }
+            }
+        });
+
+        return Promise.resolve(data);
+    }, (error) => {
+        const message =
+            (error.data && error.data.message) ||
+            (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+        dispatch({
+            type: GET_OVERALL_ANALYTICS_FAIL
+        })
+
+        dispatch(onError(message,"analytics"));
+        return Promise.reject();
+    });
+
+}
+
+export const getOverallAnalyticsDaily = (month, year, granularity) => (dispatch) => {
+    return Analytics.getOverallAnalyticsDaily(month, year, granularity).then((data) => {
 
         dispatch({
             type: GET_OVERALL_ANALYTICS_SUCCESS,
@@ -100,7 +307,7 @@ export const getOverallAnalyticsDaily = (month, year) => (dispatch) => {
             error.toString();
 
         dispatch({
-            type: GET_ANALYTICS_FAIL
+            type: GET_OVERALL_ANALYTICS_FAIL
         })
 
         dispatch(onError(message,"analytics"));
@@ -112,7 +319,8 @@ export const getCurrentMonthOverallAnalytics = () => (dispatch) => {
     const date = new Date();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-    return dispatch(getOverallAnalyticsDaily(month, year));
+    const granularity = "month";
+    return dispatch(getOverallAnalyticsDaily(month, year, granularity));
 }
 
 export const getTransactionUserAnalytics = (month, year, granularity) => (dispatch) => {

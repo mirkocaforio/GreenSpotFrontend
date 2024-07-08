@@ -1,17 +1,19 @@
 import {
     GET_ANALYTICS_FAIL,
-    GET_ANALYTICS_SUCCESS,
+    GET_ANALYTICS_SUCCESS, GET_MEMBER_ANALYTICS_FAIL, GET_MEMBER_ANALYTICS_SUCCESS, GET_OVERALL_ANALYTICS_FAIL,
     GET_OVERALL_ANALYTICS_SUCCESS, GET_PAYMENT_ADMIN_ANALYTICS_FAIL,
     GET_PAYMENT_ADMIN_ANALYTICS_SUCCESS, GET_PAYMENT_USER_ANALYTICS_FAIL,
     GET_PAYMENT_USER_ANALYTICS_SUCCESS, GET_TRANSACTION_MEMBER_ANALYTICS_FAIL,
     GET_TRANSACTION_MEMBER_ANALYTICS_SUCCESS, GET_TRANSACTION_USER_ANALYTICS_FAIL,
-    GET_TRANSACTION_USER_ANALYTICS_SUCCESS,
+    GET_TRANSACTION_USER_ANALYTICS_SUCCESS, GET_USER_ANALYTICS_FAIL, GET_USER_ANALYTICS_SUCCESS,
     LOGOUT
 } from "../actions/types";
 
 
 const initialState = {
+    userAnalytics: null,
     tasksAnalytics: null,
+    memberAnalytics: null,
     overallAnalytics: null,
     transactionUserAnalytics: null,
     transactionMemberAnalytics: null,
@@ -23,6 +25,16 @@ export default function (state = initialState, action) {
     const {type, payload} = action;
 
     switch (type) {
+        case GET_USER_ANALYTICS_SUCCESS:
+            return {
+                ...state,
+                userAnalytics: payload.userAnalytics,
+            };
+        case GET_USER_ANALYTICS_FAIL:
+            return {
+                ...state,
+                userAnalytics: state.userAnalytics ? state.userAnalytics : null
+            };
         case GET_ANALYTICS_SUCCESS:
             return {
                 ...state,
@@ -31,8 +43,17 @@ export default function (state = initialState, action) {
         case GET_ANALYTICS_FAIL:
             return {
                 ...state,
-                tasksAnalytics: state.tasksAnalytics ? state.tasksAnalytics : null,
-                overallAnalytics: state.overallAnalytics ? state.overallAnalytics : null
+                tasksAnalytics: state.tasksAnalytics ? state.tasksAnalytics : null
+            };
+            case GET_MEMBER_ANALYTICS_SUCCESS:
+            return {
+                ...state,
+                memberAnalytics: payload.memberAnalytics,
+            };
+        case GET_MEMBER_ANALYTICS_FAIL:
+            return {
+                ...state,
+                memberAnalytics: state.memberAnalytics ? state.memberAnalytics : null
             };
         case GET_OVERALL_ANALYTICS_SUCCESS:
             return {
@@ -41,6 +62,11 @@ export default function (state = initialState, action) {
                     ...state.overallAnalytics,
                     ...payload.overallAnalytics
                 },
+            };
+        case GET_OVERALL_ANALYTICS_FAIL:
+            return {
+                ...state,
+                overallAnalytics: state.overallAnalytics ? state.overallAnalytics : null
             };
         case GET_TRANSACTION_USER_ANALYTICS_SUCCESS:
             return {
@@ -85,7 +111,9 @@ export default function (state = initialState, action) {
         case LOGOUT:
             return {
                 ...state,
+                userAnalytics: null,
                 tasksAnalytics: null,
+                memberAnalytics: null,
                 overallAnalytics: null,
                 transactionUserAnalytics: null,
                 transactionMemberAnalytics: null,

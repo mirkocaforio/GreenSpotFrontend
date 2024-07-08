@@ -119,6 +119,114 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.apiV1AnalyticsMemberGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization'], ['body']);
+        
+        var apiV1AnalyticsMemberGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/analytics/member').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1AnalyticsMemberGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1AnalyticsMemberOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1AnalyticsMemberOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/analytics/member').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1AnalyticsMemberOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1AnalyticsMemberFilterGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'endDate', 'startDate'], ['body']);
+        
+        var apiV1AnalyticsMemberFilterGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/analytics/member/filter').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['endDate', 'startDate']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1AnalyticsMemberFilterGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1AnalyticsMemberFilterOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1AnalyticsMemberFilterOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/analytics/member/filter').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1AnalyticsMemberFilterOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1AnalyticsMemberListGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'year', 'month', 'granularity'], ['body']);
+        
+        var apiV1AnalyticsMemberListGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/analytics/member/list').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['year', 'month', 'granularity']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1AnalyticsMemberListGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1AnalyticsMemberListOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1AnalyticsMemberListOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/analytics/member/list').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1AnalyticsMemberListOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.apiV1AnalyticsOverallGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -194,13 +302,13 @@ apigClientFactory.newClient = function (config) {
     apigClient.apiV1AnalyticsOverallFilterDailyGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['year', 'month', 'Authorization'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['year', 'month', 'granularity', 'Authorization'], ['body']);
         
         var apiV1AnalyticsOverallFilterDailyGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/api/v1/analytics/overall/filter/daily').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['year', 'month', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['year', 'month', 'granularity', ]),
             body: body
         };
         
@@ -296,6 +404,42 @@ apigClientFactory.newClient = function (config) {
         
         
         return apiGatewayClient.makeRequest(apiV1AnalyticsUserFilterOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1AnalyticsUserListGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization', 'year', 'month', 'granularity'], ['body']);
+        
+        var apiV1AnalyticsUserListGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/analytics/user/list').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['year', 'month', 'granularity']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1AnalyticsUserListGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.apiV1AnalyticsUserListOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var apiV1AnalyticsUserListOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/api/v1/analytics/user/list').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(apiV1AnalyticsUserListOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
     
