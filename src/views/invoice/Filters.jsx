@@ -4,19 +4,19 @@ export const invoiceFilters = {
     invoiceStatus: {
         paid: {
             status: false,
-            value: "Paid",
+            value: "PAID",
             show: true,
             color: 'success'
         },
         pending: {
             status: false,
-            value: "Pending",
+            value: "PENDING",
             show: true,
             color: 'warning'
         },
         overdue: {
             status: false,
-            value: "Overdue",
+            value: "OVERDUE",
             show: true,
             color: 'error'
         },
