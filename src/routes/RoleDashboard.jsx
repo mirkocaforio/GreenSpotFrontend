@@ -22,7 +22,9 @@ export const RoleDashboard = () => {
         case ROLE_ADMIN:
             return <FetchData type={"overallAnalytics"}>
                 <FetchData type={"overallCurrentMonth"}>
-                    <AdminDashboard/>
+                    <FetchData type={"paymentAdminAnalytics"}>
+                        <AdminDashboard/>
+                    </FetchData>
                 </FetchData>
             </FetchData>;
         case ROLE_UTENTE:

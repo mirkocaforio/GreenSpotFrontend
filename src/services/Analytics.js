@@ -163,7 +163,7 @@ export const getOverallAnalyticsByDate = (startDate, endDate) => {
 
 }
 
-export const getOverallAnalyticsDaily = (month, year, granularity) => {
+export const getOverallAnalyticsList = (month, year, granularity) => {
 
     let params = AuthHeader();
     params = {
@@ -279,7 +279,7 @@ export default {
     getMemberListAnalytics,
     getOverallAnalytics,
     getOverallAnalyticsByDate,
-    getOverallAnalyticsDaily,
+    getOverallAnalyticsDaily: getOverallAnalyticsList,
     getTransactionUserAnalytics,
     getTransactionMemberAnalytics,
     getPaymentUserAnalytics,

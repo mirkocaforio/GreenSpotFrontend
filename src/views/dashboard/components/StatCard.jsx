@@ -27,28 +27,28 @@ const StatCard = ({ icon: Icon, title, value }) => {
     return (
         isLoading ? (<SkeletonStatCard/>):
             (<Grid container={true} alignItems={"center"} justifyContent="center" sx={{ p: 3 }}>
-            <Grid item xs={6}>
-                <Grid container={true} justifyContent="flex-start" >
-                    <Grid item>
-                        <Icon style={{ width: 32, height: 32, color: theme.palette.secondary.dark }} />
+                <Grid item xs={6}>
+                    <Grid container={true} justifyContent="flex-start" >
+                        <Grid item>
+                            <Icon style={{ width: 32, height: 32, color: theme.palette.secondary.dark }} />
+                        </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
-            <Grid item xs={6}>
-                <Grid container={true} justifyContent="center" alignItems="center">
-                    <Grid item>
-                        <Grid container={true} direction="column" justifyContent="center" alignItems={"center"} >
-                            <Grid item xs={12}>
-                                <Typography variant="h3">{value}</Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Typography style={{textAlign: "center"}} variant="subtitle2">{title}</Typography>
+                <Grid item xs={6}>
+                    <Grid container={true} justifyContent="center" alignItems="center">
+                        <Grid item>
+                            <Grid container={true} direction="column" justifyContent="center" alignItems={"center"} >
+                                <Grid item xs={12}>
+                                    <Typography variant="h3">{value}</Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Typography style={{textAlign: "center"}} variant="subtitle2">{title}</Typography>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
-        </Grid>)
+            </Grid>)
     );
 };
 

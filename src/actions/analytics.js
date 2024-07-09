@@ -295,14 +295,14 @@ export const getOverallFilterAnalytics = (startDate, endDate) => (dispatch) => {
 
 }
 
-export const getOverallAnalyticsDaily = (month, year, granularity) => (dispatch) => {
+export const getOverallAnalyticsList = (month, year, granularity) => (dispatch) => {
     return Analytics.getOverallAnalyticsDaily(month, year, granularity).then((data) => {
 
         dispatch({
             type: GET_OVERALL_ANALYTICS_SUCCESS,
             payload: {
                 overallAnalytics: {
-                    daily: {
+                    [granularity]: {
                         month: month,
                         year: year,
                         data: data
@@ -334,8 +334,8 @@ export const getCurrentMonthOverallAnalytics = () => (dispatch) => {
     const date = new Date();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-    const granularity = "month";
-    return dispatch(getOverallAnalyticsDaily(month, year, granularity));
+    const granularity = "day";
+    return dispatch(getOverallAnalyticsList(month, year, granularity));
 }
 
 export const getTransactionUserAnalytics = (month, year, granularity) => (dispatch) => {
@@ -435,7 +435,7 @@ export const getPaymentUserAnalytics = (month, year, granularity) => (dispatch) 
 
 export const getPaymentAdminAnalytics = (month, year, granularity) => (dispatch) => {
     return Analytics.getPaymentAdminAnalytics(month, year, granularity).then((data) => {
-
+        console.log(data)
         dispatch({
             type: GET_PAYMENT_ADMIN_ANALYTICS_SUCCESS,
             payload: {
@@ -460,4 +460,12 @@ export const getPaymentAdminAnalytics = (month, year, granularity) => (dispatch)
         dispatch(onError(message,"analytics"));
         return Promise.reject();
     });
+}
+
+export const initPaymentAdminAnalytics = () => (dispatch) => {
+    const date = new Date();
+    const month = date.getMonth() - 1;
+    const year = date.getFullYear();
+    const granularity = "month";
+    return dispatch(getPaymentAdminAnalytics(month, year, granularity));
 }

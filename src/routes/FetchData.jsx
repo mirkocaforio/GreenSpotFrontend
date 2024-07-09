@@ -7,7 +7,7 @@ import {getTasks} from "../actions/task";
 import {
     getMemberAnalytics,
     getMemberFilterAnalytics,
-    getOverallFilterAnalytics, getPaymentAdminAnalytics,
+    getOverallFilterAnalytics, initPaymentAdminAnalytics,
     getPaymentUserAnalytics,
     getTasksAnalytics,
     getTransactionUserAnalytics,
@@ -113,7 +113,7 @@ const FetchData = ({children, type}) => {
             fetchData = getPaymentUserAnalytics;
             break;
         case "paymentAdminAnalytics":
-            fetchData = getPaymentAdminAnalytics;
+            fetchData = initPaymentAdminAnalytics;
             break;
         default:
             fetchData = getProfileData;

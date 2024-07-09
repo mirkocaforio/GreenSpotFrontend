@@ -16,16 +16,18 @@ import MainCard from 'ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 
 // chart data
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {roundValue} from "../../../utils/math";
 import SmallInfoCard from "./SmallInfoCard";
 import {AccessTimeTwoTone, OfflineBoltTwoTone} from "@mui/icons-material";
+import {getOverallAnalyticsList} from "../../../actions/analytics";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
-export const convertToApexChartData = (data, mapping) => {
-    const categories = data.map(item => `${item.year}-${item.month}-${item.day}`);
+export const convertToApexChartData = (data, mapping, categoryMapper) => {
+    const categories = data.map(item => categoryMapper(item));
     const series = mapping.map(field => ({
         name: field.displayName,
-        data: data.map(item => roundValue(item[field?.fieldName],2))
+        data: data.map(item => roundValue(item[field?.fieldName], 2))
     }));
 
     // Calculate total sums for fields with Total: true
@@ -33,7 +35,7 @@ export const convertToApexChartData = (data, mapping) => {
         if (field?.total) {
             acc[field.fieldName] = {
                 title: "Total " + field.displayName,
-                value: roundValue(data.reduce((sum, item) => sum + item[field.fieldName], 0),2),
+                value: roundValue(data.reduce((sum, item) => sum + item[field.fieldName], 0), 2),
             }
         }
         return acc;
@@ -44,11 +46,11 @@ export const convertToApexChartData = (data, mapping) => {
 
 const status = [
     {
-        value: 'daily',
+        value: 'day',
         label: 'This Month'
     },
     {
-        value: 'year',
+        value: 'month',
         label: 'This Year'
     }
 ];
@@ -109,9 +111,10 @@ const initSettings = {
 // ==============================|| DASHBOARD DEFAULT - TOTAL GROWTH BAR CHART ||============================== //
 
 const TotalStatBarChart = () => {
-    const [value, setValue] = useState('daily');
+    const [value, setValue] = useState('day');
 
     const [isLoading, setIsLoading] = useState(true);
+    const dispatch = useDispatch();
 
     const { overallAnalytics } = useSelector(state => state.analytics);
     const [chartSettings, setChartSettings] = useState(initSettings);
@@ -124,11 +127,12 @@ const TotalStatBarChart = () => {
     const { primary } = theme.palette.text;
     const divider = theme.palette.divider;
     const grey500 = theme.palette.grey[500];
+    const breakMd = useMediaQuery(theme.breakpoints.down('md'));
 
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const fieldMapping = [
-        { displayName: 'Energy Consumed', fieldName: 'energyConsumed',
+        { displayName: 'Energy Consumed (kW/h)', fieldName: 'energyConsumed',
             total: true,
             icon: OfflineBoltTwoTone,
             iconSx: {
@@ -142,7 +146,7 @@ const TotalStatBarChart = () => {
         { displayName: 'Active User Count', fieldName: 'activeUserCount',initialVisibility: true },
         { displayName: 'Tasks Submitted', fieldName: 'tasksSubmitted',initialVisibility: true },
         { displayName: 'Tasks Completed', fieldName: 'tasksCompleted',initialVisibility: true },
-        { displayName: 'Work Minutes', fieldName: 'workMinutes',
+        { displayName: 'Work Minutes (min)', fieldName: 'workMinutes',
             total: true,
             icon: AccessTimeTwoTone,
             iconSx: {
@@ -160,7 +164,8 @@ const TotalStatBarChart = () => {
 
         if(overallAnalytics && overallAnalytics[value]){
             setIsLoading(false);
-            chartData = convertToApexChartData(overallAnalytics[value].data, fieldMapping);
+            const categoryMapper = item => item.day !== 0 ? `${item.year}-${item.month}-${item.day}` : `${item.year}-${item.month}`;
+            chartData = convertToApexChartData(overallAnalytics[value].data, fieldMapping, categoryMapper);
             setChartSettings(chartSettings => ({
                 ...chartSettings,
                 options: {
@@ -183,7 +188,7 @@ const TotalStatBarChart = () => {
             }));
             setTotals(chartData.totals);
             ApexCharts.exec(`rec-stats-barChart`, 'updateOptions', chartSettings);
-            setInit(false);
+            //setInit(false);
         }else {
             setIsLoading(true);
         }
@@ -202,15 +207,28 @@ const TotalStatBarChart = () => {
         }
     }, [fieldMapping, init, chartRef]);
 
+    // ############################## - Handle change event - ##############################
+    const handleValueChange = (event) => {
+        setValue(event.target.value);
+    };
+
+    useEffect(() => {
+        if( overallAnalytics && !(value in overallAnalytics)){
+            const date = new Date();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            dispatch(getOverallAnalyticsList(month, year, value));
+        }
+    },[value]);
 
     return (
         <>
                 <MainCard>
                     <Grid container spacing={gridSpacing}>
                         <Grid item xs={12}>
-                            <Grid container alignItems="center" justifyContent="space-between">
+                            <Grid container alignItems="center" justifyContent="space-between" spacing={2}>
                                 <Grid item>
-                                    <Grid container justifyContent="flex-start" direction="row" spacing={2}>
+                                    <Grid container justifyContent="flex-start" direction={breakMd ? "column" : "row"} spacing={2}>
                                         {Object.keys(totals).map((key) => {
                                             const field = fieldMapping.find(field => field.fieldName === key);
 
@@ -235,13 +253,17 @@ const TotalStatBarChart = () => {
                                     </Grid>
                                 </Grid>
                                 <Grid item>
-                                    <TextField id="standard-select-currency" select value={value} onChange={(e) => setValue(e.target.value)}>
-                                        {status.map((option) => (
-                                            <MenuItem key={option.value} value={option.value}>
-                                                {option.label}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
+                                    <Grid container justifyContent="flex-end" alignItems="center">
+                                        <Grid item>
+                                            <TextField id="standard-select-currency" select value={value} onChange={handleValueChange}>
+                                                {status.map((option) => (
+                                                    <MenuItem key={option.value} value={option.value}>
+                                                        {option.label}
+                                                    </MenuItem>
+                                                ))}
+                                            </TextField>
+                                        </Grid>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -262,7 +284,7 @@ const TotalStatBarChart = () => {
                         >
                             <div className={theme.typography.chartContent}>
                                 <div className={theme.typography.chartWrapper} >
-                                    <Chart ref={chartRef} options={chartSettings.options} series={chartSettings.series}  type={"bar"} height={480} />
+                                    <Chart ref={chartRef} {...chartSettings}  type={"bar"} height={480} />
                                 </div>
                             </div>
                         </Grid>

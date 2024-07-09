@@ -32,7 +32,7 @@ const SmallInfoCard = ({ isLoading, icon: Icon,iconSx, customSx, textSx, title, 
                 <Grid container alignItems="center" justifyContent={"center"}
                       onMouseEnter={() => setIsHovered(true)}
                       onMouseLeave={() => setIsHovered(false)}>
-                    <Grid item container justifyContent="flex-start" xs={Icon ? 6 : 12}>
+                    <Grid item container justifyContent="flex-start" xs={Icon ? 8 : 12}>
                         <Grid item>
                             <Box sx={{ p: 2.5 }}>
                                 <Grid container direction="column" spacing={1}>
@@ -66,9 +66,9 @@ const SmallInfoCard = ({ isLoading, icon: Icon,iconSx, customSx, textSx, title, 
                         </Grid>
                     </Grid>
                     {Icon && (
-                    <Grid item container justifyContent="flex-end" alignContent={"center"} xs={6}>
+                    <Grid item container justifyContent="flex-end" alignContent={"center"} xs={4}>
                         <Grid item>
-                            <Grid containe justifyContent={"center"} alignItems={"center"} sx={{
+                            <Grid container justifyContent={"center"} alignItems={"center"} sx={{
                                 transform: isHovered ? 'scale(1.1)' : 'scale(1)',
                                 transition: 'transform 0.3s',}}>
                                 <Grid item>

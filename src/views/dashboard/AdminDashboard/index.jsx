@@ -9,6 +9,8 @@ import {useSelector} from "react-redux";
 import {roundValue} from "../../../utils/math";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MainCard from "../../../ui-component/cards/MainCard";
+import BajajAreaChartCard from "../BajajAreaChartCard";
+import PopularCard from "../PopularCard";
 
 
 export const AdminDashboard = () => {
@@ -82,11 +84,7 @@ export const AdminDashboard = () => {
                         <StatsGrid data={overallAnalytics?.all} />
                     </Grid>
                     <Grid item xs={12}>
-                        <MainCard>
-                            TODO
-                            TODO
-                            TODO
-                        </MainCard>
+                        <PopularCard/>
                     </Grid>
                 </Grid>
             </Grid>
