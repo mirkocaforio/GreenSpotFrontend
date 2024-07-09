@@ -1,19 +1,31 @@
 import {
     GET_ANALYTICS_FAIL,
-    GET_ANALYTICS_SUCCESS, GET_MEMBER_ANALYTICS_FAIL, GET_MEMBER_ANALYTICS_SUCCESS, GET_OVERALL_ANALYTICS_FAIL,
-    GET_OVERALL_ANALYTICS_SUCCESS, GET_PAYMENT_ADMIN_ANALYTICS_FAIL,
-    GET_PAYMENT_ADMIN_ANALYTICS_SUCCESS, GET_PAYMENT_USER_ANALYTICS_FAIL,
-    GET_PAYMENT_USER_ANALYTICS_SUCCESS, GET_TRANSACTION_MEMBER_ANALYTICS_FAIL,
-    GET_TRANSACTION_MEMBER_ANALYTICS_SUCCESS, GET_TRANSACTION_USER_ANALYTICS_FAIL,
-    GET_TRANSACTION_USER_ANALYTICS_SUCCESS, GET_USER_ANALYTICS_FAIL, GET_USER_ANALYTICS_SUCCESS,
+    GET_ANALYTICS_SUCCESS,
+    GET_MEMBER_ANALYTICS_FAIL,
+    GET_MEMBER_ANALYTICS_SUCCESS, GET_MEMBER_LIST_ANALYTICS_FAIL, GET_MEMBER_LIST_ANALYTICS_SUCCESS,
+    GET_OVERALL_ANALYTICS_FAIL,
+    GET_OVERALL_ANALYTICS_SUCCESS,
+    GET_PAYMENT_ADMIN_ANALYTICS_FAIL,
+    GET_PAYMENT_ADMIN_ANALYTICS_SUCCESS,
+    GET_PAYMENT_USER_ANALYTICS_FAIL,
+    GET_PAYMENT_USER_ANALYTICS_SUCCESS,
+    GET_TRANSACTION_MEMBER_ANALYTICS_FAIL,
+    GET_TRANSACTION_MEMBER_ANALYTICS_SUCCESS,
+    GET_TRANSACTION_USER_ANALYTICS_FAIL,
+    GET_TRANSACTION_USER_ANALYTICS_SUCCESS,
+    GET_USER_ANALYTICS_FAIL,
+    GET_USER_ANALYTICS_SUCCESS, GET_USER_LIST_ANALYTICS_FAIL,
+    GET_USER_LIST_ANALYTICS_SUCCESS,
     LOGOUT
 } from "../actions/types";
 
 
 const initialState = {
     userAnalytics: null,
+    userListAnalytics: null,
     tasksAnalytics: null,
     memberAnalytics: null,
+    memberListAnalytics: null,
     overallAnalytics: null,
     transactionUserAnalytics: null,
     transactionMemberAnalytics: null,
@@ -35,6 +47,16 @@ export default function (state = initialState, action) {
                 ...state,
                 userAnalytics: state.userAnalytics ? state.userAnalytics : null
             };
+        case GET_USER_LIST_ANALYTICS_SUCCESS:
+            return {
+                ...state,
+                userListAnalytics: payload.userListAnalytics,
+            };
+        case GET_USER_LIST_ANALYTICS_FAIL:
+            return {
+                ...state,
+                userListAnalytics: state.userListAnalytics ? state.userListAnalytics : null
+            };
         case GET_ANALYTICS_SUCCESS:
             return {
                 ...state,
@@ -45,7 +67,7 @@ export default function (state = initialState, action) {
                 ...state,
                 tasksAnalytics: state.tasksAnalytics ? state.tasksAnalytics : null
             };
-            case GET_MEMBER_ANALYTICS_SUCCESS:
+        case GET_MEMBER_ANALYTICS_SUCCESS:
             return {
                 ...state,
                 memberAnalytics: payload.memberAnalytics,
@@ -54,6 +76,16 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 memberAnalytics: state.memberAnalytics ? state.memberAnalytics : null
+            };
+        case GET_MEMBER_LIST_ANALYTICS_SUCCESS:
+            return {
+                ...state,
+                memberListAnalytics: payload.memberListAnalytics,
+            };
+        case GET_MEMBER_LIST_ANALYTICS_FAIL:
+            return {
+                ...state,
+                memberListAnalytics: state.memberListAnalytics ? state.memberListAnalytics : null
             };
         case GET_OVERALL_ANALYTICS_SUCCESS:
             return {
@@ -112,8 +144,10 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 userAnalytics: null,
+                userListAnalytics: null,
                 tasksAnalytics: null,
                 memberAnalytics: null,
+                memberListAnalytics: null,
                 overallAnalytics: null,
                 transactionUserAnalytics: null,
                 transactionMemberAnalytics: null,

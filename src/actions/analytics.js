@@ -1,15 +1,22 @@
 import {onError} from "./expiration";
 import {
     GET_ANALYTICS_FAIL,
-    GET_ANALYTICS_SUCCESS, GET_MEMBER_ANALYTICS_FAIL, GET_MEMBER_ANALYTICS_SUCCESS, GET_OVERALL_ANALYTICS_FAIL,
-    GET_OVERALL_ANALYTICS_SUCCESS, GET_PAYMENT_ADMIN_ANALYTICS_FAIL,
+    GET_ANALYTICS_SUCCESS,
+    GET_MEMBER_ANALYTICS_FAIL,
+    GET_MEMBER_ANALYTICS_SUCCESS, GET_MEMBER_LIST_ANALYTICS_FAIL, GET_MEMBER_LIST_ANALYTICS_SUCCESS,
+    GET_OVERALL_ANALYTICS_FAIL,
+    GET_OVERALL_ANALYTICS_SUCCESS,
+    GET_PAYMENT_ADMIN_ANALYTICS_FAIL,
     GET_PAYMENT_ADMIN_ANALYTICS_SUCCESS,
     GET_PAYMENT_USER_ANALYTICS_FAIL,
     GET_PAYMENT_USER_ANALYTICS_SUCCESS,
     GET_TRANSACTION_MEMBER_ANALYTICS_FAIL,
     GET_TRANSACTION_MEMBER_ANALYTICS_SUCCESS,
     GET_TRANSACTION_USER_ANALYTICS_FAIL,
-    GET_TRANSACTION_USER_ANALYTICS_SUCCESS, GET_USER_ANALYTICS_FAIL, GET_USER_ANALYTICS_SUCCESS
+    GET_TRANSACTION_USER_ANALYTICS_SUCCESS,
+    GET_USER_ANALYTICS_FAIL,
+    GET_USER_ANALYTICS_SUCCESS, GET_USER_LIST_ANALYTICS_FAIL,
+    GET_USER_LIST_ANALYTICS_SUCCESS
 } from "./types";
 import Analytics from "../services/Analytics";
 
@@ -75,9 +82,9 @@ export const getUserListAnalytics = (month, year, granularity) => (dispatch) => 
     return Analytics.getUserListAnalytics(month, year, granularity).then((data) => {
 
         dispatch({
-            type: GET_USER_ANALYTICS_SUCCESS,
+            type: GET_USER_LIST_ANALYTICS_SUCCESS,
             payload: {
-                userAnalytics: data
+                userListAnalytics: data
             }
         });
 
@@ -92,7 +99,7 @@ export const getUserListAnalytics = (month, year, granularity) => (dispatch) => 
             error.toString();
 
         dispatch({
-            type: GET_USER_ANALYTICS_FAIL
+            type: GET_USER_LIST_ANALYTICS_FAIL
         })
 
         dispatch(onError(message,"analytics"));
@@ -191,9 +198,9 @@ export const getMemberListAnalytics = (month, year, granularity) => (dispatch) =
     return Analytics.getMemberListAnalytics(month, year, granularity).then((data) => {
 
         dispatch({
-            type: GET_MEMBER_ANALYTICS_SUCCESS,
+            type: GET_MEMBER_LIST_ANALYTICS_SUCCESS,
             payload: {
-                memberAnalytics: data
+                memberListAnalytics: data
             }
         });
 
@@ -208,13 +215,21 @@ export const getMemberListAnalytics = (month, year, granularity) => (dispatch) =
             error.toString();
 
         dispatch({
-            type: GET_MEMBER_ANALYTICS_FAIL
+            type: GET_MEMBER_LIST_ANALYTICS_FAIL
         })
 
         dispatch(onError(message,"analytics"));
         return Promise.reject();
     });
 
+}
+
+export const initMemberListAnalytics = () => (dispatch) => {
+    const date = new Date();
+    const month = date.getMonth() - 1;
+    const year = date.getFullYear();
+    const granularity = "month";
+    return dispatch(getMemberListAnalytics(month, year, granularity));
 }
 
 export const getOverallAnalytics = () => (dispatch) => {
@@ -379,6 +394,14 @@ export const getTransactionMemberAnalytics = (month, year, granularity) => (disp
         dispatch(onError(message,"analytics"));
         return Promise.reject();
     });
+}
+
+export const initTransactionMemberAnalytics = () => (dispatch) => {
+    const date = new Date();
+    const month = date.getMonth() - 1;
+    const year = date.getFullYear();
+    const granularity = "month";
+    return dispatch(getTransactionMemberAnalytics(month, year, granularity));
 }
 
 export const getPaymentUserAnalytics = (month, year, granularity) => (dispatch) => {

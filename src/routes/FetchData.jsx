@@ -4,7 +4,17 @@ import {useEffect} from "react";
 import {getWallet} from "../actions/wallet";
 import {getProfileTransactions} from "../actions/transaction";
 import {getTasks} from "../actions/task";
-import {getTasksAnalytics} from "../actions/analytics";
+import {
+    getMemberAnalytics,
+    getMemberFilterAnalytics,
+    getOverallFilterAnalytics, getPaymentAdminAnalytics,
+    getPaymentUserAnalytics,
+    getTasksAnalytics,
+    getTransactionUserAnalytics,
+    getUserAnalytics,
+    getUserFilterAnalytics,
+    getUserListAnalytics, initMemberListAnalytics, initTransactionMemberAnalytics
+} from "../actions/analytics";
 import {getRewards, getRedeems} from "../actions/reward";
 import {getCpuNames, getGpuNames} from "../actions/score";
 import {getResourceByEmail} from "../actions/resource";
@@ -63,11 +73,47 @@ const FetchData = ({children, type}) => {
         case "invoice":
             fetchData = getInvoicesByUserEmail;
             break;
+        case "userAnalytics":
+            fetchData = getUserAnalytics;
+            break;
+        case "userFilterAnalytics":
+            fetchData = getUserFilterAnalytics;
+            break;
+        case "userListAnalytics":
+            fetchData = getUserListAnalytics;
+            break;
+        case "userTaskAnalytics":
+            fetchData = getTasksAnalytics;
+            break;
+        case "memberAnalytics":
+            fetchData = getMemberAnalytics;
+            break;
+        case "memberFilterAnalytics":
+            fetchData = getMemberFilterAnalytics;
+            break;
+        case "memberListAnalytics":
+            fetchData = initMemberListAnalytics;
+            break;
         case "overallAnalytics":
             fetchData = getOverallAnalytics;
             break;
+        case "overallFilterAnalytics":
+            fetchData = getOverallFilterAnalytics;
+            break;
         case "overallCurrentMonth":
             fetchData = getCurrentMonthOverallAnalytics;
+            break;
+        case "transactionUserAnalytics":
+            fetchData = getTransactionUserAnalytics;
+            break;
+        case "transactionMemberAnalytics":
+            fetchData = initTransactionMemberAnalytics;
+            break;
+        case "paymentUserAnalytics":
+            fetchData = getPaymentUserAnalytics;
+            break;
+        case "paymentAdminAnalytics":
+            fetchData = getPaymentAdminAnalytics;
             break;
         default:
             fetchData = getProfileData;
