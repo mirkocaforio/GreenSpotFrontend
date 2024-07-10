@@ -16,8 +16,6 @@ const Wallet = () => {
 
     useEffect(() => {
         if (wallet && (transactionUserAnalytics || transactionMemberAnalytics)) {
-            console.log('transactionUserAnalytics', transactionUserAnalytics);
-            console.log('transactionMemberAnalytics', transactionMemberAnalytics);
             setLoading(false);
         } else {
             setLoading(true);
@@ -30,7 +28,7 @@ const Wallet = () => {
             return (
                 <TimeEarningCard
                     isLoading={isLoading}
-                    title="Total Earnings"
+                    title="Total Payments"
                     transactionAnalytics={transactionUserAnalytics}
                     role="user"
                 />

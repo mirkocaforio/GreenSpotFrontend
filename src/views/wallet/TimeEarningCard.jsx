@@ -56,7 +56,7 @@ export const initialSettings = {
             },
             y: {
                 title: {
-                    formatter: () => 'Earnings'
+                    formatter: () => 'Total'
                 }
             },
             marker: {
@@ -259,7 +259,6 @@ const TimeEarningCard = ({isLoading, title, transactionAnalytics, role}) => {
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={8}>
-                                        {/*getChartData(timeValue)*/}
                                         <Chart options={chartSettings.options} series={chartSettings.series} type={chartSettings.type} height={chartSettings.height} />
                                     </Grid>
                                 </Grid>

@@ -7,25 +7,27 @@ import MainCard from "../../../ui-component/cards/MainCard";
 import CustomCard from "../components/CustomCard";
 import {roundValue} from "../../../utils/math";
 import {AccessTimeTwoTone, OfflineBoltTwoTone} from "@mui/icons-material";
+import { IconCpu2 } from '@tabler/icons-react';
+import MemberAnalyticsAreaChart from "../components/MemberAnalyticsAreaChart";
 
 export const MemberDashboard = () => {
     const theme = useTheme();
 
     const {memberAnalytics} = useSelector(state => state.analytics);
-    const {memberListAnalytics} = useSelector(state => state.analytics);
-    const {transactionMemberAnalytics} = useSelector(state => state.analytics);
+    //const {memberListAnalytics} = useSelector(state => state.analytics);
+    //const {transactionMemberAnalytics} = useSelector(state => state.analytics);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        if (memberAnalytics && memberListAnalytics && transactionMemberAnalytics) {
-            console.log(memberAnalytics);
-            console.log(memberListAnalytics);
-            console.log(transactionMemberAnalytics);
+        if (memberAnalytics) {
+            //console.log(memberAnalytics);
+            //console.log(memberListAnalytics);
+            //console.log(transactionMemberAnalytics);
             setIsLoading(false);
         } else {
             setIsLoading(true);
         }
-    }, [memberAnalytics, memberListAnalytics, transactionMemberAnalytics]);
+    }, [memberAnalytics]);
 
     return (
         <>
@@ -69,15 +71,15 @@ export const MemberDashboard = () => {
                                     <Grid item xs={12} sm={12} md={4} lg={4}>
                                         <CustomCard
                                             customSx={{
-                                                bgcolor: 'secondary.dark',
+                                                bgcolor: 'success.dark',
                                             }}
                                             textSx={{
                                                 color: 'primary.light'
                                             }}
-                                            title={"Total Computing Power Sold"}
-                                            currentValue={roundValue(memberAnalytics?.computingPower,2)}
+                                            title={"Total Computing Power"}
+                                            currentValue={roundValue(memberAnalytics?.computingPower,2) + ""}
                                             previousValue={""}
-                                            icon={AccessTimeTwoTone}
+                                            icon={IconCpu2}
                                             iconSx={{
                                                 color: theme.palette.grey[300]
                                             }}
@@ -87,12 +89,12 @@ export const MemberDashboard = () => {
                                     <Grid item xs={12} sm={12} md={4} lg={4}>
                                         <CustomCard
                                             customSx={{
-                                                bgcolor: 'secondary.dark',
+                                                bgcolor: 'primary.dark',
                                             }}
                                             textSx={{
                                                 color: 'primary.light'
                                             }}
-                                            title={"Total Resources Work Time"}
+                                            title={"Total Resources Work"}
                                             currentValue={roundValue(memberAnalytics?.workMinutes,2) + " min"}
                                             previousValue={""}
                                             icon={AccessTimeTwoTone}
@@ -101,6 +103,9 @@ export const MemberDashboard = () => {
                                             }}
                                             isLoading={isLoading}
                                         />
+                                    </Grid>
+                                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                                        <MemberAnalyticsAreaChart/>
                                     </Grid>
                                 </Grid>
                             </Grid>
