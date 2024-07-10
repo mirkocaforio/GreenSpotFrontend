@@ -133,7 +133,10 @@ export default function (state = initialState, action) {
         case GET_PAYMENT_ADMIN_ANALYTICS_SUCCESS:
             return {
                 ...state,
-                paymentAdminAnalytics: payload.paymentAdminAnalytics,
+                paymentAdminAnalytics: {
+                    ...state.paymentAdminAnalytics,
+                    ...payload.paymentAdminAnalytics
+                }
             };
         case GET_PAYMENT_ADMIN_ANALYTICS_FAIL:
             return {

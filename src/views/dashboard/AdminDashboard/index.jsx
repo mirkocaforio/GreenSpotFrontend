@@ -8,9 +8,7 @@ import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {roundValue} from "../../../utils/math";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import MainCard from "../../../ui-component/cards/MainCard";
-import BajajAreaChartCard from "../BajajAreaChartCard";
-import PopularCard from "../PopularCard";
+import PopularCard from "../components/PopularCard";
 
 
 export const AdminDashboard = () => {

@@ -18,7 +18,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {visuallyHidden} from "@mui/utils";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
-import {EditTwoTone, LockOpenTwoTone, LockTwoTone, VisibilityTwoTone} from "@mui/icons-material";
+import {
+    DeleteOutline,
+    DeleteTwoTone,
+    EditTwoTone,
+    LockOpenTwoTone,
+    LockTwoTone,
+    VisibilityTwoTone
+} from "@mui/icons-material";
 import Tooltip from "@mui/material/Tooltip";
 import Chip from "@mui/material/Chip";
 import {dateBeauty} from "../../../utils/date-beauty";
@@ -28,7 +35,8 @@ import CardActions from "@mui/material/CardActions";
 import {useNavigate} from "react-router-dom";
 import RewardView from "./RewardView";
 import {NEW_REWARD} from "../../../config";
-import {disableReward, enableReward} from "../../../actions/reward";
+import {deleteReward, disableReward, enableReward} from "../../../actions/reward";
+import {AlertDialog} from "../../../ui-component/AlertDialog";
 
 const headCells = [
     { id: 'id', numeric: false, disablePadding: true, label: '#' },
@@ -89,6 +97,10 @@ const RewardList = () => {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('name');
     const [filter, setFilter] = useState('');
+
+    const [open, setOpen] = useState(false);
+    const [handleAction, setHandleAction] = useState(null);
+
     const dispatch = useDispatch();
 
     const handleRequestSort = (event, property) => {
@@ -142,6 +154,21 @@ const RewardList = () => {
         dispatch(enableReward(id));
     }
 
+    const handleClose = () => {
+        setOpen(false);
+    }
+
+    const handleOpen = (action, handleAction) => {
+        setHandleAction(handleAction);
+        setOpen(true);
+    }
+
+    const handleDeleteClick = (id) => {
+        //Show a confirmation dialog
+        dispatch(deleteReward(id));
+        handleClose();
+    }
+
     const getActions =  (product) => {
 
         let actions = [];
@@ -187,6 +214,17 @@ const RewardList = () => {
             )
         }
 
+        //Add delete action here
+        actions.push(
+            <Tooltip title={"Delete"} key={"delete_" + product?.id} disableInteractive>
+                <IconButton aria-label="delete" onClick={() => {
+                    handleOpen("Delete", () => () => handleDeleteClick(product?.id))
+                }}>
+                    <DeleteOutline color="error"/>
+                </IconButton>
+            </Tooltip>
+        )
+
 
        return actions;
     }
@@ -227,7 +265,7 @@ const RewardList = () => {
             </Grid>
         { isLoading ? (<SkeletonTransactionCard />)
             : filteredProducts.length !== 0
-                ? (
+                ? (<>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
                                 <TableHead>
@@ -304,6 +342,11 @@ const RewardList = () => {
                                 <RewardView onClose={handleDialogClose} id={selectedReward} open={dialogOpen}/>
                             }
                         </TableContainer>
+                        {open && (
+                            <AlertDialog open={open} title={"Delete reward"} message={"Are you sure to delete this article?"} handleClose={handleClose}
+                                         handleConfirm={handleAction}/>
+                        )}
+                    </>
                     )
 
                 : (

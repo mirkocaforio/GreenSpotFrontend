@@ -1,7 +1,7 @@
 import RewardService from "../services/RewardService";
 import {GET_REDEEMS_SUCCESS, GET_REWARDS_FAIL, GET_REWARDS_SUCCESS, LOAD_REWARD, SET_MESSAGE} from "./types";
 import {onError} from "./expiration";
-import {MSG_SUCCESS} from "../config";
+import {MSG_SUCCESS, MSG_WARNING} from "../config";
 
 
 export const getRewards = () => (dispatch) => {
@@ -166,6 +166,38 @@ export const disableReward = (reward) => (dispatch) => {
         return Promise.reject();
     });
 }
+
+
+//Delete reward
+export const deleteReward = (id) => (dispatch) => {
+    return RewardService.deleteReward(id).then((data) => {
+
+        dispatch({
+            type: SET_MESSAGE,
+            payload: {
+                message: "Reward deleted successfully.",
+                type: MSG_WARNING
+            }
+        });
+
+        dispatch(getRewards());
+
+        return Promise.resolve(data);
+    }, (error) => {
+        const message =
+            (error.data && error.data.message) ||
+            (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+        dispatch(onError(message,"rewards"));
+        return Promise.reject();
+    });
+
+}
+
 
 export const buyReward = (reward) => (dispatch) => {
     return RewardService.buyReward(reward).then((data) => {

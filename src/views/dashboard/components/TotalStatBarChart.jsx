@@ -17,32 +17,12 @@ import { gridSpacing } from 'store/constant';
 
 // chart data
 import {useDispatch, useSelector} from "react-redux";
-import {roundValue} from "../../../utils/math";
 import SmallInfoCard from "./SmallInfoCard";
 import {AccessTimeTwoTone, OfflineBoltTwoTone} from "@mui/icons-material";
 import {getOverallAnalyticsList} from "../../../actions/analytics";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import {convertToApexChartData} from "../../../utils/chart-utils";
 
-export const convertToApexChartData = (data, mapping, categoryMapper) => {
-    const categories = data.map(item => categoryMapper(item));
-    const series = mapping.map(field => ({
-        name: field.displayName,
-        data: data.map(item => roundValue(item[field?.fieldName], 2))
-    }));
-
-    // Calculate total sums for fields with Total: true
-    const totals = mapping.reduce((acc, field) => {
-        if (field?.total) {
-            acc[field.fieldName] = {
-                title: "Total " + field.displayName,
-                value: roundValue(data.reduce((sum, item) => sum + item[field.fieldName], 0), 2),
-            }
-        }
-        return acc;
-    }, {});
-
-    return { categories, series, totals };
-}
 
 const status = [
     {
@@ -165,7 +145,7 @@ const TotalStatBarChart = () => {
         if(overallAnalytics && overallAnalytics[value]){
             setIsLoading(false);
             const categoryMapper = item => item.day !== 0 ? `${item.year}-${item.month}-${item.day}` : `${item.year}-${item.month}`;
-            chartData = convertToApexChartData(overallAnalytics[value].data, fieldMapping, categoryMapper);
+            chartData = convertToApexChartData(overallAnalytics[value]?.data, fieldMapping, categoryMapper);
             setChartSettings(chartSettings => ({
                 ...chartSettings,
                 options: {
@@ -218,6 +198,7 @@ const TotalStatBarChart = () => {
             const month = date.getMonth() + 1;
             const year = date.getFullYear();
             dispatch(getOverallAnalyticsList(month, year, value));
+            setInit(false);
         }
     },[value]);
 

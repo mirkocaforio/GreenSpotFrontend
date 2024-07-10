@@ -5,7 +5,7 @@ const chartData = {
   height: 95,
   options: {
     chart: {
-      id: 'support-chart',
+      id: 'payment-chart',
       sparkline: {
         enabled: true
       }
@@ -26,7 +26,7 @@ const chartData = {
       },
       y: {
         title: {
-          formatter: () => 'Ticket '
+          formatter: () => 'Income '
         }
       },
       marker: {
@@ -36,7 +36,7 @@ const chartData = {
   },
   series: [
     {
-      data: [0, 15, 10, 50, 30, 40, 25]
+      data: []
     }
   ]
 };

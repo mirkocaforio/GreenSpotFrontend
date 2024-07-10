@@ -100,6 +100,25 @@ export const disableReward = (id) => {
         });
 }
 
+
+//Delete reward
+export const deleteReward = (id) => {
+    let params = AuthHeader();
+    params["id"] = id;
+
+    const body = {};
+    const additionalParams = {};
+
+    let apigClient = ApiClient();
+
+    return apigClient.apiV1RewardsDeleteIdDelete(params, body, additionalParams)
+        .then(function(result){
+            return Promise.resolve(result.data);
+        }).catch( function(result){
+            return Promise.reject(result);
+        });
+}
+
 export const buyReward = (data) => {
     let params = AuthHeader();
 
@@ -162,6 +181,7 @@ export default {
     updateReward,
     enableReward,
    disableReward,
+    deleteReward,
     buyReward,
     getRedeems,
     useRedeem,

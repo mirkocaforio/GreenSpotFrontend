@@ -1,7 +1,3 @@
-import dashboard from './dashboard';
-import pages from './pages';
-import utilities from './utilities';
-import other from './other';
 import wallet from "./wallet";
 import task from "./task";
 import resource from "./resource";
@@ -18,7 +14,7 @@ import settings from "./settings";
 const menuItems = {
   userItems: [analytics,task, wallet, billing ],
   memberItems: [analytics,resource, reward, wallet],
-  adminItems: [analytics, settings, profile, store, dashboard, pages, utilities, other]
+  adminItems: [analytics, settings, profile, store]
 };
 
 export default menuItems;

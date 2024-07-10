@@ -435,11 +435,17 @@ export const getPaymentUserAnalytics = (month, year, granularity) => (dispatch) 
 
 export const getPaymentAdminAnalytics = (month, year, granularity) => (dispatch) => {
     return Analytics.getPaymentAdminAnalytics(month, year, granularity).then((data) => {
-        console.log(data)
+
         dispatch({
             type: GET_PAYMENT_ADMIN_ANALYTICS_SUCCESS,
             payload: {
-                paymentAdminAnalytics: data
+                paymentAdminAnalytics: {
+                    [granularity]: {
+                        month: month,
+                        year: year,
+                        data: data
+                    }
+                }
             }
         });
 
