@@ -10,7 +10,6 @@ import {
     getOverallFilterAnalytics, initPaymentAdminAnalytics,
     getPaymentUserAnalytics,
     getTasksAnalytics,
-    getTransactionUserAnalytics,
     getUserAnalytics,
     getUserFilterAnalytics,
     getUserListAnalytics, initMemberListAnalytics, initTransactionMemberAnalytics
@@ -104,7 +103,7 @@ const FetchData = ({children, type}) => {
             fetchData = getCurrentMonthOverallAnalytics;
             break;
         case "transactionUserAnalytics":
-            fetchData = getTransactionUserAnalytics;
+            fetchData = initTransactionUserAnalytics;
             break;
         case "transactionMemberAnalytics":
             fetchData = initTransactionMemberAnalytics;

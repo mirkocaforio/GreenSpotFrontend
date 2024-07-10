@@ -9,13 +9,13 @@ import FetchData from "./FetchData";
 import {SnackbarProvider} from "notistack";
 import NetworkCheck from "./NetworkCheck";
 import RoleDashboard from "./RoleDashboard";
+import RoleWallet from "./RoleWallet";
 
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
 const ProfilePage = Loadable(lazy(() => import('views/profile')));
 const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
 const UtilsShadow = Loadable(lazy(() => import('views/utilities/Shadow')));
-const WalletPage = Loadable(lazy(() => import('views/wallet')));
 const TaskPage = Loadable(lazy(() => import('views/task/TaskCreatePage')));
 const TaskManagerPage = Loadable(lazy(() => import("views/task/TaskManagerPage")));
 const StorePage = Loadable(lazy(() => import("views/store")));
@@ -98,11 +98,7 @@ const MainRoutes = {
         {
             path: 'wallet',
             element: <RouteGuard allowedRoles={[ROLE_MEMBER, ROLE_UTENTE]}>
-                <FetchData type="wallet">
-                    <FetchData type="transactions">
-                        <WalletPage/>
-                    </FetchData>
-                </FetchData>
+                <RoleWallet/>
             </RouteGuard>
         },
         {

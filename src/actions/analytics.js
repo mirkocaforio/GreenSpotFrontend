@@ -367,6 +367,15 @@ export const getTransactionUserAnalytics = (month, year, granularity) => (dispat
     });
 }
 
+export const initTransactionUserAnalytics = () => (dispatch) => {
+    const date = new Date();
+    const month = date.getMonth() - 1;
+    const year = date.getFullYear();
+    const granularity = "month";
+    return dispatch(getTransactionUserAnalytics(month, year, granularity));
+
+}
+
 export const getTransactionMemberAnalytics = (month, year, granularity) => (dispatch) => {
     return Analytics.getTransactionMemberAnalytics(month, year, granularity).then((data) => {
 
