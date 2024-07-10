@@ -1,4 +1,3 @@
-import Typography from "@mui/material/Typography";
 import MainCard from "../../ui-component/cards/MainCard";
 import {gridSpacing} from "../../store/constant";
 import Grid from "@mui/material/Grid";
@@ -7,25 +6,48 @@ import {useEffect, useState} from "react";
 import TimeEarningCard from "./TimeEarningCard";
 import SubCard from "../../ui-component/cards/SubCard";
 import TransactionsCard from "./TransactionsCard";
-import {useDispatch, useSelector} from "react-redux";
-import {getWallet} from "../../actions/wallet";
+import {useSelector} from "react-redux";
 
 const Wallet = () => {
-
-    const [isLoading, setLoading] = useState(true);
     const {wallet} = useSelector(state => state.wallet);
+    const {transactionUserAnalytics} = useSelector(state => state.analytics);
+    const {transactionMemberAnalytics} = useSelector(state => state.analytics);
+    const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
-
-        if(wallet === null){
-            setLoading(true);
-        }else{
+        if (wallet && (transactionUserAnalytics || transactionMemberAnalytics)) {
+            console.log('transactionUserAnalytics', transactionUserAnalytics);
+            console.log('transactionMemberAnalytics', transactionMemberAnalytics);
             setLoading(false);
+        } else {
+            setLoading(true);
         }
 
-    }, [ wallet]);
+    }, [transactionMemberAnalytics, transactionUserAnalytics, wallet]);
 
-    return(
+    const getTimeEarningCard = () => {
+        if (transactionUserAnalytics) {
+            return (
+                <TimeEarningCard
+                    isLoading={isLoading}
+                    title="Total Earnings"
+                    transactionAnalytics={transactionUserAnalytics}
+                    role="user"
+                />
+            );
+        } else if (transactionMemberAnalytics) {
+            return (
+                <TimeEarningCard
+                    isLoading={isLoading}
+                    title="Total Earnings"
+                    transactionAnalytics={transactionMemberAnalytics}
+                    role="member"
+                />
+            );
+        }
+    }
+
+    return (
         <MainCard>
             <Grid container spacing={gridSpacing}>
                 <Grid item xs={12}>
@@ -34,7 +56,7 @@ const Wallet = () => {
                             <EarningCard isLoading={isLoading} title="Credits" value={wallet ? wallet.balance : 0}/>
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                           <TimeEarningCard isLoading={isLoading} title="Total Earnings"/>
+                            {getTimeEarningCard()}
                         </Grid>
                     </Grid>
                 </Grid>
