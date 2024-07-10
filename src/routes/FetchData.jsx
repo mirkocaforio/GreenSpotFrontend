@@ -12,7 +12,7 @@ import {
     getTasksAnalytics,
     getUserAnalytics,
     getUserFilterAnalytics,
-    getUserListAnalytics, initMemberListAnalytics, initTransactionMemberAnalytics
+    getUserListAnalytics, initMemberListAnalytics, initTransactionMemberAnalytics, initTransactionUserAnalytics
 } from "../actions/analytics";
 import {getRewards, getRedeems} from "../actions/reward";
 import {getCpuNames, getGpuNames} from "../actions/score";

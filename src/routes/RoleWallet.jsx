@@ -14,19 +14,16 @@ export const RoleWallet = () => {
     switch (role) {
         case ROLE_UTENTE:
             return <FetchData type="wallet">
-                <FetchData type="transactionUserAnalytics">
-                    <Wallet/>
-                </FetchData>
-            </FetchData>;
+                        <FetchData type="transactionUserAnalytics">
+                            <Wallet/>
+                        </FetchData>
+                    </FetchData>;
         case ROLE_MEMBER:
             return <FetchData type="wallet">
-
-                <FetchData type="transactionMemberAnalytics">
-                    <FetchData type="transactions">
-                        <Wallet/>
-                    </FetchData>
-                </FetchData>
-            </FetchData>;
+                        <FetchData type="transactionMemberAnalytics">
+                            <Wallet/>
+                        </FetchData>
+                    </FetchData>;
         default:
             return <Navigate to={"/"}/>; //Should be a landing page
     }
