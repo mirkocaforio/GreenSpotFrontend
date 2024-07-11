@@ -119,8 +119,8 @@ const TotalStatBarChart = () => {
             iconSx: {
                 color: theme.palette.warning.main
             },
-            textColor: theme.palette.warning.dark,
-            bgColor: 'warning.light',
+            textColor: theme.palette.warning.light,
+            bgColor: 'warning.dark',
             initialVisibility: true },
         { displayName: 'Computing Power Used',
             fieldName: 'computingPowerUsed',initialVisibility: false },

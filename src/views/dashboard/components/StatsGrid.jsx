@@ -1,5 +1,4 @@
 import React from 'react';
-import Box from '@mui/material/Box';
 import StatCard from './StatCard';
 import MainCard from "../../../ui-component/cards/MainCard";
 import {AssignmentTurnedInOutlined, PeopleAltOutlined, SupervisedUserCircleOutlined} from "@mui/icons-material";

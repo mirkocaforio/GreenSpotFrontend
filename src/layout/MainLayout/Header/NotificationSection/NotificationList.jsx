@@ -3,19 +3,13 @@ import PropTypes from 'prop-types';
 // material-ui
 import {useTheme} from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import ListItemText from '@mui/material/ListItemText';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Divider from '@mui/material/Divider';
 
 // project-import
 import Chip from 'ui-component/extended/Chip';
@@ -28,7 +22,6 @@ import DoneIcon from '@mui/icons-material/Done';
 import {format} from 'date-fns';
 import {readPopupNotification} from "../../../../actions/notification";
 import {useDispatch} from "react-redux";
-import {dateBeauty} from "../../../../utils/date-beauty";
 
 const ListItemWrapper = ({children}) => {
     return (
@@ -85,10 +78,10 @@ const NotificationList = ({notificationList, limit, dialogSize}) => {
 
     const chipSuccessSX = {
         ...chipSX,
-        color: theme.palette.success.dark,
-        backgroundColor: theme.palette.success.light,
+        color: theme.palette.secondary.light,
+        backgroundColor: theme.palette.secondary.main,
         '&:hover': {
-            backgroundColor: theme.palette.success.dark
+            backgroundColor: theme.palette.secondary.light
         },
     };
 
@@ -101,17 +94,44 @@ const NotificationList = ({notificationList, limit, dialogSize}) => {
             });
     }
 
+    const getAvatar = (type) => {
+        switch (type) {
+            case 'SUCCESS':
+            return (
+                <Avatar
+                    sx={{
+                        color: theme.palette.secondary.main,
+                        backgroundColor: theme.palette.secondary.light,
+                        border: 'none',
+                        borderColor: theme.palette.secondary.main
+                    }}
+                >
+                    <CheckCircleOutlineIcon stroke={1.5} size="1.3rem"/>
+                </Avatar>
+            );
+        case 'INFO':
+            return (
+                <Avatar
+                    sx={{
+                        color: theme.palette.primary.dark,
+                        backgroundColor: theme.palette.primary.light,
+                        border: 'none',
+                        borderColor: theme.palette.primary.main
+                    }}
+                >
+                    <InfoIcon stroke={1.5} size="1.3rem"/>
+                </Avatar>
+            );
+        }
+    }
+
     return (
         <List
             sx={{
                 width: '100%',
                 maxWidth: dialogSize ? ('100%') : ('330px'),
-                //maxWidth: {(xs: '100%', sm: '330px', md: '500px')},
                 py: 0,
                 borderRadius: '10px',
-                /*[theme.breakpoints.down('md')]: {
-                    maxWidth: 300
-                },*/
                 '& .MuiListItemSecondaryAction-root': {
                     top: 22
                 },
@@ -128,32 +148,7 @@ const NotificationList = ({notificationList, limit, dialogSize}) => {
                     <ListItemWrapper key={index}>
                         <ListItem alignItems="center">
                             <ListItemAvatar>
-                                {notification.type === 'SUCCESS' ? (
-                                    <Avatar
-                                        sx={{
-                                            color: theme.palette.success.dark,
-                                            backgroundColor: theme.palette.success.light,
-                                            border: 'none',
-                                            borderColor: theme.palette.success.main
-                                        }}
-                                    >
-                                        <CheckCircleOutlineIcon stroke={1.5} size="1.3rem"/>
-                                    </Avatar>
-                                ) : null
-                                }
-                                {notification.type === 'INFO' ? (
-                                    <Avatar
-                                        sx={{
-                                            color: theme.palette.primary.dark,
-                                            backgroundColor: theme.palette.primary.light,
-                                            border: 'none',
-                                            borderColor: theme.palette.primary.main
-                                        }}
-                                    >
-                                        <InfoIcon stroke={1.5} size="1.3rem"/>
-                                    </Avatar>
-                                ) : null
-                                }
+                                {getAvatar(notification.type)}
                             </ListItemAvatar>
                             <ListItemText
                                 primary={<Typography variant="subtitle1">{notification.subject}</Typography>}

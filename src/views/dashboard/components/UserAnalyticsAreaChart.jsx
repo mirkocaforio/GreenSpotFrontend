@@ -3,12 +3,12 @@ import React, {useEffect, useRef, useState} from "react";
 import {useTheme} from "@mui/material/styles";
 import {useDispatch, useSelector} from "react-redux";
 import Grid from "@mui/material/Grid";
+import SkeletonBarChart from "../../../ui-component/cards/Skeleton/BarChart";
 import Chart from "react-apexcharts";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
-import {getMemberListAnalytics} from "../../../actions/analytics";
-import MemberDashboardSkeleton from "../../../ui-component/cards/Skeleton/MemberDashboardSkeleton";
+import {getUserListAnalytics} from "../../../actions/analytics";
 
 const initialSettings = {
     options: {
@@ -46,22 +46,22 @@ const status = [
     }
 ];
 
-export const MemberAnalyticsAreaChart = () => {
+export const UserAnalyticsAreaChart = () => {
     const theme = useTheme();
     const dispatch = useDispatch();
 
-    const {memberListAnalytics} = useSelector(state => state.analytics);
+    const {userListAnalytics} = useSelector(state => state.analytics);
     const chartRef = useRef(null);
 
     const [value, setValue] = useState('month');
-    const [memberData, setMemberData] = useState([]);
+    const [userData, setUserData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [chartSettings, setChartSettings] = useState(initialSettings);
 
     const fieldMapping = [
-        { displayName: 'Total Energy Sold (kWh)', fieldName: 'totalEnergySold', initialVisibility: true },
-        { displayName: 'Total Computing Power Sold', fieldName: 'totalComputingPowerSold',initialVisibility: false },
-        { displayName: 'Total Work Minutes (min)', fieldName: 'totalWorkMinutes',initialVisibility: false }
+        { displayName: 'Energy saved (kWh)', fieldName: 'energySaved', initialVisibility: true },
+        { displayName: 'Computing power used', fieldName: 'computingPowerUsed',initialVisibility: false },
+        { displayName: 'Time spent on tasks (min)', fieldName: 'timeSpentOnTasks',initialVisibility: false }
     ];
 
     const categoryMapper = (item) => {
@@ -82,17 +82,17 @@ export const MemberAnalyticsAreaChart = () => {
     }
 
     useEffect(() => {
-        if (memberListAnalytics) {
+        if (userListAnalytics) {
             setIsLoading(false);
-            setMemberData(memberListAnalytics);
+            setUserData(userListAnalytics);
         } else {
             setIsLoading(true);
         }
-    }, [memberListAnalytics]);
+    }, [userListAnalytics]);
 
     useEffect(() => {
-        if (memberData && memberData.length) {
-            const chartData = convertToApexChartData(memberData, fieldMapping);
+        if (userData && userData.length) {
+            const chartData = convertToApexChartData(userData, fieldMapping);
             setChartSettings(chartSettings => ({
                 ...chartSettings,
                 options: {
@@ -104,16 +104,16 @@ export const MemberAnalyticsAreaChart = () => {
                 series: chartData.series
             }));
         }
-    }, [fieldMapping, memberData]);
+    }, [fieldMapping, userData]);
 
     const handleChangeValue = (value) => {
         setValue(value);
         const date = new Date();
-        let fetchMemberAnalyticsData = dispatch(getMemberListAnalytics(1, date.getFullYear(), value));
+        let fetchUserAnalyticsData = dispatch(getUserListAnalytics(1, date.getFullYear(), value));
 
-        if (fetchMemberAnalyticsData) {
-            fetchMemberAnalyticsData.then((data) => {
-                setMemberData(data);
+        if (fetchUserAnalyticsData) {
+            fetchUserAnalyticsData.then((data) => {
+                setUserData(data);
                 const chartData = convertToApexChartData(data, fieldMapping);
                 setChartSettings(chartSettings => ({
                     ...chartSettings,
@@ -134,7 +134,7 @@ export const MemberAnalyticsAreaChart = () => {
 
     return (
         <MainCard
-            title={"Resources Details"}
+            title={"Tasks Details"}
             secondary={
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                     <TextField
@@ -157,7 +157,7 @@ export const MemberAnalyticsAreaChart = () => {
                 <Grid item xs={12}>
                     {isLoading ? (
                         <Grid item xs={12}>
-                            <MemberDashboardSkeleton/>
+                            <SkeletonBarChart/>
                         </Grid>
                     ) : (
                         <Grid
@@ -188,4 +188,4 @@ export const MemberAnalyticsAreaChart = () => {
     );
 }
 
-export default MemberAnalyticsAreaChart;
+export default UserAnalyticsAreaChart;

@@ -107,6 +107,14 @@ export const getUserListAnalytics = (month, year, granularity) => (dispatch) => 
     });
 }
 
+export const initUserListAnalytics = () => (dispatch) => {
+    const date = new Date();
+    const month = date.getMonth() - 1;
+    const year = date.getFullYear();
+    const granularity = "month";
+    return dispatch(getUserListAnalytics(month, year, granularity));
+}
+
 export const getTasksAnalytics = () => (dispatch) => {
     return Analytics.getUserTasksAnalytics().then((data) => {
 
@@ -440,6 +448,14 @@ export const getPaymentUserAnalytics = (month, year, granularity) => (dispatch) 
         dispatch(onError(message,"analytics"));
         return Promise.reject();
     });
+}
+
+export const initPaymentUserAnalytics = () => (dispatch) => {
+    const date = new Date();
+    const month = date.getMonth() - 1;
+    const year = date.getFullYear();
+    const granularity = "month";
+    return dispatch(getPaymentUserAnalytics(month, year, granularity));
 }
 
 export const getPaymentAdminAnalytics = (month, year, granularity) => (dispatch) => {

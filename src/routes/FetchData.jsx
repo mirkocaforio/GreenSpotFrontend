@@ -7,12 +7,15 @@ import {getTasks} from "../actions/task";
 import {
     getMemberAnalytics,
     getMemberFilterAnalytics,
-    getOverallFilterAnalytics, initPaymentAdminAnalytics,
-    getPaymentUserAnalytics,
+    getOverallFilterAnalytics,
+    initPaymentAdminAnalytics,
     getTasksAnalytics,
     getUserAnalytics,
     getUserFilterAnalytics,
-    getUserListAnalytics, initMemberListAnalytics, initTransactionMemberAnalytics, initTransactionUserAnalytics
+    initMemberListAnalytics,
+    initTransactionMemberAnalytics,
+    initTransactionUserAnalytics,
+    initPaymentUserAnalytics, initUserListAnalytics
 } from "../actions/analytics";
 import {getRewards, getRedeems} from "../actions/reward";
 import {getCpuNames, getGpuNames} from "../actions/score";
@@ -79,7 +82,7 @@ const FetchData = ({children, type}) => {
             fetchData = getUserFilterAnalytics;
             break;
         case "userListAnalytics":
-            fetchData = getUserListAnalytics;
+            fetchData = initUserListAnalytics;
             break;
         case "userTaskAnalytics":
             fetchData = getTasksAnalytics;
@@ -109,7 +112,7 @@ const FetchData = ({children, type}) => {
             fetchData = initTransactionMemberAnalytics;
             break;
         case "paymentUserAnalytics":
-            fetchData = getPaymentUserAnalytics;
+            fetchData = initPaymentUserAnalytics;
             break;
         case "paymentAdminAnalytics":
             fetchData = initPaymentAdminAnalytics;

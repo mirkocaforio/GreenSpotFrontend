@@ -9,6 +9,7 @@ import FetchData from "./FetchData";
 
 const AdminDashboard = Loadable(lazy(() => import('views/dashboard/AdminDashboard')));
 const MemberDashboard = Loadable(lazy(() => import('views/dashboard/MemberDashboard')));
+const UserDashboard = Loadable(lazy(() => import('views/dashboard/UserDashboard')));
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
 
 
@@ -28,7 +29,13 @@ export const RoleDashboard = () => {
                 </FetchData>
             </FetchData>;
         case ROLE_UTENTE:
-            return <DashboardDefault/>;
+            return <FetchData type={"userAnalytics"}>
+                <FetchData type={"userListAnalytics"}>
+                    <FetchData type={"paymentUserAnalytics"}>
+                        <UserDashboard/>
+                    </FetchData>
+                </FetchData>
+            </FetchData>;
         case ROLE_MEMBER:
             return <FetchData type={"memberAnalytics"}>
                 <FetchData type={"memberListAnalytics"}>
