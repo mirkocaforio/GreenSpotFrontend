@@ -7,13 +7,12 @@ import TotalStatBarChart from "../components/TotalStatBarChart";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {roundValue} from "../../../utils/math";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import PopularCard from "../components/PopularCard";
 
 
 export const AdminDashboard = () => {
     const theme = useTheme();
-    const breakMd = useMediaQuery(theme.breakpoints.down('md'));
+    //const breakMd = useMediaQuery(theme.breakpoints.down('md'));
 
     const { overallAnalytics } = useSelector(state => state.analytics);
     const [isLoading, setIsLoading] = useState(true);

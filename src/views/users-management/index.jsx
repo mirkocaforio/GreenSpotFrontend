@@ -302,7 +302,7 @@ const UsersManagement = () => {
             id: 'enabled',
             numeric: false,
             disablePadding: false,
-            label: 'Enabled',
+            label: 'Status',
             align: 'left',
             disableOrdering: true,
             content: (element) => {

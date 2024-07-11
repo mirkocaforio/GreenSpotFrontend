@@ -103,6 +103,7 @@ const TotalStatBarChart = () => {
     const theme = useTheme();
     const chartRef = useRef(null);
     const [init, setInit] = useState(false);
+    const [created, setCreated] = useState(false);
 
     const { primary } = theme.palette.text;
     const divider = theme.palette.divider;
@@ -121,12 +122,20 @@ const TotalStatBarChart = () => {
             textColor: theme.palette.warning.dark,
             bgColor: 'warning.light',
             initialVisibility: true },
-        { displayName: 'Computing Power Used', fieldName: 'computingPowerUsed',initialVisibility: false },
-        { displayName: 'Active Member Count', fieldName: 'activeMemberCount',initialVisibility: true },
-        { displayName: 'Active User Count', fieldName: 'activeUserCount',initialVisibility: true },
-        { displayName: 'Tasks Submitted', fieldName: 'tasksSubmitted',initialVisibility: true },
-        { displayName: 'Tasks Completed', fieldName: 'tasksCompleted',initialVisibility: true },
-        { displayName: 'Work Minutes (min)', fieldName: 'workMinutes',
+        { displayName: 'Computing Power Used',
+            fieldName: 'computingPowerUsed',initialVisibility: false },
+        { displayName: 'Active Member Count',
+            fieldName: 'activeMemberCount',
+            initialVisibility: true },
+        { displayName: 'Active User Count',
+            fieldName: 'activeUserCount',
+            initialVisibility: true },
+        { displayName: 'Tasks Submitted',
+            fieldName: 'tasksSubmitted',initialVisibility: true },
+        { displayName: 'Tasks Completed',
+            fieldName: 'tasksCompleted',initialVisibility: true },
+        { displayName: 'Work Minutes (min)',
+            fieldName: 'workMinutes',
             total: true,
             icon: AccessTimeTwoTone,
             iconSx: {
@@ -142,8 +151,9 @@ const TotalStatBarChart = () => {
         let chartData = {};
 
 
-        if(overallAnalytics && overallAnalytics[value]){
+        if(overallAnalytics && value in overallAnalytics && overallAnalytics[value]){
             setIsLoading(false);
+
             const categoryMapper = item => item.day !== 0 ? `${item.year}-${item.month}-${item.day}` : `${item.year}-${item.month}`;
             chartData = convertToApexChartData(overallAnalytics[value]?.data, fieldMapping, categoryMapper);
             setChartSettings(chartSettings => ({
@@ -168,7 +178,8 @@ const TotalStatBarChart = () => {
             }));
             setTotals(chartData.totals);
             ApexCharts.exec(`rec-stats-barChart`, 'updateOptions', chartSettings);
-            //setInit(false);
+            console.log("Setting created")
+            setCreated(true);
         }else {
             setIsLoading(true);
         }
@@ -177,7 +188,8 @@ const TotalStatBarChart = () => {
 
     // ############################## - Chart visibility - ##############################
     useEffect(() => {
-        if (chartRef.current && !init) {
+        if (chartRef.current && !init && created) {
+            console.log("Setting visibility");
             fieldMapping.forEach((field) => {
                 if (!field.initialVisibility && chartRef.current) {
                     chartRef.current.chart.toggleSeries(field.displayName);
@@ -185,7 +197,7 @@ const TotalStatBarChart = () => {
             });
             setInit(true);
         }
-    }, [fieldMapping, init, chartRef]);
+    }, [ init,created]);
 
     // ############################## - Handle change event - ##############################
     const handleValueChange = (event) => {
@@ -198,6 +210,7 @@ const TotalStatBarChart = () => {
             const month = date.getMonth() + 1;
             const year = date.getFullYear();
             dispatch(getOverallAnalyticsList(month, year, value));
+            setCreated(false);
             setInit(false);
         }
     },[value]);

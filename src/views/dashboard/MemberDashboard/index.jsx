@@ -30,89 +30,69 @@ export const MemberDashboard = () => {
     }, [memberAnalytics]);
 
     return (
-        <>
-            {
-                isLoading ?
-                    (
-                        <Grid container spacing={gridSpacing}>
-                            <Grid item xs={12} md={12} sm={12} lg={12}>
-                                <MainCard>
-                                    <Grid container spacing={gridSpacing}>
-                                        <Grid item xs={12} md={12} sm={12} lg={12}>
-                                            <h1>Loading...</h1>
-                                        </Grid>
-                                    </Grid>
-                                </MainCard>
-                            </Grid>
-                        </Grid>
-                    ) :
-                    (
-                        <Grid container spacing={gridSpacing}>
-                            <Grid item xs={12} md={12} sm={12} lg={12}>
-                                <Grid container spacing={2} >
-                                    <Grid item xs={12} sm={12} md={4} lg={4}>
-                                        <CustomCard
-                                            customSx={{
-                                                bgcolor: 'warning.dark',
-                                            }}
-                                            textSx={{
-                                                color: 'warning.light'
-                                            }}
-                                            title={"Total Energy Sold"}
-                                            currentValue={roundValue(memberAnalytics?.energyConsumed,3) + " kWh"}
-                                            previousValue={""}
-                                            icon={OfflineBoltTwoTone}
-                                            iconSx={{
-                                                color: theme.palette.warning.light
-                                            }}
-                                            isLoading={isLoading}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} sm={12} md={4} lg={4}>
-                                        <CustomCard
-                                            customSx={{
-                                                bgcolor: 'success.dark',
-                                            }}
-                                            textSx={{
-                                                color: 'primary.light'
-                                            }}
-                                            title={"Total Computing Power"}
-                                            currentValue={roundValue(memberAnalytics?.computingPower,2) + ""}
-                                            previousValue={""}
-                                            icon={IconCpu2}
-                                            iconSx={{
-                                                color: theme.palette.grey[300]
-                                            }}
-                                            isLoading={isLoading}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} sm={12} md={4} lg={4}>
-                                        <CustomCard
-                                            customSx={{
-                                                bgcolor: 'primary.dark',
-                                            }}
-                                            textSx={{
-                                                color: 'primary.light'
-                                            }}
-                                            title={"Total Resources Work"}
-                                            currentValue={roundValue(memberAnalytics?.workMinutes,2) + " min"}
-                                            previousValue={""}
-                                            icon={AccessTimeTwoTone}
-                                            iconSx={{
-                                                color: theme.palette.grey[300]
-                                            }}
-                                            isLoading={isLoading}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} sm={12} md={12} lg={12}>
-                                        <MemberAnalyticsAreaChart/>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    )
-            }
-        </>
+        <Grid container spacing={gridSpacing}>
+            <Grid item xs={12} md={12} sm={12} lg={12}>
+                <Grid container spacing={2} >
+                    <Grid item xs={12} sm={12} md={4} lg={4}>
+                        <CustomCard
+                            customSx={{
+                                bgcolor: 'warning.dark',
+                            }}
+                            textSx={{
+                                color: 'warning.light'
+                            }}
+                            title={"Total Energy Sold"}
+                            currentValue={roundValue(memberAnalytics?.energyConsumed,3) + " kWh"}
+                            previousValue={""}
+                            icon={OfflineBoltTwoTone}
+                            iconSx={{
+                                color: theme.palette.warning.light
+                            }}
+                            isLoading={isLoading}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={4} lg={4}>
+                        <CustomCard
+                            customSx={{
+                                bgcolor: 'success.dark',
+                            }}
+                            textSx={{
+                                color: 'primary.light'
+                            }}
+                            title={"Total Computing Power"}
+                            currentValue={roundValue(memberAnalytics?.computingPower,2) + ""}
+                            previousValue={""}
+                            icon={IconCpu2}
+                            iconSx={{
+                                color: theme.palette.grey[300]
+                            }}
+                            isLoading={isLoading}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={4} lg={4}>
+                        <CustomCard
+                            customSx={{
+                                bgcolor: 'primary.dark',
+                            }}
+                            textSx={{
+                                color: 'primary.light'
+                            }}
+                            title={"Total Resources Work"}
+                            currentValue={roundValue(memberAnalytics?.workMinutes,2) + " min"}
+                            previousValue={""}
+                            icon={AccessTimeTwoTone}
+                            iconSx={{
+                                color: theme.palette.grey[300]
+                            }}
+                            isLoading={isLoading}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                        <MemberAnalyticsAreaChart/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
     );
 }
 
