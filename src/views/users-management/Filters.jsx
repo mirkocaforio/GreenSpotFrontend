@@ -14,7 +14,7 @@ export const usersFilters = {
             status: false,
             value: ROLE_UTENTE,
             show: true,
-            color: 'secondary'
+            color: 'warning'
         },
         member: {
             status: false,

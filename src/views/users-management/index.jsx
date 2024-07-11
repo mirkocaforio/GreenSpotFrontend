@@ -195,7 +195,7 @@ const UsersManagement = () => {
                 return (
                     <Chip
                         label="User"
-                        color="secondary"
+                        color="warning"
                         size="small"
                     />
                 )

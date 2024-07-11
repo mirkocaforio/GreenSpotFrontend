@@ -11,7 +11,7 @@ import Divider from "@mui/material/Divider";
 // project imports
 import AuthWrapper1 from '../AuthWrapper1';
 import AuthCardWrapper from '../AuthCardWrapper';
-import Logo from 'ui-component/Logo';
+import {Logo64} from 'ui-component/Logo';
 import AuthFooter from 'ui-component/cards/AuthFooter';
 import { RECOVERY_PATH} from "../../../config";
 
@@ -33,7 +33,7 @@ const RecoveryPassword = () => {
                                 <Grid container spacing={2} alignItems="center" justifyContent="center">
                                     <Grid item sx={{ mb: 3 }}>
                                         <Link to="#" aria-label="logo">
-                                            <Logo />
+                                            <Logo64 />
                                         </Link>
                                     </Grid>
                                     <Grid item xs={12}>
