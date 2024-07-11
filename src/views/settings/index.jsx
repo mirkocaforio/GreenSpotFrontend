@@ -1,13 +1,13 @@
 import MainCard from "../../ui-component/cards/MainCard";
-import SubCard from "../../ui-component/cards/SubCard";
 import Grid from "@mui/material/Grid";
 import React, {useEffect, useState} from "react";
-import {gridSpacing} from "../../store/constant";
+
 import {useSelector} from "react-redux";
 import CreditForm from "./CreditForm";
 import Divider from "@mui/material/Divider";
 import PaymentSettingsForm from "./PaymentSettingsForm";
-
+import SkeletonSettingsForm from "../../ui-component/cards/Skeleton/SettingsForm";
+import {gridSpacing} from "../../store/constant";
 
 const SettingsPage = () => {
 
@@ -25,13 +25,15 @@ const SettingsPage = () => {
     return (
 
         <MainCard>
-            {isLoading ? (<Grid container justifyContent={"center"}>
-                <Grid item xs={12}>
-                    <SubCard title="Loading...">
-                        <p>Settings are loading...</p>
-                    </SubCard>
-                </Grid>
-            </Grid> ):(
+            {isLoading ? (
+                <Grid container spacing={gridSpacing}>
+                    <Grid item xs={12}>
+                        <SkeletonSettingsForm/>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <SkeletonSettingsForm/>
+                    </Grid>
+                </Grid>):(
                 <Grid container spacing={gridSpacing}>
                     <Grid item xs={12}>
                         <CreditForm settings={settings?.assignment}/>

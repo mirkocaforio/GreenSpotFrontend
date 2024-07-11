@@ -9,16 +9,19 @@ import FormHelperText from "@mui/material/FormHelperText";
 import AnimateButton from "../../ui-component/extended/AnimateButton";
 import Button from "@mui/material/Button";
 import {Formik} from "formik";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {setAssignmentSettings} from "../../actions/settings";
 import {useTheme} from "@mui/material/styles";
 import {useDispatch} from "react-redux";
 import PropTypes from "prop-types";
+import SkeletonSettingsForm from "../../ui-component/cards/Skeleton/SettingsForm";
 
 export const CreditForm = ({settings}) => {
 
     const theme = useTheme();
     const dispatch = useDispatch();
+
+    const [isLoading, setIsLoading] = useState(true);
 
     const handleSubmit = (values) => {
         return dispatch(setAssignmentSettings({
@@ -26,7 +29,18 @@ export const CreditForm = ({settings}) => {
         }))
     }
 
+    useEffect(() => {
+        if(settings){
+            setIsLoading(false);
+        }else{
+            setIsLoading(true);
+        }
+    }, [settings]);
+
     return (
+        isLoading ? (
+            <SkeletonSettingsForm/>
+        ) : (
         <Formik
             initialValues={{
                 creditConstant: settings ? settings?.creditConstant : 1.0,
@@ -91,6 +105,7 @@ export const CreditForm = ({settings}) => {
                 </form>
             )}
         </Formik>
+        )
     )
 }
 
