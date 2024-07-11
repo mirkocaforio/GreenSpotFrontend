@@ -99,6 +99,7 @@ const TimeEarningCard = ({isLoading, title, transactionAnalytics, role}) => {
     }
 
     const calculateAverages = (averageValues) => {
+        if(!averageValues.length) return 0;
         return (averageValues.reduce((acc, item) => acc + item.totalAmount, 0) / averageValues.length).toFixed(2);
     };
 

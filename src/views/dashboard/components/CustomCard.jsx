@@ -16,7 +16,6 @@ import SkeletonCustomCard from 'ui-component/cards/Skeleton/CustomCard';
 const CustomCard = ({ isLoading, icon: Icon,iconSx, customSx, textSx, title, currentValue, previousValue }) => {
     const theme = useTheme();
     const [isHovered, setIsHovered] = React.useState(false);
-
     return (
         isLoading ? (<SkeletonCustomCard/>) : (
         <MainCard
@@ -55,7 +54,7 @@ const CustomCard = ({ isLoading, icon: Icon,iconSx, customSx, textSx, title, cur
                                                         sx={{
                                                             ...textSx,
                                                             }}>
-                                                {currentValue}
+                                                {currentValue ? currentValue : "0"}
                                             </Typography>
                                         </Grid>
                                     </Grid>

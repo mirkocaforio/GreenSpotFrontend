@@ -47,15 +47,16 @@ const RewardForm = ({ reward, isLoading = false }) => {
             // update reward
             const rewardObj = RewardModel.fromJson(values);
             rewardObj.setId(reward?.id);
-            dispatch(updateReward(rewardObj.toJson())).then(
-                () => {
+            return dispatch(updateReward(rewardObj.toJson())).then(
+
+                setTimeout(() => {
                     navigate("/store/management", { replace: true });
-                }
-            );
+                }, 1000)
+            )
         }else{
             // create reward
             const rewardObj = RewardModel.fromJson(values);
-            dispatch(createReward(rewardObj.toJson())).then(
+            return dispatch(createReward(rewardObj.toJson())).then(
                 () => {
                     navigate("/store/management", { replace: true });
                 }
@@ -90,8 +91,9 @@ const RewardForm = ({ reward, isLoading = false }) => {
             })}
             onSubmit={(values,{setSubmitting }) => {
                 setSubmitting(true);
-                handleSubmit(values);
-                setSubmitting(false);
+                handleSubmit(values).then(() => {
+                    setSubmitting(false);
+                })
             }}>
             {({ errors,
                   handleBlur,
