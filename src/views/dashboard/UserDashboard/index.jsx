@@ -3,7 +3,6 @@ import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import Grid from "@mui/material/Grid";
 import {gridSpacing} from "../../../store/constant";
-import MainCard from "../../../ui-component/cards/MainCard";
 import CustomCard from "../components/CustomCard";
 import {roundValue} from "../../../utils/math";
 import {AccessTimeTwoTone, OfflineBoltTwoTone} from "@mui/icons-material";
@@ -11,6 +10,7 @@ import {IconCpu2} from "@tabler/icons-react";
 import UserAnalyticsAreaChart from "../components/UserAnalyticsAreaChart";
 import UserPaymentChartCard from "../components/UserPaymentChartCard";
 import UserStatsGrid from "../components/UserStatsGrid";
+import UserDashboardSkeleton from "../../../ui-component/cards/Skeleton/UserDashboardSkeleton";
 
 export const UserDashboard = () => {
     const theme = useTheme();
@@ -31,17 +31,7 @@ export const UserDashboard = () => {
             {
                 isLoading ?
                     (
-                        <Grid container spacing={gridSpacing}>
-                            <Grid item xs={12} md={12} sm={12} lg={12}>
-                                <MainCard>
-                                    <Grid container spacing={gridSpacing}>
-                                        <Grid item xs={12} md={12} sm={12} lg={12}>
-                                            <h1>Loading...</h1>
-                                        </Grid>
-                                    </Grid>
-                                </MainCard>
-                            </Grid>
-                        </Grid>
+                        <UserDashboardSkeleton/>
                     ) :
                     (
                         <Grid container spacing={gridSpacing}>
