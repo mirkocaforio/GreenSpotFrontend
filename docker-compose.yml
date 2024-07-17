@@ -1,21 +1,15 @@
 services:
-  greenSpotFrontend:
+  greenSpotFrontendBuild:
     image: node:22.4.0
     container_name: greenSpotFrontend
-    build: .
     ports:
       - "${SERVICE_PORT}:3000"
     env_file:
       - .env
-    networks:
-      - greenspot-net
     volumes:
       - .:/app
-      - node_modules:/app/node_modules
-    command: npm run dev
+    working_dir: /app
+    command: /bin/sh -c "npm install && npm run dev"
 
 networks:
   greenspot-net:
-
-volumes:
-  node_modules:
