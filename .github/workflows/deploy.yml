@@ -155,6 +155,7 @@ jobs:
 
           rsync -avz -e "ssh -i key.pem -o StrictHostKeyChecking=no" dist/ $SSH_USER@$SSH_HOST:$SSH_PATH${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/}/dist/
           rsync -avz -e "ssh -i key.pem -o StrictHostKeyChecking=no" server.js $SSH_USER@$SSH_HOST:$SSH_PATH${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/}/server.js
+          scp -o StrictHostKeyChecking=no -i key.pem docker-compose.yml $SSH_USER@$SSH_HOST:$SSH_PATH${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/}/docker-compose.yml
           scp -o StrictHostKeyChecking=no -i key.pem .env $SSH_USER@$SSH_HOST:$SSH_PATH${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/}/.env
           scp -o StrictHostKeyChecking=no -i key.pem upservice.sh $SSH_USER@$SSH_HOST:$SSH_PATH${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/}/upservice.sh
 
