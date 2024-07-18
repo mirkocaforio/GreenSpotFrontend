@@ -28,12 +28,7 @@ export const UserDashboard = () => {
 
     return (
         <>
-            {
-                isLoading ?
-                    (
-                        <UserDashboardSkeleton/>
-                    ) :
-                    (
+
                         <Grid container spacing={gridSpacing}>
                             <Grid item xs={12} md={12} sm={12} lg={12}>
                                 <Grid container spacing={2}>
@@ -107,8 +102,7 @@ export const UserDashboard = () => {
                                 </Grid>
                             </Grid>
                         </Grid>
-                    )
-            }
+
         </>
     );
 }
