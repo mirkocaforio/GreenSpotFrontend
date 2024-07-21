@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-app.use('/apiGateway-js-sdk', express.static(path.join(__dirname, 'apiGateway-js-sdk')));
+app.use('/apiGateway-js-sdk', express.static('apiGateway-js-sdk'));
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
