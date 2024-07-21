@@ -42,6 +42,7 @@ import {useDispatch, useSelector} from "react-redux";
 import CircularProgressBar from "../../ui-component/CircularProgress";
 import {getAnalyticsRange, getTaskAnalytics} from "../../utils/analytics-range";
 import {dateFormatBeauty} from "../../utils/date-beauty";
+import {roundValue} from "../../utils/math";
 
 
 const TaskTable = ({maxRows = 2}) => {
@@ -293,7 +294,7 @@ const TaskTable = ({maxRows = 2}) => {
                                 <TableCell align="center">
                                     { isAnalyticsLoading ? (<CircularProgress />)
                                         :(<CircularProgressBar values={analyticsRange?.energyConsumption}
-                                                                                    progress={getTaskAnalytics(tasksAnalytics?.list, task?.id, "energyConsumption")}
+                                                                                    progress={roundValue(getTaskAnalytics(tasksAnalytics?.list, task?.id, "energyConsumption"),4)}
                                                                sx={{color: theme.palette.success[200],}}
                                                                />)}
                                 </TableCell>
