@@ -10,6 +10,7 @@ services:
       - .:/app
     working_dir: /app
     command: /bin/sh -c "npm install && node server.js"
+    restart: always
 
 networks:
   greenspot-net:
